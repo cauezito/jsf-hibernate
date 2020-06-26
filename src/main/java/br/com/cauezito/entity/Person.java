@@ -22,6 +22,8 @@ public class Person implements Serializable {
 
 	private Integer age;
 	
+	private String gender;
+	
 	public Person() {
 
 	}
@@ -57,6 +59,14 @@ public class Person implements Serializable {
 
 	public void setAge(Integer age) {
 		this.age = age;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	@Override

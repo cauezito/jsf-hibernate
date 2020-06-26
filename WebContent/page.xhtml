@@ -25,6 +25,13 @@ xmlns:f="http://java.sun.com/jsf/core">
 			<h:outputLabel value="Idade:"/>
 			<h:inputText value="#{personBean.person.age}"/>	
 			
+			<h:outputLabel value="Gênero:"/>
+			<h:selectOneMenu id="gender" value="#{personBean.person.gender}" required="true">
+				<f:selectItem itemValue="M"   itemLabel="Masculino"/>
+				<f:selectItem itemValue="F"   itemLabel="Feminino"/>
+				<f:selectItem itemValue="O"   itemLabel="Outro"/>
+			</h:selectOneMenu>
+			
 			<h:outputLabel/>
 			<h:panelGroup>
 				<h:commandButton value="Novo" action="#{personBean.newPerson}"/>
