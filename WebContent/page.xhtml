@@ -42,6 +42,9 @@ xmlns:f="http://java.sun.com/jsf/core">
 				<f:selectItem itemValue="PHP"/>
 			</h:selectManyMenu>
 			
+			<h:outputLabel value="Ativo?"/>
+			<h:selectBooleanCheckbox value="#{personBean.person.active}"/>
+			
 			<h:outputLabel/>
 			<h:panelGroup>
 				<h:commandButton value="Novo" action="#{personBean.newPerson}"/>
