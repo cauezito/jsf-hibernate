@@ -26,8 +26,25 @@
 		<br/>
 		
 		<h:commandButton value="Novo" action="#{personBean.newPerson}"/>
+		<h:commandButton value="Remover" action="#{personBean.remove}"/>
 		<h:commandButton value="Salvar" action="#{personBean.save}"/>
 			
+			
+		<!-- TABLE -->
+		<h:dataTable value="#{personBean.people}" var="p">
+			<h:column>
+				<h:outputText value="#{p.id}"/>
+			</h:column>
+			<h:column>
+				<h:outputText value="#{p.name}"/>
+			</h:column>
+			<h:column>
+				<h:outputText value="#{p.surname}"/>
+			</h:column>
+			<h:column>
+				<h:outputText value="#{p.age}"/>
+			</h:column>
+		</h:dataTable>	
 	</h:form>
 </h:body>
 </html>

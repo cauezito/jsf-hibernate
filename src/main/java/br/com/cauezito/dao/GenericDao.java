@@ -1,5 +1,7 @@
 package br.com.cauezito.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -33,41 +35,41 @@ public class GenericDao<E> {
 	}
 	
 	
- /*	public void delete(E entidade){
+ 	public void delete(E entity){
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 		
-		entityManager.remove(entidade);
+		entityManager.remove(entity);
 		
 		entityTransaction.commit();
 		entityManager.close();
-	}
+	} 
 	
-	public void deletePorId(E entidade){
+	public void deleteById(E entity){
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 		
-		Object id = JPAUtil.getPrimaryKey(entidade);
-		entityManager.createQuery("delete from " + entidade.getClass().getCanonicalName() + " where id = " + id).executeUpdate();
+		Object id = JPAUtil.getPrimaryKey(entity);
+		entityManager.createQuery("delete from " + entity.getClass().getCanonicalName() +
+				" where id = " + id).executeUpdate();
 		
 		entityTransaction.commit();
 		entityManager.close();
 	}
-	
-	
-	public List<E> getListEntity(Class<E> entidade){
+
+	public List<E> getListEntity(Class<E> entity){
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 		
-		List<E> retorno = entityManager.createQuery("from " + entidade.getName()).getResultList();
+		List<E> registry = entityManager.createQuery("from " + 
+		entity.getName()).getResultList();
 		
 		entityTransaction.commit();
 		entityManager.close();
 		
-		return retorno;
+		return registry;
 	}
-	*/
 }
