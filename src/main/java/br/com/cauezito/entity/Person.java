@@ -24,6 +24,8 @@ public class Person implements Serializable {
 	
 	private String gender;
 	
+	private String[] courses;
+	
 	public Person() {
 
 	}
@@ -67,6 +69,14 @@ public class Person implements Serializable {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public String[] getCourses() {
+		return courses;
+	}
+
+	public void setCourses(String[] courses) {
+		this.courses = courses;
 	}
 
 	@Override

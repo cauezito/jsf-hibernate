@@ -32,6 +32,16 @@ xmlns:f="http://java.sun.com/jsf/core">
 				<f:selectItem itemValue="O"   itemLabel="Outro"/>
 			</h:selectOneMenu>
 			
+			<h:outputLabel value="Cursos:"/>
+			<h:selectManyMenu id="courses" style="height: 100px"
+			 value="#{personBean.person.courses}" >
+				<f:selectItem itemValue="HTML5" />
+				<f:selectItem itemValue="CSS3" />
+				<f:selectItem itemValue="JAVA WEB"/>
+				<f:selectItem itemValue="SPRING BOOT"/>
+				<f:selectItem itemValue="PHP"/>
+			</h:selectManyMenu>
+			
 			<h:outputLabel/>
 			<h:panelGroup>
 				<h:commandButton value="Novo" action="#{personBean.newPerson}"/>
