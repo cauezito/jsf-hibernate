@@ -9,54 +9,75 @@ xmlns:f="http://java.sun.com/jsf/core">
 </h:head>
 <h:body>
 	<h:form id="formUser">
-		
-		<h:outputLabel value="Id:"/>
-		<h:inputText value="#{personBean.person.id}" readonly="true"/>
-		<br/>
-		
-		<h:outputLabel value="Nome:"/>
-		<h:inputText value="#{personBean.person.name}"/>
-		<br/>
-		
-		<h:outputLabel value="Sobrenome:"/>
-		<h:inputText value="#{personBean.person.surname}"/>
-		<br/>
-		
-		<h:outputLabel value="Idade:"/>
-		<h:inputText value="#{personBean.person.age}"/>
-		<br/>
-		
-		<h:commandButton value="Novo" action="#{personBean.newPerson}"/>
-		<h:commandButton value="Remover" action="#{personBean.removeById}"/>
-		<h:commandButton value="Salvar" action="#{personBean.save}"/>
+		<h:panelGrid columns="2">
+			<f:facet name="header">
+				Cadastro de usuários
+			</f:facet>
+			<h:outputLabel value="Id:"/>
+			<h:inputText value="#{personBean.person.id}" readonly="true"/>
+			
+			<h:outputLabel value="Nome:"/>
+			<h:inputText value="#{personBean.person.name}"/>
+			
+			<h:outputLabel value="Sobrenome:"/>
+			<h:inputText value="#{personBean.person.surname}"/>
+			
+			<h:outputLabel value="Idade:"/>
+			<h:inputText value="#{personBean.person.age}"/>	
+			
+			<h:outputLabel/>
+			<h:panelGroup>
+				<h:commandButton value="Novo" action="#{personBean.newPerson}"/>
+				<h:commandButton value="Remover" action="#{personBean.removeById}"/>
+				<h:commandButton value="Salvar" action="#{personBean.save}"/>
+			</h:panelGroup>
+					
+		</h:panelGrid>
 			
 			
 		<!-- TABLE -->
-		<h:dataTable value="#{personBean.people}" var="p">
+		<h:dataTable value="#{personBean.people}" var="p" border="2" cellpadding="5">
+			<f:facet name="header">
+				Usuários
+			</f:facet>
 			<h:column>
+				<f:facet name="header">
+					ID
+				</f:facet>
 				<h:outputText value="#{p.id}"/>
 			</h:column>
 			<h:column>
+				<f:facet name="header">
+					Nome
+				</f:facet>
 				<h:outputText value="#{p.name}"/>
 			</h:column>
 			<h:column>
+				<f:facet name="header">
+					Sobrenome
+				</f:facet>
 				<h:outputText value="#{p.surname}"/>
 			</h:column>
 			<h:column>
+				<f:facet name="header">
+						Idade
+					</f:facet>
 				<h:outputText value="#{p.age}"/>
 			</h:column>
 			<h:column>
+				<f:facet name="header">
+					Ação
+				</f:facet>
 				<h:commandLink value="Editar">
 				<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
 					<f:setPropertyActionListener value="#{p}" target="#{personBean.person}"/>
 				</h:commandLink>
-			</h:column>
-			<h:column>
 				<h:commandLink value="Remover" action="#{personBean.removeById}">
 				<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
 					<f:setPropertyActionListener value="#{p}" target="#{personBean.person}"/>
 				</h:commandLink>
 			</h:column>
+
 		</h:dataTable>	
 	</h:form>
 </h:body>
