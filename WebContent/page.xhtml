@@ -27,7 +27,7 @@ xmlns:f="http://java.sun.com/jsf/core">
 		<br/>
 		
 		<h:commandButton value="Novo" action="#{personBean.newPerson}"/>
-		<h:commandButton value="Remover" action="#{personBean.remove}"/>
+		<h:commandButton value="Remover" action="#{personBean.removeById}"/>
 		<h:commandButton value="Salvar" action="#{personBean.save}"/>
 			
 			
@@ -47,6 +47,12 @@ xmlns:f="http://java.sun.com/jsf/core">
 			</h:column>
 			<h:column>
 				<h:commandLink value="Editar">
+				<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
+					<f:setPropertyActionListener value="#{p}" target="#{personBean.person}"/>
+				</h:commandLink>
+			</h:column>
+			<h:column>
+				<h:commandLink value="Remover" action="#{personBean.removeById}">
 				<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
 					<f:setPropertyActionListener value="#{p}" target="#{personBean.person}"/>
 				</h:commandLink>

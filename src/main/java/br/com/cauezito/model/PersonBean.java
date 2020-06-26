@@ -31,7 +31,7 @@ public class PersonBean {
 		return "";
 	}
 	
-	public String remove() {
+	public String removeById() {
 		dao.deleteById(person);
 		person = new Person();
 		this.listAll();
