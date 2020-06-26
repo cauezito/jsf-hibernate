@@ -4,7 +4,8 @@
 xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-	<title>Início</title>	
+	<title>Registrar-se</title>	
+	<link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css" media="screen" />
 	
 </h:head>
 <h:body>
@@ -41,13 +42,17 @@ xmlns:f="http://java.sun.com/jsf/core">
 				<f:selectItem itemValue="SPRING BOOT"/>
 				<f:selectItem itemValue="PHP"/>
 			</h:selectManyMenu>
+
+			<h:outputLabel value="Login"/>
+			<h:inputText value="#{personBean.person.login}"/>
 			
-			<h:outputLabel value="Ativo?"/>
-			<h:selectBooleanCheckbox value="#{personBean.person.active}"/>
+			<h:outputLabel value="Password"/>
+			<h:inputSecret value="#{personBean.person.password}"/>
 			
 			<h:outputLabel/>
+			
 			<h:panelGroup>
-				<h:commandButton value="Novo" action="#{personBean.newPerson}"/>
+				<h:commandButton value="Novo" action="#{personBean.newPerson}" image="/resources/img/new.png"/>
 				<h:commandButton value="Remover" action="#{personBean.removeById}"/>
 				<h:commandButton value="Salvar" action="#{personBean.save}"/>
 				<h:commandButton value="Limpar" action="#{personBean.newPerson}"/>

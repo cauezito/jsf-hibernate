@@ -26,7 +26,9 @@ public class Person implements Serializable {
 	
 	private String[] courses;
 	
-	private Boolean active;
+	private String login;
+	
+	private String password;
 	
 	public Person() {
 
@@ -81,12 +83,20 @@ public class Person implements Serializable {
 		this.courses = courses;
 	}
 
-	public Boolean getActive() {
-		return active;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setActive(Boolean active) {
-		this.active = active;
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
