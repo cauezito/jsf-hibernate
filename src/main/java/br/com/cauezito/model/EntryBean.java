@@ -34,7 +34,7 @@ public class EntryBean implements Crud{
 	public String save() {
 		Person p = this.getUserOn();
 		entry.setUser(p);
-		dao.save(entry);
+		entry = dao.merge(entry);
 		this.listAll();
 		return "";
 	}
