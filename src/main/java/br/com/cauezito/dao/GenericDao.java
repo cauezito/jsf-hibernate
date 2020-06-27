@@ -35,7 +35,7 @@ public class GenericDao<E> {
 	}
 	
 	
- 	public void delete(E entity){
+ 	public void remove(E entity){
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
@@ -46,7 +46,7 @@ public class GenericDao<E> {
 		entityManager.close();
 	} 
 	
-	public void deleteById(E entity){
+	public void removeById(E entity){
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();

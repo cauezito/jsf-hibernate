@@ -34,7 +34,7 @@ public class PersonBean implements Crud {
 	
 	@Override
 	public String removeById() {
-		dao.deleteById(person);
+		dao.removeById(person);
 		person = new Person();
 		this.listAll();
 		return "";
