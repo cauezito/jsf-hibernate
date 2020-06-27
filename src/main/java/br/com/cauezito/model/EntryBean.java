@@ -35,6 +35,7 @@ public class EntryBean implements Crud{
 		Person p = this.getUserOn();
 		entry.setUser(p);
 		dao.save(entry);
+		this.listAll();
 		return "";
 	}
 	@Override

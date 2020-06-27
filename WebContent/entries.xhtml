@@ -40,12 +40,35 @@ xmlns:f="http://java.sun.com/jsf/core">
 				<h:commandButton value="Novo" action="#{entryBean.clear}" image="/resources/img/new.png"/>
 				<h:commandButton value="Remover" action="#{entryBean.removeById}"/>
 				<h:commandButton value="Salvar" action="#{entryBean.save}"/>
-			</h:panelGroup>
-			
-			
-			
-			
+			</h:panelGroup>		
 		</h:panelGrid>
+		
+		<h:dataTable value="#{entryBean.entries}" var="e" border="2">
+			<f:facet name="header">
+				Lançamentos
+			</f:facet>
+			
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputLabel value="#{e.id}"/>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Nota fiscal</f:facet>
+				<h:outputLabel value="#{e.invoice}"/>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Origem</f:facet>
+				<h:outputLabel value="#{e.origin}"/>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Destino</f:facet>
+				<h:outputLabel value="#{e.destination}"/>
+			</h:column>
+			
+		</h:dataTable>
 	</h:form>
 </h:body>
 </html>
