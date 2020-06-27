@@ -8,12 +8,17 @@ xmlns:f="http://java.sun.com/jsf/core">
 	<link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css" media="screen" />
 </h:head>
 <h:body>
-	<h:form>                                                     
-		<h:outputText value="Login"/>
-		<h:inputText id="login"/>
-		<h:outputText value="Senha"/>
-		<h:inputText id="password"/>
-		<h:commandButton value="Salvar"/>
+	<h:form>        
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Usuário:"/>
+			<h:inputText value="#{personBean.person.login}"/>
+			
+			<h:outputLabel value="Senha:"/>
+			<h:inputSecret value="#{personBean.person.password}"/>
+			
+			<h:commandButton value="Salvar" action="#{personBean.login}"/>
+		</h:panelGrid>                                             
+
 	</h:form>		
 </h:body>
 </html>
