@@ -73,7 +73,7 @@ public class PersonBean {
 		if(p != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext ec = context.getExternalContext();
-			ec.getSessionMap().put("personOn", p.getLogin());
+			ec.getSessionMap().put("personOn", p);
 			return "index.xhtml";
 		}
 

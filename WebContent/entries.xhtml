@@ -4,21 +4,19 @@
 xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-	<title>Login</title>	
+	<title>Lançamentos</title>	
 	<link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css" media="screen" />
 </h:head>
 <h:body>
-	<h:form id="formLogin">        
-		<h:panelGrid columns="2">
-			<h:outputLabel value="Usuário:"/>
-			<h:inputText value="#{personBean.person.login}"/>
-			
-			<h:outputLabel value="Senha:"/>
-			<h:inputSecret value="#{personBean.person.password}"/>
-			
-			<h:commandButton value="Salvar" action="#{personBean.login}"/>
-		</h:panelGrid>                                             
+	<h:form>
+		<h:commandLink value="Cadastro" action="index"/>
+		<h:commandLink value="Sair" action="login"/>
+		
+	</h:form>
 
-	</h:form>		
+
+	<h:form id="formEntries">
+		
+	</h:form>
 </h:body>
 </html>
