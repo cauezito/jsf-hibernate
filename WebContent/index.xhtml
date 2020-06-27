@@ -59,10 +59,9 @@ xmlns:f="http://java.sun.com/jsf/core">
 			<h:outputLabel/>
 			
 			<h:panelGroup>
-				<h:commandButton value="Novo" action="#{personBean.newPerson}" image="/resources/img/new.png"/>
 				<h:commandButton value="Remover" action="#{personBean.removeById}"/>
 				<h:commandButton value="Salvar" action="#{personBean.save}"/>
-				<h:commandButton value="Limpar" action="#{personBean.newPerson}"/>
+				<h:commandButton value="Limpar" action="#{personBean.clear}"/>
 			</h:panelGroup>
 					
 		</h:panelGrid>

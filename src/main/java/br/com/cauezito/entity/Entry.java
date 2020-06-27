@@ -25,6 +25,7 @@ public class Entry implements Serializable{
 	@ManyToOne(optional = false)
 	@ForeignKey(name = "fk_user")
 	private Person user;
+	
 	public Long getId() {
 		return id;
 	}

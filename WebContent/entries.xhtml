@@ -16,7 +16,36 @@ xmlns:f="http://java.sun.com/jsf/core">
 
 
 	<h:form id="formEntries">
-		
+		<h:panelGrid columns="2">
+			<f:facet name="header">
+				Lançamentos
+			</f:facet>
+			
+			<h:outputLabel value="ID:"/>
+			<h:inputText value="#{entryBean.entry.id}" readonly="true"/>
+			
+			<h:outputLabel value="Nota fiscal:"/>
+			<h:inputText value="#{entryBean.entry.invoice}" />
+			
+			<h:outputLabel value="Origem:"/>
+			<h:inputText value="#{entryBean.entry.origin}" />
+			
+			<h:outputLabel value="Destino:"/>
+			<h:inputText value="#{entryBean.entry.destination}" />
+			
+			
+			<h:outputLabel/>
+			
+			<h:panelGroup>
+				<h:commandButton value="Novo" action="#{entryBean.clear}" image="/resources/img/new.png"/>
+				<h:commandButton value="Remover" action="#{entryBean.removeById}"/>
+				<h:commandButton value="Salvar" action="#{entryBean.save}"/>
+			</h:panelGroup>
+			
+			
+			
+			
+		</h:panelGrid>
 	</h:form>
 </h:body>
 </html>

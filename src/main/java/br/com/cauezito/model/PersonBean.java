@@ -17,34 +17,44 @@ import br.com.cauezito.repository.PersonDaoImpl;
 
 @ViewScoped
 @ManagedBean(name = "personBean")
-public class PersonBean {
+public class PersonBean implements Crud {
 
 	private Person person = new Person();
 	private GenericDao<Person> dao = new GenericDao<Person>();
 	private List<Person> people = new ArrayList<Person>();
 	private PersonDao pdao = new PersonDaoImpl();
 
+	
+	@Override
 	public String save() {
 		person = dao.merge(person);
 		this.listAll();
 		return "";
 	}
 	
-	public String newPerson() {
-		person = new Person();
-		return "";
-	}
-	
+	@Override
 	public String removeById() {
 		dao.deleteById(person);
 		person = new Person();
 		this.listAll();
 		return "";
 	}
-	
+
+	@Override
+	public String remove() {
+		return null;
+	}
+
+	@Override
 	@PostConstruct
 	public void listAll() {
 		people = dao.getListEntity(Person.class);
+	}
+
+	@Override
+	public String clear() {
+		person = new Person();
+		return "";
 	}
 	
 	public Person getPerson() {
@@ -79,5 +89,7 @@ public class PersonBean {
 
 		return "login.xhtml";
 	}
+
+
 
 }
