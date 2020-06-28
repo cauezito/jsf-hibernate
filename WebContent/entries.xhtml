@@ -23,14 +23,24 @@ xmlns:ui="http://java.sun.com/jsf/facelets">
 			<h:inputText value="#{entryBean.entry.id}" readonly="true"/>
 			
 			<h:outputLabel value="Nota fiscal:"/>
-			<h:inputText value="#{entryBean.entry.invoice}" />
+			<h:inputText value="#{entryBean.entry.invoice}" required="true"
+			validatorMessage="O número da nota fiscal precisa ter pelo menos 10 caracteres"
+			requiredMessage="É necessário informar o número da nota fiscal">
+				<f:validateLength minimum="10"/>
+			</h:inputText>
 			
 			<h:outputLabel value="Origem:"/>
-			<h:inputText value="#{entryBean.entry.origin}" />
-			
+			<h:inputText value="#{entryBean.entry.origin}" required="true"
+			requiredMessage="É necessário informar o nome da empresa de origem"
+			validatorMessage="O nome da empresa de origem precisa ter no mínimo 5 caracteres">
+				<f:validateLength minimum="5"/>
+			</h:inputText>			
 			<h:outputLabel value="Destino:"/>
-			<h:inputText value="#{entryBean.entry.destination}" />
-			
+			<h:inputText value="#{entryBean.entry.destination}" required="true"
+			requiredMessage="É necessário informar o nome da empresa de destino"
+			validatorMessage="O nome da empresa de destino precisa ter no mínimo 5 caracteres">
+				<f:validateLength minimum="5"/>
+			</h:inputText>	
 			
 			<h:outputLabel/>
 			

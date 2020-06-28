@@ -26,10 +26,18 @@ xmlns:ui="http://java.sun.com/jsf/facelets">
 			<h:inputText value="#{personBean.person.id}" readonly="true"/>
 			
 			<h:outputLabel value="Nome:"/>
-			<h:inputText value="#{personBean.person.name}"/>
+			<h:inputText value="#{personBean.person.name}" required="true"
+			requiredMessage="É obrigatório informar um nome" 
+			validatorMessage="O nome deve ter entre 3 e 30 letras">
+				<f:validateLength minimum="3" maximum="30"/>
+			</h:inputText>
 			
 			<h:outputLabel value="Sobrenome:"/>
-			<h:inputText value="#{personBean.person.surname}"/>
+			<h:inputText value="#{personBean.person.surname}" required="true"
+			requiredMessage="É obrigatório informar um sobrenome"
+			validatorMessage="O sobrenome deve ter entre 5 e 60 letras">
+				<f:validateLength minimum="5" maximum="60"/>
+			</h:inputText>
 		
 			<h:outputLabel value="Data de nascimento:"/>
 				<h:inputText value="#{personBean.person.birth}" converterMessage="Data incorreta">
@@ -54,10 +62,18 @@ xmlns:ui="http://java.sun.com/jsf/facelets">
 			</h:selectManyCheckbox>
 
 			<h:outputLabel value="Login"/>
-			<h:inputText value="#{personBean.person.login}"/>
+			<h:inputText value="#{personBean.person.login}" required="true"
+			requiredMessage="É obrigatório informar um login"
+			validatorMessage="O login deve ter entre 6 e 15 caracteres">
+				<f:validateLength minimum="6" maximum="15"/>			
+			</h:inputText>
 			
 			<h:outputLabel value="Password"/>
-			<h:inputSecret value="#{personBean.person.password}"/>
+			<h:inputSecret value="#{personBean.person.password}" required="true"
+			requiredMessage="É obrigatório informar uma senha"
+			validatorMessage="A senha deve ter entre 8 e 20 caracteres">			
+				<f:validateLength minimum="8" maximum="20"/>
+			</h:inputSecret>
 			
 			<h:outputLabel/>
 			
