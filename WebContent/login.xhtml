@@ -8,7 +8,9 @@ xmlns:f="http://java.sun.com/jsf/core">
 	<link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css" media="screen" />
 </h:head>
 <h:body>
-	<h:form id="formLogin">        
+	<h:form id="formLogin">    
+		<h:messages/>
+			    
 		<h:panelGrid columns="2">
 			<h:outputLabel value="Usuário:"/>
 			<h:inputText value="#{personBean.person.login}"/>

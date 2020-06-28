@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.Person;
@@ -52,6 +53,14 @@ public class PersonBean implements Crud {
 	@Override
 	public String remove() {
 		return null;
+	}
+	
+	public String logout() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest httpServletRequest = (HttpServletRequest) context.getExternalContext().getRequest();		
+		httpServletRequest.getSession().invalidate();
+		this.showMessage("Você saiu");
+		return "login";
 	}
 
 	@Override
