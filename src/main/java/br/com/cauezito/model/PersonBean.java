@@ -1,5 +1,11 @@
 package br.com.cauezito.model;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +15,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.IOUtils;
 
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.Person;
@@ -73,6 +82,16 @@ public class PersonBean implements Crud {
 	public String clear() {
 		person = new Person();
 		return "";
+	}
+	
+	public void searchZipCode(AjaxBehaviorEvent event) {		
+		try {
+			String url = "http://viacep.com.br/ws/" + person.getZipCode() + "/json/";
+			String json = IOUtils.toString(new URL(url), "UTF-8");
+			System.out.println(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Person getPerson() {

@@ -57,6 +57,11 @@
 				<f:selectItem itemValue="O" itemLabel="Outro" />
 			</h:selectOneRadio>
 
+			<h:outputLabel value="CEP:" />
+			<h:inputText value="#{personBean.person.zipCode}">
+				<f:ajax event="blur" execute="@this" listener="#{personBean.searchZipCode}"/>
+			</h:inputText>
+			
 			<h:outputLabel value="Cursos:" />
 			<h:selectManyCheckbox id="courses" style="height: 100px"
 				value="#{personBean.person.courses}">

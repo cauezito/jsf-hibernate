@@ -27,6 +27,8 @@ public class Person implements Serializable {
 	
 	private String[] courses;
 	
+	private String zipCode;
+	
 	private String login;
 	
 	private String password;
@@ -96,6 +98,12 @@ public class Person implements Serializable {
 
 	public void setBirth(Date birth) {
 		this.birth = birth;
+	}
+	public String getZipCode() {
+		return zipCode;
+	}
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
 
 	@Override
