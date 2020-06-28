@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -28,8 +29,15 @@ public class PersonBean implements Crud {
 	@Override
 	public String save() {
 		person = dao.merge(person);
+		this.showMessage("Usuário inserido com sucesso!");
 		this.listAll();
 		return "";
+	}
+	
+	private void showMessage(String msg) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		FacesMessage message = new FacesMessage(msg);
+		context.addMessage(null, message);
 	}
 	
 	@Override
@@ -37,6 +45,7 @@ public class PersonBean implements Crud {
 		dao.removeById(person);
 		person = new Person();
 		this.listAll();
+		this.showMessage("Usuário removido com sucesso!");
 		return "";
 	}
 

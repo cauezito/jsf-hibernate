@@ -17,6 +17,9 @@ xmlns:f="http://java.sun.com/jsf/core">
 
 
 	<h:form id="formUser">
+	
+		<h:messages/>
+			
 		<h:panelGrid columns="2">
 			<f:facet name="header">
 				Cadastro de usuários
@@ -32,23 +35,23 @@ xmlns:f="http://java.sun.com/jsf/core">
 			
 			<h:outputLabel value="Idade:"/>
 			<h:inputText value="#{personBean.person.age}"/>	
-			
+		
 			<h:outputLabel value="Gênero:"/>
-			<h:selectOneMenu id="gender" value="#{personBean.person.gender}" required="true">
-				<f:selectItem itemValue="M"   itemLabel="Masculino"/>
-				<f:selectItem itemValue="F"   itemLabel="Feminino"/>
-				<f:selectItem itemValue="O"   itemLabel="Outro"/>
-			</h:selectOneMenu>
+			<h:selectOneRadio value="#{personBean.person.gender}" layout="pageDirection">
+				<f:selectItem itemValue="F" itemLabel="Feminino"/>
+				<f:selectItem itemValue="M" itemLabel="Masculino"/>
+				<f:selectItem itemValue="O" itemLabel="Outro"/>
+			</h:selectOneRadio>
 			
 			<h:outputLabel value="Cursos:"/>
-			<h:selectManyMenu id="courses" style="height: 100px"
+			<h:selectManyCheckbox id="courses" style="height: 100px"
 			 value="#{personBean.person.courses}" >
 				<f:selectItem itemValue="HTML5" />
 				<f:selectItem itemValue="CSS3" />
 				<f:selectItem itemValue="JAVA WEB"/>
 				<f:selectItem itemValue="SPRING BOOT"/>
 				<f:selectItem itemValue="PHP"/>
-			</h:selectManyMenu>
+			</h:selectManyCheckbox>
 
 			<h:outputLabel value="Login"/>
 			<h:inputText value="#{personBean.person.login}"/>
