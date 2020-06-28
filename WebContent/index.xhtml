@@ -30,9 +30,11 @@ xmlns:ui="http://java.sun.com/jsf/facelets">
 			
 			<h:outputLabel value="Sobrenome:"/>
 			<h:inputText value="#{personBean.person.surname}"/>
-			
-			<h:outputLabel value="Idade:"/>
-			<h:inputText value="#{personBean.person.age}"/>	
+		
+			<h:outputLabel value="Data de nascimento:"/>
+				<h:inputText value="#{personBean.person.birth}" converterMessage="Data incorreta">
+				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00"/>
+			</h:inputText>
 		
 			<h:outputLabel value="Gênero:"/>
 			<h:selectOneRadio value="#{personBean.person.gender}" layout="pageDirection">
@@ -93,9 +95,9 @@ xmlns:ui="http://java.sun.com/jsf/facelets">
 			</h:column>
 			<h:column>
 				<f:facet name="header">
-						Idade
+						Nascimento
 					</f:facet>
-				<h:outputText value="#{p.age}"/>
+				<h:outputText value="#{p.birth}"/>
 			</h:column>
 			<h:column>
 				<f:facet name="header">

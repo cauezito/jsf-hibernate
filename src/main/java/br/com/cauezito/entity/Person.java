@@ -1,11 +1,14 @@
 package br.com.cauezito.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Person implements Serializable {
@@ -19,8 +22,6 @@ public class Person implements Serializable {
 	private String name;
 
 	private String surname;
-
-	private Integer age;
 	
 	private String gender;
 	
@@ -30,9 +31,8 @@ public class Person implements Serializable {
 	
 	private String password;
 	
-	public Person() {
-
-	}
+	@Temporal(TemporalType.DATE)
+	private Date birth = new Date();
 
 	public Long getId() {
 		return id;
@@ -41,7 +41,6 @@ public class Person implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public String getName() {
 		return name;
@@ -57,14 +56,6 @@ public class Person implements Serializable {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
 	}
 
 	public String getGender() {
@@ -97,6 +88,14 @@ public class Person implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Date getBirth() {
+		return birth;
+	}
+
+	public void setBirth(Date birth) {
+		this.birth = birth;
 	}
 
 	@Override
