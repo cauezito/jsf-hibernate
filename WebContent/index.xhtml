@@ -1,93 +1,103 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-xmlns:f="http://java.sun.com/jsf/core"
-xmlns:ui="http://java.sun.com/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-	<title>Registrar-se</title>	
-	<link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css" media="screen" />
-	
+	<title>Registrar-se</title>
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css"
+		media="screen" />
+
 </h:head>
 <h:body>
-	
-	<ui:include src="/nav.xhtml"/>
+
+	<ui:include src="/nav.xhtml" />
 
 
 	<h:form id="formUser">
-	
-		<h:messages/>
-			
+
+		<h:messages />
+
 		<h:panelGrid columns="2">
 			<f:facet name="header">
 				Cadastro de usuários
 			</f:facet>
-			<h:outputLabel value="Id:"/>
-			<h:inputText value="#{personBean.person.id}" readonly="true"/>
-			
-			<h:outputLabel value="Nome:"/>
+			<h:outputLabel value="Id:" />
+			<h:inputText value="#{personBean.person.id}" readonly="true" />
+
+			<h:outputLabel value="Nome:" />
 			<h:inputText value="#{personBean.person.name}" required="true"
-			requiredMessage="É obrigatório informar um nome" 
-			validatorMessage="O nome deve ter entre 3 e 30 letras">
-				<f:validateLength minimum="3" maximum="30"/>
+				requiredMessage="É obrigatório informar um nome"
+				validatorMessage="O nome deve ter entre 3 e 30 letras">
+				<f:validateLength minimum="3" maximum="30" />
 			</h:inputText>
-			
-			<h:outputLabel value="Sobrenome:"/>
+
+			<h:outputLabel value="Sobrenome:" />
 			<h:inputText value="#{personBean.person.surname}" required="true"
-			requiredMessage="É obrigatório informar um sobrenome"
-			validatorMessage="O sobrenome deve ter entre 5 e 60 letras">
-				<f:validateLength minimum="5" maximum="60"/>
+				requiredMessage="É obrigatório informar um sobrenome"
+				validatorMessage="O sobrenome deve ter entre 5 e 60 letras">
+				<f:validateLength minimum="5" maximum="60" />
 			</h:inputText>
-		
-			<h:outputLabel value="Data de nascimento:"/>
-				<h:inputText value="#{personBean.person.birth}" converterMessage="Data incorreta">
-				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00"/>
+
+			<h:outputLabel value="Data de nascimento:" />
+			<h:inputText value="#{personBean.person.birth}"
+				converterMessage="Data incorreta">
+				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+					timeZone="GMT-03:00" />
 			</h:inputText>
-		
-			<h:outputLabel value="Gênero:"/>
-			<h:selectOneRadio value="#{personBean.person.gender}" layout="pageDirection">
-				<f:selectItem itemValue="F" itemLabel="Feminino"/>
-				<f:selectItem itemValue="M" itemLabel="Masculino"/>
-				<f:selectItem itemValue="O" itemLabel="Outro"/>
+
+			<h:outputLabel value="Gênero:" />
+			<h:selectOneRadio value="#{personBean.person.gender}"
+				layout="pageDirection">
+				<f:selectItem itemValue="F" itemLabel="Feminino" />
+				<f:selectItem itemValue="M" itemLabel="Masculino" />
+				<f:selectItem itemValue="O" itemLabel="Outro" />
 			</h:selectOneRadio>
-			
-			<h:outputLabel value="Cursos:"/>
+
+			<h:outputLabel value="Cursos:" />
 			<h:selectManyCheckbox id="courses" style="height: 100px"
-			 value="#{personBean.person.courses}" >
+				value="#{personBean.person.courses}">
 				<f:selectItem itemValue="HTML5" />
 				<f:selectItem itemValue="CSS3" />
-				<f:selectItem itemValue="JAVA WEB"/>
-				<f:selectItem itemValue="SPRING BOOT"/>
-				<f:selectItem itemValue="PHP"/>
+				<f:selectItem itemValue="JAVA WEB" />
+				<f:selectItem itemValue="SPRING BOOT" />
+				<f:selectItem itemValue="PHP" />
 			</h:selectManyCheckbox>
 
-			<h:outputLabel value="Login"/>
+			<h:outputLabel value="Login" />
 			<h:inputText value="#{personBean.person.login}" required="true"
-			requiredMessage="É obrigatório informar um login"
-			validatorMessage="O login deve ter entre 6 e 15 caracteres">
-				<f:validateLength minimum="6" maximum="15"/>			
+				requiredMessage="É obrigatório informar um login"
+				validatorMessage="O login deve ter entre 6 e 15 caracteres">
+				<f:validateLength minimum="6" maximum="15" />
 			</h:inputText>
-			
-			<h:outputLabel value="Password"/>
+
+			<h:outputLabel value="Password" />
 			<h:inputSecret value="#{personBean.person.password}" required="true"
-			requiredMessage="É obrigatório informar uma senha"
-			validatorMessage="A senha deve ter entre 8 e 20 caracteres">			
-				<f:validateLength minimum="8" maximum="20"/>
+				requiredMessage="É obrigatório informar uma senha"
+				validatorMessage="A senha deve ter entre 8 e 20 caracteres">
+				<f:validateLength minimum="8" maximum="20" />
 			</h:inputSecret>
-			
-			<h:outputLabel/>
-			
+
+			<h:outputLabel />
+
 			<h:panelGroup>
-				<h:commandButton value="Remover" action="#{personBean.removeById}"/>
-				<h:commandButton value="Salvar" action="#{personBean.save}"/>
-				<h:commandButton value="Limpar" action="#{personBean.clear}"/>
+				<h:commandButton value="Remover" action="#{personBean.removeById}" />
+				<h:commandButton value="Salvar" action="#{personBean.save}" />
+				<h:commandButton value="Limpar" id="clear" action="#{personBean.clear}">
+					<f:ajax execute="clear" render="@form"/>
+				</h:commandButton>
 			</h:panelGroup>
-					
+
 		</h:panelGrid>
-			
-			
+	</h:form>
+
+	<h:form id="formTable">
 		<!-- TABLE -->
-		<h:dataTable value="#{personBean.people}" var="p" border="2" cellpadding="5">
+		<h:dataTable value="#{personBean.people}" var="p" border="2"
+			cellpadding="5">
 			<f:facet name="header">
 				Usuários
 			</f:facet>
@@ -95,41 +105,43 @@ xmlns:ui="http://java.sun.com/jsf/facelets">
 				<f:facet name="header">
 					ID
 				</f:facet>
-				<h:outputText value="#{p.id}"/>
+				<h:outputText value="#{p.id}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">
 					Nome
 				</f:facet>
-				<h:outputText value="#{p.name}"/>
+				<h:outputText value="#{p.name}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">
 					Sobrenome
 				</f:facet>
-				<h:outputText value="#{p.surname}"/>
+				<h:outputText value="#{p.surname}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">
 						Nascimento
 					</f:facet>
-				<h:outputText value="#{p.birth}"/>
+				<h:outputText value="#{p.birth}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">
 					Ação
 				</f:facet>
 				<h:commandLink value="Editar">
-				<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
-					<f:setPropertyActionListener value="#{p}" target="#{personBean.person}"/>
+					<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
+					<f:setPropertyActionListener value="#{p}"
+						target="#{personBean.person}" />
 				</h:commandLink>
 				<h:commandLink value="Remover" action="#{personBean.removeById}">
-				<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
-					<f:setPropertyActionListener value="#{p}" target="#{personBean.person}"/>
+					<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
+					<f:setPropertyActionListener value="#{p}"
+						target="#{personBean.person}" />
 				</h:commandLink>
 			</h:column>
 
-		</h:dataTable>	
+		</h:dataTable>
 	</h:form>
 </h:body>
 </html>
