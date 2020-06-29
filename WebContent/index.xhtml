@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 	<title>Registrar-se</title>
@@ -31,7 +32,7 @@
 			<h:outputLabel value="Nome:" />
 			<h:inputText value="#{personBean.person.name}" required="true"
 				requiredMessage="É obrigatório informar um nome"
-				validatorMessage="O nome deve ter entre 3 e 30 letras">
+				validatorMessage="O nome deve ter entre 3 e 30 letras" ph:placeholder="Nome">
 				<f:validateLength minimum="3" maximum="30" />
 			</h:inputText>
 
@@ -59,9 +60,22 @@
 
 			<h:outputLabel value="CEP:" />
 			<h:inputText value="#{personBean.person.cep}">
-				<f:ajax event="blur" execute="@this" listener="#{personBean.searchZipCode}"/>
+				<f:ajax event="blur" execute="@this" listener="#{personBean.searchZipCode}"
+				render="logradouro localidade uf bairro"/>
 			</h:inputText>
 			
+			<h:outputLabel value="Logradouro:" />
+			<h:inputText value="#{personBean.person.logradouro}" id="logradouro"/>
+			
+			<h:outputLabel value="Localidade" />
+			<h:inputText value="#{personBean.person.localidade}" id="localidade"/>
+			
+			<h:outputLabel value="UF:" />
+			<h:inputText value="#{personBean.person.uf}" id="uf"/>
+			
+			<h:outputLabel value="Bairro:" />
+			<h:inputText value="#{personBean.person.bairro}" id="bairro"/>
+			 			
 			<h:outputLabel value="Cursos:" />
 			<h:selectManyCheckbox id="courses" style="height: 100px"
 				value="#{personBean.person.courses}">

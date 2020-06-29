@@ -67,8 +67,10 @@ public class PersonBean implements Crud {
 	
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest httpServletRequest = (HttpServletRequest) context.getExternalContext().getRequest();		
-		httpServletRequest.getSession().invalidate();
+		ExternalContext ec = context.getExternalContext();
+		ec.getSessionMap().remove("personOn");
+		HttpServletRequest req = (HttpServletRequest) context.getCurrentInstance().getExternalContext().getRequest();
+		req.getSession().invalidate();
 		this.showMessage("Você saiu");
 		return "login";
 	}

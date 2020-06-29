@@ -37,9 +37,6 @@ public class Person implements Serializable {
 	
 	private String[] courses;
 	
-	@OneToMany(mappedBy = "person", orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<Address> adresses;
-	
 	private String login;
 	
 	private String password;
@@ -121,14 +118,6 @@ public class Person implements Serializable {
 		this.birth = birth;
 	}
 
-	public List<Address> getAdresses() {
-		return adresses;
-	}
-
-	public void setAdresses(List<Address> adresses) {
-		this.adresses = adresses;
-	}
-
 	public String getCep() {
 		return cep;
 	}
@@ -197,7 +186,7 @@ public class Person implements Serializable {
 	@Override
 	public String toString() {
 		return "Person [id=" + id + ", name=" + name + ", surname=" + surname + ", gender=" + gender + ", courses="
-				+ Arrays.toString(courses) + ", adresses=" + adresses + ", login=" + login + ", password=" + password
+				+ Arrays.toString(courses) + ", login=" + login + ", password=" + password
 				+ ", cep=" + cep + ", logradouro=" + logradouro + ", localidade=" + localidade + ", uf=" + uf
 				+ ", bairro=" + bairro + ", birth=" + birth + "]";
 	}
