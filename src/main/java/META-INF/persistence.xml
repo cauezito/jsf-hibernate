@@ -5,6 +5,8 @@
 		<class>br.com.cauezito.entity.Person</class>
 		<class>br.com.cauezito.entity.Entry</class>
 		<class>br.com.cauezito.entity.Address</class>
+		<class>br.com.cauezito.entity.State</class>
+		<class>br.com.cauezito.entity.City</class>
 		
 		<properties>
 			<!-- Conexão com o banco -->
