@@ -4,6 +4,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>br.com.cauezito.entity.Person</class>
 		<class>br.com.cauezito.entity.Entry</class>
+		<class>br.com.cauezito.entity.Address</class>
 		
 		<properties>
 			<!-- Conexão com o banco -->

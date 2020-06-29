@@ -1,14 +1,23 @@
 package br.com.cauezito.entity;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 public class Person implements Serializable {
@@ -17,6 +26,7 @@ public class Person implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(unique = true, nullable = false)
 	private Long id;
 
 	private String name;
@@ -27,11 +37,22 @@ public class Person implements Serializable {
 	
 	private String[] courses;
 	
-	private String zipCode;
+	@OneToMany(mappedBy = "person", orphanRemoval = true, cascade = CascadeType.ALL)
+	private List<Address> adresses;
 	
 	private String login;
 	
 	private String password;
+	
+	private String cep;
+	
+	private String logradouro;
+	
+	private String localidade;
+	
+	private String uf;
+	
+	private String bairro;
 	
 	@Temporal(TemporalType.DATE)
 	private Date birth = new Date();
@@ -99,11 +120,53 @@ public class Person implements Serializable {
 	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
-	public String getZipCode() {
-		return zipCode;
+
+	public List<Address> getAdresses() {
+		return adresses;
 	}
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
+
+	public void setAdresses(List<Address> adresses) {
+		this.adresses = adresses;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getLocalidade() {
+		return localidade;
+	}
+
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
 	}
 
 	@Override
@@ -131,4 +194,12 @@ public class Person implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", surname=" + surname + ", gender=" + gender + ", courses="
+				+ Arrays.toString(courses) + ", adresses=" + adresses + ", login=" + login + ", password=" + password
+				+ ", cep=" + cep + ", logradouro=" + logradouro + ", localidade=" + localidade + ", uf=" + uf
+				+ ", bairro=" + bairro + ", birth=" + birth + "]";
+	}
+	
 }

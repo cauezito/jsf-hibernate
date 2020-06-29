@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 
+import com.google.gson.Gson;
+
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.repository.PersonDao;
@@ -34,7 +36,6 @@ public class PersonBean implements Crud {
 	private GenericDao<Person> dao = new GenericDao<Person>();
 	private List<Person> people = new ArrayList<Person>();
 	private PersonDao pdao = new PersonDaoImpl();
-
 	
 	@Override
 	public String save() {
@@ -86,9 +87,15 @@ public class PersonBean implements Crud {
 	
 	public void searchZipCode(AjaxBehaviorEvent event) {		
 		try {
-			String url = "http://viacep.com.br/ws/" + person.getZipCode() + "/json/";
+			String url = "http://viacep.com.br/ws/" + person.getCep() + "/json/";
 			String json = IOUtils.toString(new URL(url), "UTF-8");
-			System.out.println(json);
+			Person gsonAux = new Gson().fromJson(json.toString(), Person.class);
+			person.setCep(gsonAux.getCep());
+			person.setLogradouro(gsonAux.getLogradouro());
+			person.setUf(gsonAux.getUf());
+			person.setBairro(gsonAux.getBairro());
+			person.setLocalidade(gsonAux.getLocalidade());
+			System.out.println(gsonAux);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
