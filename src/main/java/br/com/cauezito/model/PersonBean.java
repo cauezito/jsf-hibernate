@@ -24,9 +24,12 @@ import org.apache.commons.io.IOUtils;
 import com.google.gson.Gson;
 
 import br.com.cauezito.dao.GenericDao;
+import br.com.cauezito.entity.City;
 import br.com.cauezito.entity.Person;
+import br.com.cauezito.entity.State;
 import br.com.cauezito.repository.PersonDao;
 import br.com.cauezito.repository.PersonDaoImpl;
+import br.com.cauezito.util.JPAUtil;
 
 
 @ViewScoped
@@ -38,6 +41,7 @@ public class PersonBean implements Crud {
 	private List<Person> people = new ArrayList<Person>();
 	private PersonDao pdao = new PersonDaoImpl();
 	private List<SelectItem> states;
+	private List<SelectItem> cities;
 	@Override
 	public String save() {
 		person = dao.merge(person);
@@ -104,6 +108,26 @@ public class PersonBean implements Crud {
 		}
 	}
 	
+	public void findCities(AjaxBehaviorEvent e) {
+		String idState = (String) e.getComponent().getAttributes().get("submittedValue");
+		if(idState != null) {
+			State state = JPAUtil.getEntityManager()
+					.find(State.class, Long.parseLong(idState));
+			
+			if(state != null) {
+				person.setState(state);
+				List<City> cities = JPAUtil.getEntityManager()
+						.createQuery("from City where state.id = " + idState)
+						.getResultList();
+				List<SelectItem> selectItemsCities = new ArrayList<SelectItem>();
+				for (City city : cities) {
+					selectItemsCities.add(new SelectItem(city.getId(), city.getName()));
+				}
+				setCities(selectItemsCities);
+			}
+		}
+	}
+	
 	public Person getPerson() {
 		return person;
 	}
@@ -126,6 +150,12 @@ public class PersonBean implements Crud {
 	public List<SelectItem> getStates() {
 		states = pdao.allStates();
 		return states;
+	}
+	public List<SelectItem> getCities() {
+		return cities;
+	}
+	public void setCities(List<SelectItem> cities) {
+		this.cities = cities;
 	}
 	public String login() {
 		Person p = pdao.findUser(person.getLogin(), person.getPassword());

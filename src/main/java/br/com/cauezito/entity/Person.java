@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -53,11 +54,14 @@ public class Person implements Serializable {
 	@Transient /*Não é criada uma coluna no banco de dados*/
 	private State state;
 	
+	@ManyToOne
+	private City city;
+	
 	private String bairro;
 	
 	@Temporal(TemporalType.DATE)
 	private Date birth = new Date();
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -167,6 +171,14 @@ public class Person implements Serializable {
 	}
 	public State getState() {
 		return state;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
 	}
 
 	@Override

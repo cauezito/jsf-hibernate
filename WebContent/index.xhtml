@@ -77,8 +77,17 @@
 			<h:inputText value="#{personBean.person.bairro}" id="bairro"/>
 			
 			<h:outputLabel value="Estados:"/>
-			<h:selectOneMenu value="#{personBean.person.state}">
+			<h:selectOneMenu value="#{personBean.person.state}" immediate="true">
+				<f:selectItem itemLabel="[SELECIONE]" noSelectionOption="true"/>
 				<f:selectItems value="#{personBean.states}"/>
+				<f:ajax event="change" execute="@this" listener="#{personBean.findCities}" 
+				render="citiesCombo"/>
+			</h:selectOneMenu>
+			
+			<h:outputLabel value="Cidades:" />
+			<h:selectOneMenu value="#{personBean.person.city}" id="citiesCombo">
+				<f:selectItem noSelectionOption="true" itemLabel="[SELECIONE]"/>
+				<f:selectItems value="#{personBean.cities}"/>
 			</h:selectOneMenu>
 			 			
 			<h:outputLabel value="Cursos:" />

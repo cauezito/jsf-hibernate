@@ -17,6 +17,8 @@ public class State implements Serializable {
 	private Long id;
 	
 	private String name;
+	
+	private String initials;
 
 	public Long getId() {
 		return id;
@@ -32,6 +34,14 @@ public class State implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getInitials() {
+		return initials;
+	}
+
+	public void setInitials(String initials) {
+		this.initials = initials;
 	}
 
 	@Override
