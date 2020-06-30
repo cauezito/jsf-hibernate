@@ -12,7 +12,7 @@ import javax.persistence.EntityTransaction;
 import br.com.cauezito.entity.City;
 import br.com.cauezito.util.JPAUtil;
 
-@FacesConverter(forClass = City.class)
+@FacesConverter(forClass = City.class, value = "cityConverter")
 public class CityConverter implements Converter, Serializable {
 
 	/*
@@ -35,8 +35,16 @@ public class CityConverter implements Converter, Serializable {
 	 */
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object city) {
+		if(city == null) {
+			return null;
+		}
+		
+		if(city instanceof City) {
+			return ((City) city).getId().toString();
+		} else {
+			return city.toString();
+		}
 
-		return ((City) city).getId().toString();
 	}
 
 }

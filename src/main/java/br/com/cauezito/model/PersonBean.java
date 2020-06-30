@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -31,7 +32,6 @@ import br.com.cauezito.repository.PersonDao;
 import br.com.cauezito.repository.PersonDaoImpl;
 import br.com.cauezito.util.JPAUtil;
 
-
 @ViewScoped
 @ManagedBean(name = "personBean")
 public class PersonBean implements Crud {
@@ -42,6 +42,7 @@ public class PersonBean implements Crud {
 	private PersonDao pdao = new PersonDaoImpl();
 	private List<SelectItem> states;
 	private List<SelectItem> cities;
+
 	@Override
 	public String save() {
 		person = dao.merge(person);
@@ -49,13 +50,13 @@ public class PersonBean implements Crud {
 		this.listAll();
 		return "";
 	}
-	
+
 	private void showMessage(String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage message = new FacesMessage(msg);
 		context.addMessage(null, message);
 	}
-	
+
 	@Override
 	public String removeById() {
 		dao.removeById(person);
@@ -69,7 +70,7 @@ public class PersonBean implements Crud {
 	public String remove() {
 		return null;
 	}
-	
+
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext ec = context.getExternalContext();
@@ -91,8 +92,8 @@ public class PersonBean implements Crud {
 		person = new Person();
 		return "";
 	}
-	
-	public void searchZipCode(AjaxBehaviorEvent event) {		
+
+	public void searchZipCode(AjaxBehaviorEvent event) {
 		try {
 			String url = "http://viacep.com.br/ws/" + person.getCep() + "/json/";
 			String json = IOUtils.toString(new URL(url), "UTF-8");
@@ -107,27 +108,22 @@ public class PersonBean implements Crud {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void findCities(AjaxBehaviorEvent e) {
-		String idState = (String) e.getComponent().getAttributes().get("submittedValue");
-		if(idState != null) {
-			State state = JPAUtil.getEntityManager()
-					.find(State.class, Long.parseLong(idState));
-			
-			if(state != null) {
-				person.setState(state);
-				List<City> cities = JPAUtil.getEntityManager()
-						.createQuery("from City where state.id = " + idState)
-						.getResultList();
-				List<SelectItem> selectItemsCities = new ArrayList<SelectItem>();
-				for (City city : cities) {
-					selectItemsCities.add(new SelectItem(city.getId(), city.getName()));
-				}
-				setCities(selectItemsCities);
+
+		State state = (State) ((HtmlSelectOneMenu) e.getSource()).getValue();
+		if (state.getId() != null) {
+			person.setState(state);
+			List<City> cities = JPAUtil.getEntityManager().createQuery("from City where state.id = " + state.getId())
+					.getResultList();
+			List<SelectItem> selectItemsCities = new ArrayList<SelectItem>();
+			for (City city : cities) {
+				selectItemsCities.add(new SelectItem(city, city.getName()));
 			}
+			setCities(selectItemsCities);
 		}
 	}
-	
+
 	public Person getPerson() {
 		return person;
 	}
@@ -147,20 +143,24 @@ public class PersonBean implements Crud {
 	public List<Person> getPeople() {
 		return people;
 	}
+
 	public List<SelectItem> getStates() {
 		states = pdao.allStates();
 		return states;
 	}
+
 	public List<SelectItem> getCities() {
 		return cities;
 	}
+
 	public void setCities(List<SelectItem> cities) {
 		this.cities = cities;
 	}
+
 	public String login() {
 		Person p = pdao.findUser(person.getLogin(), person.getPassword());
-		
-		if(p != null) {
+
+		if (p != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext ec = context.getExternalContext();
 			ec.getSessionMap().put("personOn", p);
@@ -169,7 +169,5 @@ public class PersonBean implements Crud {
 
 		return "login.xhtml";
 	}
-
-
 
 }

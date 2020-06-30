@@ -36,7 +36,7 @@ public class PersonDaoImpl implements PersonDao{
 		
 		List<State> state = em.createQuery("from State").getResultList();
 		for (State st : state) {
-			selectItems.add(new SelectItem(st.getId(), st.getName()));
+			selectItems.add(new SelectItem(st, st.getName()));
 		}
 		
 		em.close();
