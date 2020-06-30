@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 
@@ -48,6 +49,9 @@ public class Person implements Serializable {
 	private String localidade;
 	
 	private String uf;
+	
+	@Transient /*Não é criada uma coluna no banco de dados*/
+	private State state;
 	
 	private String bairro;
 	
@@ -156,6 +160,13 @@ public class Person implements Serializable {
 
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
+	}
+	
+	public void setState(State state) {
+		this.state = state;
+	}
+	public State getState() {
+		return state;
 	}
 
 	@Override

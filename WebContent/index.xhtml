@@ -75,6 +75,11 @@
 			
 			<h:outputLabel value="Bairro:" />
 			<h:inputText value="#{personBean.person.bairro}" id="bairro"/>
+			
+			<h:outputLabel value="Estados:"/>
+			<h:selectOneMenu value="#{personBean.person.state}">
+				<f:selectItems value="#{personBean.states}"/>
+			</h:selectOneMenu>
 			 			
 			<h:outputLabel value="Cursos:" />
 			<h:selectManyCheckbox id="courses" style="height: 100px"

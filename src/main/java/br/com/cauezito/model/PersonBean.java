@@ -16,6 +16,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
@@ -36,7 +37,7 @@ public class PersonBean implements Crud {
 	private GenericDao<Person> dao = new GenericDao<Person>();
 	private List<Person> people = new ArrayList<Person>();
 	private PersonDao pdao = new PersonDaoImpl();
-	
+	private List<SelectItem> states;
 	@Override
 	public String save() {
 		person = dao.merge(person);
@@ -122,7 +123,10 @@ public class PersonBean implements Crud {
 	public List<Person> getPeople() {
 		return people;
 	}
-	
+	public List<SelectItem> getStates() {
+		states = pdao.allStates();
+		return states;
+	}
 	public String login() {
 		Person p = pdao.findUser(person.getLogin(), person.getPassword());
 		
