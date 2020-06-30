@@ -123,6 +123,20 @@ public class PersonBean implements Crud {
 			setCities(selectItemsCities);
 		}
 	}
+	
+	public void edit() {
+		if(person.getCity() != null) {
+			State state = person.getCity().getState();
+			person.setState(state);
+			List<City> cities = JPAUtil.getEntityManager().createQuery("from City where state.id = " + state.getId())
+					.getResultList();
+			List<SelectItem> selectItemsCities = new ArrayList<SelectItem>();
+			for (City city : cities) {
+				selectItemsCities.add(new SelectItem(city, city.getName()));
+			}
+			setCities(selectItemsCities);
+		}
+	}
 
 	public Person getPerson() {
 		return person;
