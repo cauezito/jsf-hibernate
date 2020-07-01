@@ -5,13 +5,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -61,6 +64,15 @@ public class Person implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	private Date birth = new Date();
+	
+	@Column(columnDefinition = "text")
+	private String photoIconB64;
+	
+	private String extension;
+	
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	private byte[] photoIconB64Original;
 	
 	public Long getId() {
 		return id;
@@ -179,6 +191,32 @@ public class Person implements Serializable {
 
 	public void setCity(City city) {
 		this.city = city;
+	}
+	
+	
+
+	public String getPhotoIconB64() {
+		return photoIconB64;
+	}
+
+	public void setPhotoIconB64(String photoIconB64) {
+		this.photoIconB64 = photoIconB64;
+	}
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
+
+	public byte[] getPhotoIconB64Original() {
+		return photoIconB64Original;
+	}
+
+	public void setPhotoIconB64Original(byte[] photoIconB64Original) {
+		this.photoIconB64Original = photoIconB64Original;
 	}
 
 	@Override
