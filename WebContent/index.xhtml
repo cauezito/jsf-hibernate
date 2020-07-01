@@ -18,7 +18,7 @@
 	<ui:include src="/nav.xhtml" />
 
 
-	<h:form id="formUser">
+	<h:form id="formUser" enctype="multipart/form-data">
 
 		<h:messages />
 
@@ -32,7 +32,8 @@
 			<h:outputLabel value="Nome:" />
 			<h:inputText value="#{personBean.person.name}" required="true"
 				requiredMessage="É obrigatório informar um nome"
-				validatorMessage="O nome deve ter entre 3 e 30 letras" ph:placeholder="Nome">
+				validatorMessage="O nome deve ter entre 3 e 30 letras"
+				ph:placeholder="Nome">
 				<f:validateLength minimum="3" maximum="30" />
 			</h:inputText>
 
@@ -60,38 +61,39 @@
 
 			<h:outputLabel value="CEP:" />
 			<h:inputText value="#{personBean.person.cep}">
-				<f:ajax event="blur" execute="@this" listener="#{personBean.searchZipCode}"
-				render="logradouro localidade uf bairro"/>
+				<f:ajax event="blur" execute="@this"
+					listener="#{personBean.searchZipCode}"
+					render="logradouro localidade uf bairro" />
 			</h:inputText>
-			
+
 			<h:outputLabel value="Logradouro:" />
-			<h:inputText value="#{personBean.person.logradouro}" id="logradouro"/>
-			
+			<h:inputText value="#{personBean.person.logradouro}" id="logradouro" />
+
 			<h:outputLabel value="Localidade" />
-			<h:inputText value="#{personBean.person.localidade}" id="localidade"/>
-			
+			<h:inputText value="#{personBean.person.localidade}" id="localidade" />
+
 			<h:outputLabel value="UF:" />
-			<h:inputText value="#{personBean.person.uf}" id="uf"/>
-			
+			<h:inputText value="#{personBean.person.uf}" id="uf" />
+
 			<h:outputLabel value="Bairro:" />
-			<h:inputText value="#{personBean.person.bairro}" id="bairro"/>
-			
-			<h:outputLabel value="Estados:"/>
-			<h:selectOneMenu value="#{personBean.person.state}" immediate="true" id="statesCombo"
-			converter="stateConverter">
-				<f:selectItem itemLabel="[SELECIONE]" noSelectionOption="true"/>
-				<f:selectItems value="#{personBean.states}"/>
-				<f:ajax event="change" execute="@this" listener="#{personBean.findCities}" 
-				render="citiesCombo"/>
+			<h:inputText value="#{personBean.person.bairro}" id="bairro" />
+
+			<h:outputLabel value="Estados:" />
+			<h:selectOneMenu value="#{personBean.person.state}" immediate="true"
+				id="statesCombo" converter="stateConverter">
+				<f:selectItem itemLabel="[SELECIONE]" noSelectionOption="true" />
+				<f:selectItems value="#{personBean.states}" />
+				<f:ajax event="change" execute="@this"
+					listener="#{personBean.findCities}" render="citiesCombo" />
 			</h:selectOneMenu>
-			
+
 			<h:outputLabel value="Cidades:" />
-			<h:selectOneMenu value="#{personBean.person.city}" immediate="true" id="citiesCombo"
-			converter="cityConverter">
-				<f:selectItem noSelectionOption="true" itemLabel="[SELECIONE]"/>
-				<f:selectItems value="#{personBean.cities}"/>
+			<h:selectOneMenu value="#{personBean.person.city}" immediate="true"
+				id="citiesCombo" converter="cityConverter">
+				<f:selectItem noSelectionOption="true" itemLabel="[SELECIONE]" />
+				<f:selectItems value="#{personBean.cities}" />
 			</h:selectOneMenu>
-			 			
+
 			<h:outputLabel value="Cursos:" />
 			<h:selectManyCheckbox id="courses" style="height: 100px"
 				value="#{personBean.person.courses}">
@@ -101,6 +103,9 @@
 				<f:selectItem itemValue="SPRING BOOT" />
 				<f:selectItem itemValue="PHP" />
 			</h:selectManyCheckbox>
+
+			<h:outputLabel value="Foto" />
+			<h:inputFile id="photo" value="#{personBean.photo}"></h:inputFile>
 
 			<h:outputLabel value="Login" />
 			<h:inputText value="#{personBean.person.login}" required="true"
@@ -121,8 +126,9 @@
 			<h:panelGroup>
 				<h:commandButton value="Remover" action="#{personBean.removeById}" />
 				<h:commandButton value="Salvar" action="#{personBean.save}" />
-				<h:commandButton value="Limpar" id="clear" action="#{personBean.clear}">
-					<f:ajax execute="clear" render="@form"/>
+				<h:commandButton value="Limpar" id="clear"
+					action="#{personBean.clear}">
+					<f:ajax execute="clear" render="@form" />
 				</h:commandButton>
 			</h:panelGroup>
 
@@ -160,11 +166,24 @@
 					</f:facet>
 				<h:outputText value="#{p.birth}" />
 			</h:column>
+
+			<h:column>
+				<f:facet name="header">
+						Foto
+					</f:facet>
+				<h:commandLink actionListener="#{personBean.download}">
+					<f:param name="fileDownloadId" value="#{p.id}"/>
+					<h:graphicImage width="60" height="60"
+						value="#{personBean.person.photoIconB64}" />
+				</h:commandLink>
+			</h:column>
+
 			<h:column>
 				<f:facet name="header">
 					Ação
 				</f:facet>
-				<h:commandLink value="Editar" immediate="true" action="#{personBean.edit}">
+				<h:commandLink value="Editar" immediate="true"
+					action="#{personBean.edit}">
 					<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
 					<f:setPropertyActionListener value="#{p}"
 						target="#{personBean.person}" />

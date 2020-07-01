@@ -1,6 +1,10 @@
 package br.com.cauezito.model;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -8,6 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -18,7 +23,11 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.io.IOUtils;
 
@@ -42,9 +51,41 @@ public class PersonBean implements Crud {
 	private PersonDao pdao = new PersonDaoImpl();
 	private List<SelectItem> states;
 	private List<SelectItem> cities;
+	//seleciona o arquivo e cria temporariamente no lado do servidor para obter posteriormente no sistema e depois processar
+	private Part photo;
 
 	@Override
 	public String save() {
+		try {
+			byte[] imageByte = this.getByte(photo.getInputStream());
+			person.setPhotoIconB64Original(imageByte);
+			
+			BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageByte));
+			
+			int type = bi.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bi.getType();
+			int width = 200;
+			int height = 200;
+			
+			//miniature
+			BufferedImage resizedImage = new BufferedImage(width, height, type);
+			Graphics2D g = resizedImage.createGraphics();
+			g.drawImage(bi, 0, 0, width, height, null);
+			g.dispose();
+			
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			String extension = photo.getContentType().split("\\/")[1];
+			ImageIO.write(resizedImage, extension, baos);
+			
+			String miniature = "data:" + photo.getContentType() + ";base64," +
+			DatatypeConverter.printBase64Binary(baos.toByteArray());
+			person.setPhotoIconB64(miniature);
+			person.setExtension(extension);
+			
+		} catch (IOException e) {
+			this.showMessage("Não foi possível salvar a foto");
+			e.printStackTrace();
+		}
+		
 		person = dao.merge(person);
 		this.showMessage("Usuário inserido com sucesso!");
 		this.listAll();
@@ -70,6 +111,13 @@ public class PersonBean implements Crud {
 	public String remove() {
 		return null;
 	}
+	
+	private byte[] getByte(InputStream file) throws IOException{
+	
+		byte[] bytes = IOUtils.toByteArray(file);
+		
+		return bytes;		
+	}
 
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -79,6 +127,25 @@ public class PersonBean implements Crud {
 		req.getSession().invalidate();
 		this.showMessage("Você saiu");
 		return "login";
+	}
+	
+	public void download() throws IOException {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext()
+				.getRequestParameterMap();
+		String id = params.get("fileDownloadId");
+		
+		Person person = dao.search(Person.class, id);
+		
+		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
+				.getResponse();
+		
+		response.addHeader("Content-Disposition", "attachment; filename=foto" + person.getName() +
+		"."+ person.getExtension());
+		response.setContentType("application/octet-stream");
+		response.setContentLengthLong(person.getPhotoIconB64Original().length);
+		response.getOutputStream().write(person.getPhotoIconB64Original());
+		response.getOutputStream().flush();
+		FacesContext.getCurrentInstance().responseComplete();
 	}
 
 	@Override
@@ -169,6 +236,14 @@ public class PersonBean implements Crud {
 
 	public void setCities(List<SelectItem> cities) {
 		this.cities = cities;
+	}
+
+	public Part getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(Part photo) {
+		this.photo = photo;
 	}
 
 	public String login() {

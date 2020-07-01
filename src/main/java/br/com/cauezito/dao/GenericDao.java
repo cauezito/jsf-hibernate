@@ -72,4 +72,15 @@ public class GenericDao<E> {
 		
 		return registry;
 	}
+	
+	public E search(Class<E> entity, String cod) {
+		EntityManager entityManager = JPAUtil.getEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();
+		
+		E object = (E) entityManager.find(entity, Long.parseLong(cod));
+		entityTransaction.commit();
+		
+		return object;
+	}
 }
