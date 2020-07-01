@@ -192,8 +192,7 @@ public class Person implements Serializable {
 	public void setCity(City city) {
 		this.city = city;
 	}
-	
-	
+
 
 	public String getPhotoIconB64() {
 		return photoIconB64;

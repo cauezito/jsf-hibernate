@@ -89,13 +89,13 @@
 			<artifactId>jaxb-api-osgi</artifactId>
 			<version>2.2.7</version>
 		</dependency>
-
+	<!-- 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
-			<version>4.3.8.Final</version>
+			<version>5.4.2.Final</version>
 		</dependency>
-
+ 	-->
 	</dependencies>
 
 	<build>

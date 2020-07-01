@@ -51,7 +51,8 @@ public class PersonBean implements Crud {
 	private PersonDao pdao = new PersonDaoImpl();
 	private List<SelectItem> states;
 	private List<SelectItem> cities;
-	//seleciona o arquivo e cria temporariamente no lado do servidor para obter posteriormente no sistema e depois processar
+	// seleciona o arquivo e cria temporariamente no lado do servidor para obter
+	// posteriormente no sistema e depois processar
 	private Part photo;
 
 	@Override
@@ -59,36 +60,35 @@ public class PersonBean implements Crud {
 		try {
 			byte[] imageByte = this.getByte(photo.getInputStream());
 			person.setPhotoIconB64Original(imageByte);
-			
+
 			BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageByte));
-			
+
 			int type = bi.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bi.getType();
 			int width = 200;
 			int height = 200;
-			
-			//miniature
+
+			// miniature
 			BufferedImage resizedImage = new BufferedImage(width, height, type);
 			Graphics2D g = resizedImage.createGraphics();
 			g.drawImage(bi, 0, 0, width, height, null);
 			g.dispose();
-			
+
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			String extension = photo.getContentType().split("\\/")[1];
 			ImageIO.write(resizedImage, extension, baos);
-			
-			String miniature = "data:" + photo.getContentType() + ";base64," +
-			DatatypeConverter.printBase64Binary(baos.toByteArray());
+
+			String miniature = "data:" + photo.getContentType() + ";base64,"
+					+ DatatypeConverter.printBase64Binary(baos.toByteArray());
 			person.setPhotoIconB64(miniature);
 			person.setExtension(extension);
-			
+			dao.merge(person);
+			this.showMessage("Usuário inserido com sucesso!");
+			this.listAll();
 		} catch (IOException e) {
-			this.showMessage("Não foi possível salvar a foto");
+			this.showMessage("Não foi possível salvar o usuário");
 			e.printStackTrace();
 		}
-		
-		person = dao.merge(person);
-		this.showMessage("Usuário inserido com sucesso!");
-		this.listAll();
+
 		return "";
 	}
 
@@ -111,12 +111,12 @@ public class PersonBean implements Crud {
 	public String remove() {
 		return null;
 	}
-	
-	private byte[] getByte(InputStream file) throws IOException{
-	
+
+	private byte[] getByte(InputStream file) throws IOException {
+
 		byte[] bytes = IOUtils.toByteArray(file);
-		
-		return bytes;		
+
+		return bytes;
 	}
 
 	public String logout() {
@@ -128,19 +128,18 @@ public class PersonBean implements Crud {
 		this.showMessage("Você saiu");
 		return "login";
 	}
-	
+
 	public void download() throws IOException {
-		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext()
-				.getRequestParameterMap();
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String id = params.get("fileDownloadId");
-		
+
 		Person person = dao.search(Person.class, id);
-		
+
 		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
 				.getResponse();
-		
-		response.addHeader("Content-Disposition", "attachment; filename=foto" + person.getName() +
-		"."+ person.getExtension());
+
+		response.addHeader("Content-Disposition",
+				"attachment; filename=foto" + person.getName() + "." + person.getExtension());
 		response.setContentType("application/octet-stream");
 		response.setContentLengthLong(person.getPhotoIconB64Original().length);
 		response.getOutputStream().write(person.getPhotoIconB64Original());
@@ -170,7 +169,6 @@ public class PersonBean implements Crud {
 			person.setUf(gsonAux.getUf());
 			person.setBairro(gsonAux.getBairro());
 			person.setLocalidade(gsonAux.getLocalidade());
-			System.out.println(gsonAux);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -190,9 +188,9 @@ public class PersonBean implements Crud {
 			setCities(selectItemsCities);
 		}
 	}
-	
+
 	public void edit() {
-		if(person.getCity() != null) {
+		if (person.getCity() != null) {
 			State state = person.getCity().getState();
 			person.setState(state);
 			List<City> cities = JPAUtil.getEntityManager().createQuery("from City where state.id = " + state.getId())

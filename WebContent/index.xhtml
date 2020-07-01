@@ -59,40 +59,8 @@
 				<f:selectItem itemValue="O" itemLabel="Outro" />
 			</h:selectOneRadio>
 
-			<h:outputLabel value="CEP:" />
-			<h:inputText value="#{personBean.person.cep}">
-				<f:ajax event="blur" execute="@this"
-					listener="#{personBean.searchZipCode}"
-					render="logradouro localidade uf bairro" />
-			</h:inputText>
-
-			<h:outputLabel value="Logradouro:" />
-			<h:inputText value="#{personBean.person.logradouro}" id="logradouro" />
-
-			<h:outputLabel value="Localidade" />
-			<h:inputText value="#{personBean.person.localidade}" id="localidade" />
-
-			<h:outputLabel value="UF:" />
-			<h:inputText value="#{personBean.person.uf}" id="uf" />
-
-			<h:outputLabel value="Bairro:" />
-			<h:inputText value="#{personBean.person.bairro}" id="bairro" />
-
-			<h:outputLabel value="Estados:" />
-			<h:selectOneMenu value="#{personBean.person.state}" immediate="true"
-				id="statesCombo" converter="stateConverter">
-				<f:selectItem itemLabel="[SELECIONE]" noSelectionOption="true" />
-				<f:selectItems value="#{personBean.states}" />
-				<f:ajax event="change" execute="@this"
-					listener="#{personBean.findCities}" render="citiesCombo" />
-			</h:selectOneMenu>
-
-			<h:outputLabel value="Cidades:" />
-			<h:selectOneMenu value="#{personBean.person.city}" immediate="true"
-				id="citiesCombo" converter="cityConverter">
-				<f:selectItem noSelectionOption="true" itemLabel="[SELECIONE]" />
-				<f:selectItems value="#{personBean.cities}" />
-			</h:selectOneMenu>
+			
+			
 
 			<h:outputLabel value="Cursos:" />
 			<h:selectManyCheckbox id="courses" style="height: 100px"
@@ -105,7 +73,7 @@
 			</h:selectManyCheckbox>
 
 			<h:outputLabel value="Foto" />
-			<h:inputFile id="photo" value="#{personBean.photo}"></h:inputFile>
+			<h:inputFile id="photo" value="#{personBean.photo}"/>
 
 			<h:outputLabel value="Login" />
 			<h:inputText value="#{personBean.person.login}" required="true"
@@ -125,7 +93,7 @@
 
 			<h:panelGroup>
 				<h:commandButton value="Remover" action="#{personBean.removeById}" />
-				<h:commandButton value="Salvar" action="#{personBean.save}" />
+				<h:commandButton value="Salvar" action="#{personBean.save}"/>
 				<h:commandButton value="Limpar" id="clear"
 					action="#{personBean.clear}">
 					<f:ajax execute="clear" render="@form" />
@@ -174,7 +142,7 @@
 				<h:commandLink actionListener="#{personBean.download}">
 					<f:param name="fileDownloadId" value="#{p.id}"/>
 					<h:graphicImage width="60" height="60"
-						value="#{personBean.person.photoIconB64}" />
+						value="#{p.photoIconB64}" />
 				</h:commandLink>
 			</h:column>
 
