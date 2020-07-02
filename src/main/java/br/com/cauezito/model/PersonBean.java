@@ -27,12 +27,15 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.io.IOUtils;
+import org.hibernate.service.spi.InjectService;
 
 import com.google.gson.Gson;
 
@@ -55,6 +58,7 @@ public class PersonBean implements Crud{
 	private PersonDao pdao = new PersonDaoImpl();
 	private List<SelectItem> states;
 	private List<SelectItem> cities;
+	
 	// seleciona o arquivo e cria temporariamente no lado do servidor para obter
 	// posteriormente no sistema e depois processar
 	private Part photo;
