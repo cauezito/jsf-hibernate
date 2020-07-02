@@ -172,6 +172,7 @@ public class PersonBean implements Crud {
 
 	@Override
 	public String clear() {
+		System.out.println("oaksoaksask");
 		person = new Person();
 		return "";
 	}

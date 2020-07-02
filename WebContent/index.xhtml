@@ -4,64 +4,73 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pr="http://primefaces.org/ui">
 
 <h:head>
 	<title>Registrar-se</title>
 	<link rel="stylesheet" type="text/css"
 		href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css"
 		media="screen" />
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/css/primeicons.css"
+		media="screen" />
+	<h:outputStylesheet name="/css/fontawesome/css/font-awesome.css" />
+
 </h:head>
 <h:body>
 
 	<ui:include src="/nav.xhtml" />
 
-
 	<h:form id="formUser" enctype="multipart/form-data">
 
 		<h:messages />
 
-		<h:panelGrid columns="2">
+		<pr:panelGrid columns="2"
+			columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+			styleClass="customPanelGrid" contentStyleClass="ui-fluid">
 			<f:facet name="header">
 				Cadastro de usuários
 			</f:facet>
-			<h:outputLabel value="Id:" />
-			<h:inputText value="#{personBean.person.id}" readonly="true" />
 
-			<h:outputLabel value="Nome:" />
-			<h:inputText value="#{personBean.person.name}" required="true"
-				requiredMessage="É obrigatório informar um nome"
+			<pr:outputLabel value="Id" for="id" />
+			<pr:inputText value="#{personBean.person.id}" readonly="true" id="id" />
+
+			<pr:outputLabel value="Nome" for="name" />
+			<pr:inputText value="#{personBean.person.name}" required="true"
+				id="name" requiredMessage="É obrigatório informar um nome"
 				validatorMessage="O nome deve ter entre 3 e 30 letras"
 				ph:placeholder="Nome">
 				<f:validateLength minimum="3" maximum="30" />
-			</h:inputText>
+			</pr:inputText>
 
-			<h:outputLabel value="Sobrenome:" />
-			<h:inputText value="#{personBean.person.surname}" required="true"
+			<pr:outputLabel value="Sobrenome" for="surname" />
+			<pr:inputText value="#{personBean.person.surname}" id="surname"
+				required="true"
 				requiredMessage="É obrigatório informar um sobrenome"
 				validatorMessage="O sobrenome deve ter entre 5 e 60 letras">
 				<f:validateLength minimum="5" maximum="30" />
-			</h:inputText>
+			</pr:inputText>
 
-			<h:outputLabel value="Data de nascimento:" />
-			<h:inputText value="#{personBean.person.birth}"
+			<pr:outputLabel value="Data de nascimento" for="birth" />
+			<pr:inputText value="#{personBean.person.birth}" id="birth"
 				converterMessage="Data incorreta">
 				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
 					timeZone="GMT-03:00" />
-			</h:inputText>
-			
-			<h:outputLabel value="CPF:"/>
-			<h:inputText value="#{personBean.person.cpf}"/>
+			</pr:inputText>
 
-			<h:outputLabel value="Gênero:" />
-			<h:selectOneRadio value="#{personBean.person.gender}"
+			<pr:outputLabel value="CPF" for="cpf" />
+			<pr:inputText value="#{personBean.person.cpf}" id="cpf" />
+
+			<pr:outputLabel value="Gênero" for="gender" />
+			<h:selectOneRadio id="gender" value="#{personBean.person.gender}"
 				layout="pageDirection">
 				<f:selectItem itemValue="F" itemLabel="Feminino" />
 				<f:selectItem itemValue="M" itemLabel="Masculino" />
 				<f:selectItem itemValue="O" itemLabel="Outro" />
-			</h:selectOneRadio>	
+			</h:selectOneRadio>
 
-			<h:outputLabel value="Cursos:" />
+			<pr:outputLabel value="Cursos" for="courses" />
 			<h:selectManyCheckbox id="courses" style="height: 100px"
 				value="#{personBean.person.courses}">
 				<f:selectItem itemValue="HTML5" />
@@ -71,98 +80,84 @@
 				<f:selectItem itemValue="PHP" />
 			</h:selectManyCheckbox>
 
-			<h:outputLabel value="Foto" />
-			<h:inputFile id="photo" value="#{personBean.photo}"/>
+			<pr:outputLabel value="Foto" for="photo" />
+			<h:inputFile id="photo" value="#{personBean.photo}" />
 
-			<h:outputLabel value="Login" />
-			<h:inputText value="#{personBean.person.login}" required="true"
-				requiredMessage="É obrigatório informar um login"
+			<pr:outputLabel value="Login" for="login" />
+			<pr:inputText value="#{personBean.person.login}" id="login"
+				required="true" requiredMessage="É obrigatório informar um login"
 				validatorMessage="O login deve ter entre 6 e 15 caracteres">
 				<f:validateLength minimum="6" maximum="15" />
-			</h:inputText>
+			</pr:inputText>
 
-			<h:outputLabel value="Password" />
-			<h:inputSecret value="#{personBean.person.password}" required="true"
-				requiredMessage="É obrigatório informar uma senha" redisplay="true"
+			<pr:outputLabel value="Password" for="password" />
+			<pr:password id="password" value="#{personBean.person.password}"
+				required="true" requiredMessage="É obrigatório informar uma senha"
+				redisplay="true"
 				validatorMessage="A senha deve ter entre 8 e 20 caracteres">
 				<f:validateLength minimum="8" maximum="20" />
-			</h:inputSecret>
+			</pr:password>
 
-			<h:outputLabel />
+			<pr:outputLabel />
 
 			<h:panelGroup>
-				<h:commandButton value="Remover" action="#{personBean.removeById}" immediate="true" />
-				<h:commandButton value="Salvar" action="#{personBean.save}" />
-				<h:commandButton value="Limpar" id="clear" immediate="true"
+				<pr:commandButton value="Salvar" ajax="false"
+					action="#{personBean.save}" />
+				<pr:commandButton value="Limpar" id="clear" immediate="true"
 					action="#{personBean.clear}">
-					<f:ajax execute="clear" render="@form"  />
-				</h:commandButton>
+					<f:ajax execute="clear" render="@form" />
+				</pr:commandButton>
 			</h:panelGroup>
 
-		</h:panelGrid>
+		</pr:panelGrid>
 	</h:form>
 
 	<h:form id="formTable">
 		<!-- TABLE -->
-		<h:dataTable value="#{personBean.people}" var="p" border="2"
-			cellpadding="5">
+		<pr:dataTable value="#{personBean.people}" var="p">
 			<f:facet name="header">
 				Usuários
 			</f:facet>
-			<h:column>
-				<f:facet name="header">
-					ID
-				</f:facet>
+			<pr:column headerText="ID">
 				<h:outputText value="#{p.id}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					Nome
-				</f:facet>
+			</pr:column>
+
+			<pr:column headerText="Nome">
 				<h:outputText value="#{p.name}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-					Sobrenome
-				</f:facet>
+			</pr:column>
+
+			<pr:column headerText="Sobrenome">
 				<h:outputText value="#{p.surname}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">
-						Nascimento
-					</f:facet>
+			</pr:column>
+
+			<pr:column headerText="Nascimento">
 				<h:outputText value="#{p.birth}" />
-			</h:column>
+			</pr:column>
 
-			<h:column>
-				<f:facet name="header">
-						Foto
-					</f:facet>
+			<pr:column headerText="Foto">
 				<h:commandLink actionListener="#{personBean.download}">
-					<f:param name="fileDownloadId" value="#{p.id}"/>
-					<h:graphicImage width="60" height="60"
-						value="#{p.photoIconB64}" />
+					<f:param name="fileDownloadId" value="#{p.id}" />
+					<h:graphicImage width="60" height="60" value="#{p.photoIconB64}" />
 				</h:commandLink>
-			</h:column>
+			</pr:column>
 
-			<h:column>
-				<f:facet name="header">
-					Ação
-				</f:facet>
-				<h:commandLink value="Editar" immediate="true"
-					action="#{personBean.edit}">
+			<pr:column headerText="Ações">
+				<h:commandLink immediate="true" action="#{personBean.edit}">
 					<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
 					<f:setPropertyActionListener value="#{p}"
 						target="#{personBean.person}" />
+					<i class="fa fa-fw fa-edit"></i>
 				</h:commandLink>
-				<h:commandLink value="Remover" action="#{personBean.removeById}" immediate="true">
+				<pr:commandLink action="#{personBean.removeById}"
+					immediate="true">
 					<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
 					<f:setPropertyActionListener value="#{p}"
 						target="#{personBean.person}" />
-				</h:commandLink>
-			</h:column>
+					<i class="fa fa-trash"></i>
+				</pr:commandLink>
+			</pr:column>
 
-		</h:dataTable>
+		</pr:dataTable>
 	</h:form>
 </h:body>
 </html>

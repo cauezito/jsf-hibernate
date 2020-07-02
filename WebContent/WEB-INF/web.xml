@@ -27,4 +27,9 @@
   	<extension>jsp</extension>
   	<mime-type>application/jsp</mime-type>
   </mime-mapping>
+  
+  <context-param>
+    <param-name>primefaces.FONT_AWESOME</param-name>
+    <param-value>true</param-value>
+</context-param>
 </web-app>
