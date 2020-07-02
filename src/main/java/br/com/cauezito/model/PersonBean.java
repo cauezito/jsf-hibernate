@@ -1,6 +1,7 @@
 package br.com.cauezito.model;
 
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -8,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -39,11 +42,12 @@ import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.State;
 import br.com.cauezito.repository.PersonDao;
 import br.com.cauezito.repository.PersonDaoImpl;
+import br.com.cauezito.util.ClearComponents;
 import br.com.cauezito.util.JPAUtil;
 
 @ViewScoped
 @ManagedBean(name = "personBean")
-public class PersonBean implements Crud {
+public class PersonBean implements Crud{
 
 	private Person person = new Person();
 	private GenericDao<Person> dao = new GenericDao<Person>();
@@ -54,7 +58,6 @@ public class PersonBean implements Crud {
 	// seleciona o arquivo e cria temporariamente no lado do servidor para obter
 	// posteriormente no sistema e depois processar
 	private Part photo;
-
 	@Override
 	public String save() {
 		try {
@@ -84,9 +87,9 @@ public class PersonBean implements Crud {
 			dao.merge(person);
 			this.showMessage("Usuário inserido com sucesso!");
 			this.listAll();
-		} catch (IOException e) {
+		} catch (IOException err) {
 			this.showMessage("Não foi possível salvar o usuário");
-			e.printStackTrace();
+			err.printStackTrace();
 		}
 
 		return "";
@@ -175,7 +178,7 @@ public class PersonBean implements Crud {
 	}
 
 	public void findCities(AjaxBehaviorEvent e) {
-
+		
 		State state = (State) ((HtmlSelectOneMenu) e.getSource()).getValue();
 		if (state.getId() != null) {
 			person.setState(state);

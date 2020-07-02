@@ -17,7 +17,7 @@ import br.com.cauezito.repository.EntryDaoImpl;
 
 @ViewScoped
 @ManagedBean(name = "entryBean")
-public class EntryBean implements Crud{
+public class EntryBean {
 	private Entry entry = new Entry();
 	private GenericDao<Entry> dao = new GenericDao<Entry>();
 	private List<Entry> entries = new ArrayList<Entry>();
@@ -30,7 +30,6 @@ public class EntryBean implements Crud{
 		return p;
 	}
 	
-	@Override
 	public String save() {
 		Person p = this.getUserOn();
 		entry.setUser(p);
@@ -38,27 +37,21 @@ public class EntryBean implements Crud{
 		this.listAll();
 		return "";
 	}
-	@Override
+
 	public String removeById() {
 		dao.removeById(entry);
 		this.clear();
 		this.listAll();
 		return "";
 	}
-	@Override
-	public String remove() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 	@PostConstruct
-	@Override
 	public void listAll() {
 		Person p = this.getUserOn();
 		entries = entryDao.list(p.getId());
 	}
 
-	@Override
 	public String clear() {
 		entry = new Entry();
 		return "";
@@ -81,5 +74,5 @@ public class EntryBean implements Crud{
 	public void setEntries(List<Entry> entries) {
 		this.entries = entries;
 	}
-	
+
 }

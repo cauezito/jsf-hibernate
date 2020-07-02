@@ -3,26 +3,24 @@ package br.com.cauezito.entity;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Cascade;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 public class Person implements Serializable {
@@ -33,17 +31,26 @@ public class Person implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true, nullable = false)
 	private Long id;
-
+	
+	@NotEmpty
+	@Size(min = 3, max = 30, message = "O nome deve ter entre 3 e 30 letras")
 	private String name;
-
+	
+	@Size(min = 5, max = 30, message = "O sobrenome deve ter entre 3 e 30 letras")
+	@NotEmpty(message = "O sobrenome deve ser informado")
+	@NotNull(message = "O sobrenome deve ser informado")
 	private String surname;
 	
 	private String gender;
 	
 	private String[] courses;
 	
+	@NotEmpty(message = "O login deve ser informado")
+	@NotNull(message = "O login deve ser informado")
 	private String login;
 	
+	@NotEmpty(message = "A senha deve ser informada")
+	@NotNull(message = "A senha deve ser informada")
 	private String password;
 	
 	private String cep;
@@ -59,6 +66,9 @@ public class Person implements Serializable {
 	
 	@ManyToOne
 	private City city;
+	
+	@CPF(message = "Digite um CPF válido")
+	private String cpf;
 	
 	private String bairro;
 	
@@ -216,6 +226,14 @@ public class Person implements Serializable {
 
 	public void setPhotoIconB64Original(byte[] photoIconB64Original) {
 		this.photoIconB64Original = photoIconB64Original;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	@Override

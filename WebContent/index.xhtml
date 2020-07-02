@@ -11,7 +11,6 @@
 	<link rel="stylesheet" type="text/css"
 		href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css"
 		media="screen" />
-
 </h:head>
 <h:body>
 
@@ -41,7 +40,7 @@
 			<h:inputText value="#{personBean.person.surname}" required="true"
 				requiredMessage="É obrigatório informar um sobrenome"
 				validatorMessage="O sobrenome deve ter entre 5 e 60 letras">
-				<f:validateLength minimum="5" maximum="60" />
+				<f:validateLength minimum="5" maximum="30" />
 			</h:inputText>
 
 			<h:outputLabel value="Data de nascimento:" />
@@ -50,6 +49,9 @@
 				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
 					timeZone="GMT-03:00" />
 			</h:inputText>
+			
+			<h:outputLabel value="CPF:"/>
+			<h:inputText value="#{personBean.person.cpf}"/>
 
 			<h:outputLabel value="Gênero:" />
 			<h:selectOneRadio value="#{personBean.person.gender}"
@@ -57,10 +59,7 @@
 				<f:selectItem itemValue="F" itemLabel="Feminino" />
 				<f:selectItem itemValue="M" itemLabel="Masculino" />
 				<f:selectItem itemValue="O" itemLabel="Outro" />
-			</h:selectOneRadio>
-
-			
-			
+			</h:selectOneRadio>	
 
 			<h:outputLabel value="Cursos:" />
 			<h:selectManyCheckbox id="courses" style="height: 100px"
@@ -92,11 +91,11 @@
 			<h:outputLabel />
 
 			<h:panelGroup>
-				<h:commandButton value="Remover" action="#{personBean.removeById}" />
-				<h:commandButton value="Salvar" action="#{personBean.save}"/>
-				<h:commandButton value="Limpar" id="clear"
+				<h:commandButton value="Remover" action="#{personBean.removeById}" immediate="true" />
+				<h:commandButton value="Salvar" action="#{personBean.save}" />
+				<h:commandButton value="Limpar" id="clear" immediate="true"
 					action="#{personBean.clear}">
-					<f:ajax execute="clear" render="@form" />
+					<f:ajax execute="clear" render="@form"  />
 				</h:commandButton>
 			</h:panelGroup>
 
@@ -156,7 +155,7 @@
 					<f:setPropertyActionListener value="#{p}"
 						target="#{personBean.person}" />
 				</h:commandLink>
-				<h:commandLink value="Remover" action="#{personBean.removeById}">
+				<h:commandLink value="Remover" action="#{personBean.removeById}" immediate="true">
 					<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
 					<f:setPropertyActionListener value="#{p}"
 						target="#{personBean.person}" />
