@@ -28,6 +28,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,20 +49,29 @@ import br.com.cauezito.repository.PersonDaoImpl;
 import br.com.cauezito.util.ClearComponents;
 import br.com.cauezito.util.JPAUtil;
 
-@ViewScoped
-@ManagedBean(name = "personBean")
-public class PersonBean implements Crud{
+@javax.faces.view.ViewScoped
+@Named(value = "personBean")
+public class PersonBean implements Crud {
 
 	private Person person = new Person();
-	private GenericDao<Person> dao = new GenericDao<Person>();
+	
+	@Inject
+	private GenericDao<Person> dao;
+	
+	@Inject
+	private PersonDao pdao;
+	
+	@Inject
+	private EntityManager entityManager;
+	
 	private List<Person> people = new ArrayList<Person>();
-	private PersonDao pdao = new PersonDaoImpl();
 	private List<SelectItem> states;
 	private List<SelectItem> cities;
-	
+
 	// seleciona o arquivo e cria temporariamente no lado do servidor para obter
 	// posteriormente no sistema e depois processar
 	private Part photo;
+
 	@Override
 	public String save() {
 		try {
@@ -182,11 +192,11 @@ public class PersonBean implements Crud{
 	}
 
 	public void findCities(AjaxBehaviorEvent e) {
-		
+
 		State state = (State) ((HtmlSelectOneMenu) e.getSource()).getValue();
 		if (state.getId() != null) {
 			person.setState(state);
-			List<City> cities = JPAUtil.getEntityManager().createQuery("from City where state.id = " + state.getId())
+			List<City> cities = entityManager.createQuery("from City where state.id = " + state.getId())
 					.getResultList();
 			List<SelectItem> selectItemsCities = new ArrayList<SelectItem>();
 			for (City city : cities) {
@@ -200,7 +210,7 @@ public class PersonBean implements Crud{
 		if (person.getCity() != null) {
 			State state = person.getCity().getState();
 			person.setState(state);
-			List<City> cities = JPAUtil.getEntityManager().createQuery("from City where state.id = " + state.getId())
+			List<City> cities = entityManager.createQuery("from City where state.id = " + state.getId())
 					.getResultList();
 			List<SelectItem> selectItemsCities = new ArrayList<SelectItem>();
 			for (City city : cities) {

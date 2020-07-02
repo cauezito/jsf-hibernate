@@ -6,6 +6,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -13,19 +15,21 @@ import br.com.cauezito.entity.State;
 import br.com.cauezito.util.JPAUtil;
 
 @FacesConverter(forClass = State.class, value = "stateConverter")
+@Named
 public class StateConverter implements Converter, Serializable {
 	
+	@Inject
+	private EntityManager entityManager;
 	/*
 	* Retorna o objeto inteiro (consultando no banco de dados a partir do id recebido).
 	*É executado quando o objeto vem da tela para o servidor.
 	*/
 	@Override 
 	public Object getAsObject(FacesContext context, UIComponent component, String stateCod) {
-		EntityManager em = JPAUtil.getEntityManager();
-		EntityTransaction et = em.getTransaction();
+		EntityTransaction et = entityManager.getTransaction();
 		et.begin();
 		
-		State state = (State) em.find(State.class, Long.parseLong(stateCod));
+		State state = (State) entityManager.find(State.class, Long.parseLong(stateCod));
 		return state;
 	}
 

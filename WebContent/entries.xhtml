@@ -48,8 +48,8 @@ xmlns:ui="http://java.sun.com/jsf/facelets">
 			<h:outputLabel/>
 			
 			<h:panelGroup>
-				<h:commandButton value="Novo" action="#{entryBean.clear}" image="/resources/img/new.png"/>
-				<h:commandButton value="Remover" action="#{entryBean.removeById}"/>
+				<h:commandButton value="Novo" action="#{entryBean.clear}" image="/resources/img/new.png" immediate="true"/>
+				<h:commandButton value="Remover" action="#{entryBean.removeById}" immediate="true"/>
 				<h:commandButton value="Salvar" action="#{entryBean.save}"/>
 			</h:panelGroup>		
 		</h:panelGrid>

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.Entry;
@@ -15,13 +15,18 @@ import br.com.cauezito.entity.Person;
 import br.com.cauezito.repository.EntryDao;
 import br.com.cauezito.repository.EntryDaoImpl;
 
-@ViewScoped
-@ManagedBean(name = "entryBean")
+@javax.faces.view.ViewScoped
+@Named(value = "entryBean")
 public class EntryBean {
 	private Entry entry = new Entry();
-	private GenericDao<Entry> dao = new GenericDao<Entry>();
+	
+	@Inject
+	private GenericDao<Entry> dao;
+	
 	private List<Entry> entries = new ArrayList<Entry>();
-	private EntryDao entryDao = new EntryDaoImpl();
+	
+	@Inject
+	private EntryDao entryDao;
 	
 	private Person getUserOn() {
 		FacesContext context = FacesContext.getCurrentInstance();

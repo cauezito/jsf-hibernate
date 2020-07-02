@@ -6,6 +6,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -13,7 +15,11 @@ import br.com.cauezito.entity.City;
 import br.com.cauezito.util.JPAUtil;
 
 @FacesConverter(forClass = City.class, value = "cityConverter")
+@Named
 public class CityConverter implements Converter, Serializable {
+	
+	@Inject
+	private EntityManager entityManager;
 
 	/*
 	 * Retorna o objeto inteiro (consultando no banco de dados a partir do id
@@ -21,11 +27,10 @@ public class CityConverter implements Converter, Serializable {
 	 */
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String cityCod) {
-		EntityManager em = JPAUtil.getEntityManager();
-		EntityTransaction et = em.getTransaction();
+		EntityTransaction et = entityManager.getTransaction();
 		et.begin();
 
-		City city = (City) em.find(City.class, Long.parseLong(cityCod));
+		City city = (City) entityManager.find(City.class, Long.parseLong(cityCod));
 		return city;
 	}
 
