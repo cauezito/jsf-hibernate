@@ -1,10 +1,13 @@
 package br.com.cauezito.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -79,6 +83,9 @@ public class Person implements Serializable {
 	private String photoIconB64;
 	
 	private String extension;
+	
+	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Telephone> phones = new ArrayList<Telephone>();
 	
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
@@ -234,6 +241,13 @@ public class Person implements Serializable {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	
+	public List<Telephone> getPhones() {
+		return phones;
+	}
+	public void setPhones(List<Telephone> phones) {
+		this.phones = phones;
 	}
 
 	@Override

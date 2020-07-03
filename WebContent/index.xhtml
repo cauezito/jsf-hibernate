@@ -24,7 +24,7 @@
 
 	<h:form id="formUser" enctype="multipart/form-data">
 
-		<h:messages />
+		<pr:messages autoUpdate="true"/>
 
 		<pr:panelGrid columns="2"
 			columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
@@ -63,22 +63,22 @@
 			<pr:inputText value="#{personBean.person.cpf}" id="cpf" />
 
 			<pr:outputLabel value="Gênero" for="gender" />
-			<h:selectOneRadio id="gender" value="#{personBean.person.gender}"
+			<pr:selectOneRadio id="gender" value="#{personBean.person.gender}"
 				layout="pageDirection">
 				<f:selectItem itemValue="F" itemLabel="Feminino" />
 				<f:selectItem itemValue="M" itemLabel="Masculino" />
 				<f:selectItem itemValue="O" itemLabel="Outro" />
-			</h:selectOneRadio>
+			</pr:selectOneRadio>
 
 			<pr:outputLabel value="Cursos" for="courses" />
-			<h:selectManyCheckbox id="courses" style="height: 100px"
-				value="#{personBean.person.courses}">
-				<f:selectItem itemValue="HTML5" />
-				<f:selectItem itemValue="CSS3" />
-				<f:selectItem itemValue="JAVA WEB" />
-				<f:selectItem itemValue="SPRING BOOT" />
-				<f:selectItem itemValue="PHP" />
-			</h:selectManyCheckbox>
+			<pr:selectManyCheckbox id="courses" style="height: 100px"
+				value="#{personBean.person.courses}" layout="grid" columns="5">
+				<f:selectItem itemValue="HTML5" itemLabel="HTML5"/>
+				<f:selectItem itemValue="CSS3" itemLabel="CSS3" />
+				<f:selectItem itemValue="JAVA WEB" itemLabel="Java web"/>
+				<f:selectItem itemValue="SPRING BOOT" itemLabel="Spring boot"/>
+				<f:selectItem itemValue="PHP" itemLabel="PHP"/>
+			</pr:selectManyCheckbox>
 
 			<pr:outputLabel value="Foto" for="photo" />
 			<h:inputFile id="photo" value="#{personBean.photo}" />
@@ -105,7 +105,7 @@
 					action="#{personBean.save}" />
 				<pr:commandButton value="Limpar" id="clear" immediate="true"
 					action="#{personBean.clear}">
-					<f:ajax execute="clear" render="@form" />
+					<f:ajax execute="@this" render="@form" />
 				</pr:commandButton>
 			</h:panelGroup>
 
@@ -140,6 +140,15 @@
 					<h:graphicImage width="60" height="60" value="#{p.photoIconB64}" />
 				</h:commandLink>
 			</pr:column>
+			
+			<pr:column headerText="Telefones">
+				<pr:commandLink update=":formTable:dialogTelephone" oncomplete="PF('dialogTelephone').show()">
+				<f:setPropertyActionListener value="#{p}" target="#{personBean.person}"/>
+				<h:outputText value="Telefones"/>				
+				</pr:commandLink>
+			</pr:column>
+			
+			
 
 			<pr:column headerText="Ações">
 				<h:commandLink immediate="true" action="#{personBean.edit}">
@@ -156,8 +165,14 @@
 					<i class="fa fa-trash"></i>
 				</pr:commandLink>
 			</pr:column>
-
+			
+			
 		</pr:dataTable>
+		
+		<pr:dialog header="Telefone" id="dialogTelephone" position="center" modal="true" width="500px" widgetVar="dialogTelephone">
+			
+		</pr:dialog>
+		
 	</h:form>
 </h:body>
 </html>
