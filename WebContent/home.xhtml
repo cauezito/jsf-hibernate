@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pr="http://primefaces.org/ui">
+
+<h:head>
+	<title>TechJobs</title>
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css"
+		media="screen" />
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/css/primeicons.css"
+		media="screen" />
+	<h:outputStylesheet name="/css/fontawesome/css/font-awesome.css" />
+</h:head>
+<h:body>
+
+	<ui:include src="/nav.xhtml" />
+	<pr:panel>
+		<h:form>
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-10 ui-g-nopad">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-4">
+							<h:panelGrid columns="2" cellpadding="7">
+								<h:outputText value="Nome:" />
+								<h:outputText value="#{sessionScope.personOn.name}" />
+
+								<h:outputText value="Sobrenome:" />
+								<h:outputText value="#{sessionScope.personOn.surname}" />
+
+								<h:outputText value="Nascimento:" />
+								<h:outputText value="#{sessionScope.personOn.birth}" />
+
+								<h:outputText value="CPF:" />
+								<h:outputText value="#{sessionScope.personOn.cpf}" />
+
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-12 ui-md-8">Lorem ipsum dolor sit amet,
+							consectetur adipiscing elit. Sed imperdiet, orci nec dictum
+							convallis, ligula mauris vestibulum turpis, nec varius tortor
+							quam at diam. Nullam a viverra nibh. In tincidunt tempor lectus
+							quis vulputate. Pellentesque nec dui aliquam, lobortis est in,
+							lobortis ante Lorem ipsum dolor sit amet.</div>
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</pr:panel>
+</h:body>
+</html>

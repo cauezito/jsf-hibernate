@@ -1,5 +1,6 @@
 package br.com.cauezito.repository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +15,9 @@ import br.com.cauezito.entity.State;
 import br.com.cauezito.util.JPAUtil;
 
 @Named
-public class PersonDaoImpl implements PersonDao{
-	
+public class PersonDaoImpl implements PersonDao, Serializable{
+
+	private static final long serialVersionUID = 1L;
 	@Inject
 	private EntityManager entityManager;
 	

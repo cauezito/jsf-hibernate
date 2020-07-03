@@ -1,26 +1,21 @@
 package br.com.cauezito.model;
 
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
+
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -36,7 +31,6 @@ import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.io.IOUtils;
-import org.hibernate.service.spi.InjectService;
 
 import com.google.gson.Gson;
 
@@ -45,25 +39,24 @@ import br.com.cauezito.entity.City;
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.State;
 import br.com.cauezito.repository.PersonDao;
-import br.com.cauezito.repository.PersonDaoImpl;
-import br.com.cauezito.util.ClearComponents;
-import br.com.cauezito.util.JPAUtil;
 
-@javax.faces.view.ViewScoped
 @Named(value = "personBean")
-public class PersonBean implements Crud {
+@SessionScoped
+public class PersonBean implements Crud, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Person person = new Person();
-	
+
 	@Inject
 	private GenericDao<Person> dao;
-	
+
 	@Inject
 	private PersonDao pdao;
-	
+
 	@Inject
 	private EntityManager entityManager;
-	
+
 	private List<Person> people = new ArrayList<Person>();
 	private List<SelectItem> states;
 	private List<SelectItem> cities;
@@ -71,6 +64,13 @@ public class PersonBean implements Crud {
 	// seleciona o arquivo e cria temporariamente no lado do servidor para obter
 	// posteriormente no sistema e depois processar
 	private Part photo;
+
+	public void recoverInfoUser() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext ec = context.getExternalContext();
+		person = (Person) ec.getSessionMap().get("personOn");
+
+	}
 
 	@Override
 	public String save() {
@@ -99,6 +99,10 @@ public class PersonBean implements Crud {
 			person.setPhotoIconB64(miniature);
 			person.setExtension(extension);
 			dao.merge(person);
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext ec = context.getExternalContext();
+			ec.getSessionMap().remove("personOn");
+			ec.getSessionMap().put("personOn", person);
 			this.showMessage("Usuário inserido com sucesso!");
 			this.listAll();
 		} catch (IOException err) {
@@ -269,10 +273,9 @@ public class PersonBean implements Crud {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ExternalContext ec = context.getExternalContext();
 			ec.getSessionMap().put("personOn", p);
-			return "index.xhtml";
+			return "home.xhtml?faces-redirect=true";
 		}
 
 		return "login.xhtml";
 	}
-
 }

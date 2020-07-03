@@ -3,13 +3,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
 xmlns:f="http://java.sun.com/jsf/core"
 xmlns:ui="http://java.sun.com/jsf/facelets"
-xmlns:b="http://bootsfaces.net/ui">
+xmlns:b="http://bootsfaces.net/ui"
+xmlns:pr="http://primefaces.org/ui">
 
-
-
-	<h:form>
-		<h:commandLink value="Lançamentos" action="entries"/>
-		<h:commandLink value="Sair" action="#{personBean.logout}"/>		
-	</h:form>
-
+	<pr:megaMenu orientation="horizontal" style="margin-top:20px">
+		<pr:submenu label="Vagas" icon="pi pi-check">
+			<pr:column>
+				<pr:submenu>
+					<pr:menuitem value="Buscar" url="#" />
+					<pr:menuitem value="Candidaturas" url="#" />
+				</pr:submenu>
+			</pr:column>
+		</pr:submenu>
+		<pr:submenu label="Perfil" icon="pi pi-check">
+			<pr:column>
+				<pr:submenu>
+					<pr:menuitem value="Ver" url="home.xhtml" />
+					<pr:menuitem value="Editar" url="updateInfoUser.xhtml" />
+				</pr:submenu>
+			</pr:column>
+		</pr:submenu>
+	</pr:megaMenu>
+	
 </html>

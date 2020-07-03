@@ -16,6 +16,7 @@
 		href="#{facesContext.externalContext.requestContextPath}/css/primeicons.css"
 		media="screen" />
 	<h:outputStylesheet name="/css/fontawesome/css/font-awesome.css" />
+	<h:outputStylesheet library="css" name="profile.css"/>
 
 </h:head>
 <h:body>
@@ -26,16 +27,20 @@
 
 		<pr:messages autoUpdate="true"/>
 
-		<pr:panelGrid columns="2"
+		<h:panelGrid columns="2"
 			columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
-			styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+			styleClass="customPanelGrid, text-14" contentStyleClass="ui-fluid">
 			<f:facet name="header">
-				Cadastro de usuários
+				
 			</f:facet>
+			
+			<h:panelGroup layout="block" styleClass="hidden">
+	    		<pr:outputLabel value="id" for="id"/>
+				<pr:inputText value="#{personBean.person.id}" readonly="true" id="id"/>    		
+			</h:panelGroup>
+			<pr:outputLabel/>
 
-			<pr:outputLabel value="Id" for="id" />
-			<pr:inputText value="#{personBean.person.id}" readonly="true" id="id" />
-
+			
 			<pr:outputLabel value="Nome" for="name" />
 			<pr:inputText value="#{personBean.person.name}" required="true"
 				id="name" requiredMessage="É obrigatório informar um nome"
@@ -63,8 +68,7 @@
 			<pr:inputText value="#{personBean.person.cpf}" id="cpf" />
 
 			<pr:outputLabel value="Gênero" for="gender" />
-			<pr:selectOneRadio id="gender" value="#{personBean.person.gender}"
-				layout="pageDirection">
+			<pr:selectOneRadio id="gender" value="#{personBean.person.gender}">
 				<f:selectItem itemValue="F" itemLabel="Feminino" />
 				<f:selectItem itemValue="M" itemLabel="Masculino" />
 				<f:selectItem itemValue="O" itemLabel="Outro" />
@@ -81,8 +85,8 @@
 			</pr:selectManyCheckbox>
 
 			<pr:outputLabel value="Foto" for="photo" />
-			<h:inputFile id="photo" value="#{personBean.photo}" />
-
+<!-- 			<pr:fileUpload id="photo" value="#{personBean.photo}" mode="simple" skinSimple="true"/> -->
+			<h:inputFile id="photo" value="#{personBean.photo}" mode="simple" skinSimple="true"/>
 			<pr:outputLabel value="Login" for="login" />
 			<pr:inputText value="#{personBean.person.login}" id="login"
 				required="true" requiredMessage="É obrigatório informar um login"
@@ -103,76 +107,9 @@
 			<h:panelGroup>
 				<pr:commandButton value="Salvar" ajax="false"
 					action="#{personBean.save}" />
-				<pr:commandButton value="Limpar" id="clear" immediate="true"
-					action="#{personBean.clear}">
-					<f:ajax execute="@this" render="@form" />
-				</pr:commandButton>
 			</h:panelGroup>
 
-		</pr:panelGrid>
-	</h:form>
-
-	<h:form id="formTable">
-		<!-- TABLE -->
-		<pr:dataTable value="#{personBean.people}" var="p">
-			<f:facet name="header">
-				Usuários
-			</f:facet>
-			<pr:column headerText="ID">
-				<h:outputText value="#{p.id}" />
-			</pr:column>
-
-			<pr:column headerText="Nome">
-				<h:outputText value="#{p.name}" />
-			</pr:column>
-
-			<pr:column headerText="Sobrenome">
-				<h:outputText value="#{p.surname}" />
-			</pr:column>
-
-			<pr:column headerText="Nascimento">
-				<h:outputText value="#{p.birth}" />
-			</pr:column>
-
-			<pr:column headerText="Foto">
-				<h:commandLink actionListener="#{personBean.download}">
-					<f:param name="fileDownloadId" value="#{p.id}" />
-					<h:graphicImage width="60" height="60" value="#{p.photoIconB64}" />
-				</h:commandLink>
-			</pr:column>
-			
-			<pr:column headerText="Telefones">
-				<pr:commandLink update=":formTable:dialogTelephone" oncomplete="PF('dialogTelephone').show()">
-				<f:setPropertyActionListener value="#{p}" target="#{personBean.person}"/>
-				<h:outputText value="Telefones"/>				
-				</pr:commandLink>
-			</pr:column>
-			
-			
-
-			<pr:column headerText="Ações">
-				<h:commandLink immediate="true" action="#{personBean.edit}">
-					<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
-					<f:setPropertyActionListener value="#{p}"
-						target="#{personBean.person}" />
-					<i class="fa fa-fw fa-edit"></i>
-				</h:commandLink>
-				<pr:commandLink action="#{personBean.removeById}"
-					immediate="true">
-					<!-- value = objeto correspondente à linha, injetando os dados no target (person bean)  -->
-					<f:setPropertyActionListener value="#{p}"
-						target="#{personBean.person}" />
-					<i class="fa fa-trash"></i>
-				</pr:commandLink>
-			</pr:column>
-			
-			
-		</pr:dataTable>
-		
-		<pr:dialog header="Telefone" id="dialogTelephone" position="center" modal="true" width="500px" widgetVar="dialogTelephone">
-			
-		</pr:dialog>
-		
+		</h:panelGrid>
 	</h:form>
 </h:body>
 </html>
