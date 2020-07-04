@@ -5,8 +5,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
@@ -65,17 +71,33 @@ public class PersonBean implements Crud, Serializable {
 	// posteriormente no sistema e depois processar
 	private Part photo;
 
-	public void recoverInfoUser() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		ExternalContext ec = context.getExternalContext();
-		person = (Person) ec.getSessionMap().get("personOn");
-
+	public String recoverInfoUser() {
+		this.getSession();
+		return "updateInfoUser.xhtml";
 	}
 
 	@Override
 	public String save() {
+		System.out.println("Part: " + photo.getSize());
+		if (photo.getSize() != 0) {
+			savePhoto(photo);
+		} 
+		
+		if (dao.merge(person) != null) {
+			this.setSession("personOn", person);
+			this.showMessage("Usuário inserido com sucesso!");
+		} else {
+			this.listAll();
+			this.showMessage("Não foi possível salvar o usuário");
+		}
+		return "";
+	}
+
+	// passo o inputStream direto
+	private void savePhoto(Part photo) {
+		byte[] imageByte;
 		try {
-			byte[] imageByte = this.getByte(photo.getInputStream());
+			imageByte = this.getByte(photo.getInputStream());
 			person.setPhotoIconB64Original(imageByte);
 
 			BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageByte));
@@ -98,19 +120,10 @@ public class PersonBean implements Crud, Serializable {
 					+ DatatypeConverter.printBase64Binary(baos.toByteArray());
 			person.setPhotoIconB64(miniature);
 			person.setExtension(extension);
-			dao.merge(person);
-			FacesContext context = FacesContext.getCurrentInstance();
-			ExternalContext ec = context.getExternalContext();
-			ec.getSessionMap().remove("personOn");
-			ec.getSessionMap().put("personOn", person);
-			this.showMessage("Usuário inserido com sucesso!");
-			this.listAll();
-		} catch (IOException err) {
-			this.showMessage("Não foi possível salvar o usuário");
-			err.printStackTrace();
+		} catch (IOException e) {
+			this.showMessage("Erro ao salvar imagem");
+			e.printStackTrace();
 		}
-
-		return "";
 	}
 
 	private void showMessage(String msg) {
@@ -225,6 +238,34 @@ public class PersonBean implements Crud, Serializable {
 		}
 	}
 
+	public String login() {
+		Person p = pdao.findUser(person.getLogin(), person.getPassword());
+
+		if (p != null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext ec = context.getExternalContext();
+			ec.getSessionMap().put("personOn", p);
+			this.getSession();
+
+			return "home.xhtml?faces-redirect=true";
+		}
+
+		return "login.xhtml";
+	}
+
+	private void getSession() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext ec = context.getExternalContext();
+		person = (Person) ec.getSessionMap().get("personOn");
+	}
+
+	private void setSession(String key, Person person) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext ec = context.getExternalContext();
+		ec.getSessionMap().remove(key);
+		ec.getSessionMap().put(key, person);
+	}
+
 	public Person getPerson() {
 		return person;
 	}
@@ -264,18 +305,5 @@ public class PersonBean implements Crud, Serializable {
 
 	public void setPhoto(Part photo) {
 		this.photo = photo;
-	}
-
-	public String login() {
-		Person p = pdao.findUser(person.getLogin(), person.getPassword());
-
-		if (p != null) {
-			FacesContext context = FacesContext.getCurrentInstance();
-			ExternalContext ec = context.getExternalContext();
-			ec.getSessionMap().put("personOn", p);
-			return "home.xhtml?faces-redirect=true";
-		}
-
-		return "login.xhtml";
 	}
 }

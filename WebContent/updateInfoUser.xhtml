@@ -36,26 +36,21 @@
 			
 			<h:panelGroup layout="block" styleClass="hidden">
 	    		<pr:outputLabel value="id" for="id"/>
-				<pr:inputText value="#{personBean.person.id}" readonly="true" id="id"/>    		
+				<pr:inputText value="#{sessionScope.personOn.id}" readonly="true" id="id"/>    		
 			</h:panelGroup>
 			<pr:outputLabel/>
 
 			
 			<pr:outputLabel value="Nome" for="name" />
 			<pr:inputText value="#{personBean.person.name}" required="true"
-				id="name" requiredMessage="É obrigatório informar um nome"
-				validatorMessage="O nome deve ter entre 3 e 30 letras"
-				ph:placeholder="Nome">
-				<f:validateLength minimum="3" maximum="30" />
-			</pr:inputText>
+				id="name" />
+		
 
 			<pr:outputLabel value="Sobrenome" for="surname" />
 			<pr:inputText value="#{personBean.person.surname}" id="surname"
 				required="true"
-				requiredMessage="É obrigatório informar um sobrenome"
-				validatorMessage="O sobrenome deve ter entre 5 e 60 letras">
-				<f:validateLength minimum="5" maximum="30" />
-			</pr:inputText>
+				/>
+			
 
 			<pr:outputLabel value="Data de nascimento" for="birth" />
 			<pr:inputText value="#{personBean.person.birth}" id="birth"

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-xmlns:f="http://java.sun.com/jsf/core"
-xmlns:ui="http://java.sun.com/jsf/facelets"
-xmlns:b="http://bootsfaces.net/ui"
-xmlns:pr="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:pr="http://primefaces.org/ui">
 
+<h:form>
 	<pr:megaMenu orientation="horizontal" style="margin-top:20px">
 		<pr:submenu label="Vagas" icon="pi pi-check">
 			<pr:column>
@@ -19,10 +20,10 @@ xmlns:pr="http://primefaces.org/ui">
 			<pr:column>
 				<pr:submenu>
 					<pr:menuitem value="Ver" url="home.xhtml" />
-					<pr:menuitem value="Editar" url="updateInfoUser.xhtml" />
+					<pr:menuitem value="Editar" action="#{personBean.recoverInfoUser}" /> 
 				</pr:submenu>
 			</pr:column>
 		</pr:submenu>
 	</pr:megaMenu>
-	
+</h:form>
 </html>

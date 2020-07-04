@@ -41,8 +41,6 @@ public class Person implements Serializable {
 	private String name;
 	
 	@Size(min = 5, max = 30, message = "O sobrenome deve ter entre 3 e 30 letras")
-	@NotEmpty(message = "O sobrenome deve ser informado")
-	@NotNull(message = "O sobrenome deve ser informado")
 	private String surname;
 	
 	private String gender;

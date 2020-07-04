@@ -18,7 +18,6 @@
 	<h:outputStylesheet name="/css/fontawesome/css/font-awesome.css" />
 </h:head>
 <h:body>
-
 	<ui:include src="/nav.xhtml" />
 	<pr:panel>
 		<h:form>
@@ -28,16 +27,16 @@
 						<div class="ui-g-12 ui-md-4">
 							<h:panelGrid columns="2" cellpadding="7">
 								<h:outputText value="Nome:" />
-								<h:outputText value="#{sessionScope.personOn.name}" />
+								<h:outputText value="#{personBean.person.name}" />
 
 								<h:outputText value="Sobrenome:" />
-								<h:outputText value="#{sessionScope.personOn.surname}" />
+								<h:outputText value="#{personBean.person.surname}" />
 
 								<h:outputText value="Nascimento:" />
-								<h:outputText value="#{sessionScope.personOn.birth}" />
+								<h:outputText value="#{personBean.person.birth}" />
 
 								<h:outputText value="CPF:" />
-								<h:outputText value="#{sessionScope.personOn.cpf}" />
+								<h:outputText value="#{personBean.person.cpf}" />
 
 							</h:panelGrid>
 						</div>
