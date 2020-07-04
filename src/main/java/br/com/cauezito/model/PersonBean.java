@@ -37,6 +37,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.primefaces.model.UploadedFile;
 
 import com.google.gson.Gson;
 
@@ -67,10 +68,10 @@ public class PersonBean implements Crud, Serializable {
 	private List<SelectItem> states;
 	private List<SelectItem> cities;
 	private List<String> skills = new ArrayList<String>();
+	private UploadedFile photo;
 
 	// seleciona o arquivo e cria temporariamente no lado do servidor para obter
 	// posteriormente no sistema e depois processar
-	private Part photo;
 	
 	public PersonBean() {
 		this.skills();
@@ -83,7 +84,6 @@ public class PersonBean implements Crud, Serializable {
 
 	@Override
 	public String save() {
-		System.out.println("Part: " + photo.getSize());
 		if (photo.getSize() != 0) {
 			savePhoto(photo);
 		} 
@@ -99,10 +99,10 @@ public class PersonBean implements Crud, Serializable {
 	}
 
 	// passo o inputStream direto
-	private void savePhoto(Part photo) {
+	private void savePhoto(UploadedFile photo) {
 		byte[] imageByte;
 		try {
-			imageByte = this.getByte(photo.getInputStream());
+			imageByte = this.getByte(photo.getInputstream());
 			person.setPhotoIconB64Original(imageByte);
 
 			BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageByte));
@@ -309,14 +309,6 @@ public class PersonBean implements Crud, Serializable {
 		this.cities = cities;
 	}
 
-	public Part getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(Part photo) {
-		this.photo = photo;
-	}
-
 	public List<String> getSkills() {
 		return skills;
 	}
@@ -324,5 +316,15 @@ public class PersonBean implements Crud, Serializable {
 	public void setSkills(List<String> skills) {
 		this.skills = skills;
 	}
+
+	public UploadedFile getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(UploadedFile photo) {
+		this.photo = photo;
+	}
+	
+	
 	
 }

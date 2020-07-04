@@ -76,12 +76,10 @@
 				<f:selectItems value="#{personBean.skills}" />
 			</pr:selectCheckboxMenu>
 
-			<pr:outputLabel />
-			<pr:outputLabel value="Foto" for="photo" />
-			<!-- 			<pr:fileUpload id="photo" value="#{personBean.photo}" mode="simple" skinSimple="true"/> -->
-			<h:inputFile id="photo" value="#{personBean.photo}" mode="simple"
+			<pr:outputLabel value="Foto" />
+			<pr:fileUpload id="photo" value="#{personBean.photo}" mode="simple"
 				skinSimple="true" />
-
+		
 			<pr:outputLabel value="Resumo" />
 			<pr:inputTextarea rows="5" cols="30" counter="display"
 				maxlength="350" counterTemplate="{0} caracteres restantes."
