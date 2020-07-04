@@ -16,7 +16,7 @@
 		href="#{facesContext.externalContext.requestContextPath}/css/primeicons.css"
 		media="screen" />
 	<h:outputStylesheet name="/css/fontawesome/css/font-awesome.css" />
-	<h:outputStylesheet library="css" name="profile.css"/>
+	<h:outputStylesheet library="css" name="profile.css" />
 
 </h:head>
 <h:body>
@@ -25,32 +25,32 @@
 
 	<h:form id="formUser" enctype="multipart/form-data">
 
-		<pr:messages autoUpdate="true"/>
+		<pr:messages autoUpdate="true" />
 
 		<h:panelGrid columns="2"
 			columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
 			styleClass="customPanelGrid, text-14" contentStyleClass="ui-fluid">
 			<f:facet name="header">
-				
-			</f:facet>
-			
-			<h:panelGroup layout="block" styleClass="hidden">
-	    		<pr:outputLabel value="id" for="id"/>
-				<pr:inputText value="#{sessionScope.personOn.id}" readonly="true" id="id"/>    		
-			</h:panelGroup>
-			<pr:outputLabel/>
 
-			
+			</f:facet>
+
+			<h:panelGroup layout="block" styleClass="hidden">
+				<pr:outputLabel value="id" for="id" />
+				<pr:inputText value="#{sessionScope.personOn.id}" readonly="true"
+					id="id" />
+			</h:panelGroup>
+			<pr:outputLabel />
+
+
 			<pr:outputLabel value="Nome" for="name" />
 			<pr:inputText value="#{personBean.person.name}" required="true"
 				id="name" />
-		
+
 
 			<pr:outputLabel value="Sobrenome" for="surname" />
 			<pr:inputText value="#{personBean.person.surname}" id="surname"
-				required="true"
-				/>
-			
+				required="true" />
+
 
 			<pr:outputLabel value="Data de nascimento" for="birth" />
 			<pr:inputText value="#{personBean.person.birth}" id="birth"
@@ -68,34 +68,26 @@
 				<f:selectItem itemValue="M" itemLabel="Masculino" />
 				<f:selectItem itemValue="O" itemLabel="Outro" />
 			</pr:selectOneRadio>
+			
+			<pr:outputLabel value="Conhecimentos:" />
+			<pr:selectCheckboxMenu id="skills"
+				value="#{personBean.person.courses}" label="Escolha" filter="true"
+				filterMatchMode="startsWith" panelStyle="width:300px">
+				<f:selectItems value="#{personBean.skills}" />
+			</pr:selectCheckboxMenu>
 
-			<pr:outputLabel value="Cursos" for="courses" />
-			<pr:selectManyCheckbox id="courses" style="height: 100px"
-				value="#{personBean.person.courses}" layout="grid" columns="5">
-				<f:selectItem itemValue="HTML5" itemLabel="HTML5"/>
-				<f:selectItem itemValue="CSS3" itemLabel="CSS3" />
-				<f:selectItem itemValue="JAVA WEB" itemLabel="Java web"/>
-				<f:selectItem itemValue="SPRING BOOT" itemLabel="Spring boot"/>
-				<f:selectItem itemValue="PHP" itemLabel="PHP"/>
-			</pr:selectManyCheckbox>
-
+			<pr:outputLabel />
 			<pr:outputLabel value="Foto" for="photo" />
-<!-- 			<pr:fileUpload id="photo" value="#{personBean.photo}" mode="simple" skinSimple="true"/> -->
-			<h:inputFile id="photo" value="#{personBean.photo}" mode="simple" skinSimple="true"/>
-			<pr:outputLabel value="Login" for="login" />
-			<pr:inputText value="#{personBean.person.login}" id="login"
-				required="true" requiredMessage="É obrigatório informar um login"
-				validatorMessage="O login deve ter entre 6 e 15 caracteres">
-				<f:validateLength minimum="6" maximum="15" />
-			</pr:inputText>
+			<!-- 			<pr:fileUpload id="photo" value="#{personBean.photo}" mode="simple" skinSimple="true"/> -->
+			<h:inputFile id="photo" value="#{personBean.photo}" mode="simple"
+				skinSimple="true" />
 
-			<pr:outputLabel value="Password" for="password" />
-			<pr:password id="password" value="#{personBean.person.password}"
-				required="true" requiredMessage="É obrigatório informar uma senha"
-				redisplay="true"
-				validatorMessage="A senha deve ter entre 8 e 20 caracteres">
-				<f:validateLength minimum="8" maximum="20" />
-			</pr:password>
+			<pr:outputLabel value="Resumo" />
+			<pr:inputTextarea rows="5" cols="30" counter="display"
+				maxlength="350" counterTemplate="{0} caracteres restantes."
+				autoResize="false" value="#{personBean.person.bio}" />
+			<br />
+			<h:outputText id="display" />
 
 			<pr:outputLabel />
 

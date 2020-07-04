@@ -47,6 +47,9 @@ public class Person implements Serializable {
 	
 	private String[] courses;
 	
+	@Size(max = 300, message = "O resumo não pode ter mais de 300 caracteres")
+	private String bio;
+	
 	@NotEmpty(message = "O login deve ser informado")
 	@NotNull(message = "O login deve ser informado")
 	private String login;
@@ -246,6 +249,13 @@ public class Person implements Serializable {
 	}
 	public void setPhones(List<Telephone> phones) {
 		this.phones = phones;
+	}
+	public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
 	}
 
 	@Override

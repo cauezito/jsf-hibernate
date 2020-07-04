@@ -66,10 +66,15 @@ public class PersonBean implements Crud, Serializable {
 	private List<Person> people = new ArrayList<Person>();
 	private List<SelectItem> states;
 	private List<SelectItem> cities;
+	private List<String> skills = new ArrayList<String>();
 
 	// seleciona o arquivo e cria temporariamente no lado do servidor para obter
 	// posteriormente no sistema e depois processar
 	private Part photo;
+	
+	public PersonBean() {
+		this.skills();
+	}
 
 	public String recoverInfoUser() {
 		this.getSession();
@@ -265,6 +270,11 @@ public class PersonBean implements Crud, Serializable {
 		ec.getSessionMap().remove(key);
 		ec.getSessionMap().put(key, person);
 	}
+	
+	private void skills() {		
+		skills.add("PHP");
+		skills.add("JAVA");
+	}
 
 	public Person getPerson() {
 		return person;
@@ -306,4 +316,13 @@ public class PersonBean implements Crud, Serializable {
 	public void setPhoto(Part photo) {
 		this.photo = photo;
 	}
+
+	public List<String> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<String> skills) {
+		this.skills = skills;
+	}
+	
 }
