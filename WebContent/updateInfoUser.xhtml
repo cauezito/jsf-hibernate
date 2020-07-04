@@ -36,7 +36,7 @@
 
 			<h:panelGroup layout="block" styleClass="hidden">
 				<pr:outputLabel value="id" for="id" />
-				<pr:inputText value="#{sessionScope.personOn.id}" readonly="true"
+				<pr:inputText value="#{personBean.person.id}" readonly="true"
 					id="id" />
 			</h:panelGroup>
 			<pr:outputLabel />
@@ -68,7 +68,10 @@
 				<f:selectItem itemValue="M" itemLabel="Masculino" />
 				<f:selectItem itemValue="O" itemLabel="Outro" />
 			</pr:selectOneRadio>
-			
+
+			<pr:outputLabel for="chips" value="Telefones: " />
+			<pr:chips id="chips" value="#{personBean.phones}" />
+
 			<pr:outputLabel value="Conhecimentos:" />
 			<pr:selectCheckboxMenu id="skills"
 				value="#{personBean.person.courses}" label="Escolha" filter="true"
@@ -79,7 +82,7 @@
 			<pr:outputLabel value="Foto" />
 			<pr:fileUpload id="photo" value="#{personBean.photo}" mode="simple"
 				skinSimple="true" />
-		
+
 			<pr:outputLabel value="Resumo" />
 			<pr:inputTextarea rows="5" cols="30" counter="display"
 				maxlength="350" counterTemplate="{0} caracteres restantes."

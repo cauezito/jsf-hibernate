@@ -45,6 +45,7 @@ import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.City;
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.State;
+import br.com.cauezito.entity.Telephone;
 import br.com.cauezito.repository.PersonDao;
 
 @Named(value = "personBean")
@@ -69,10 +70,12 @@ public class PersonBean implements Crud, Serializable {
 	private List<SelectItem> cities;
 	private List<String> skills = new ArrayList<String>();
 	private UploadedFile photo;
+	private List<String> phones = new ArrayList<String>();
+	private Telephone telephone;
 
 	// seleciona o arquivo e cria temporariamente no lado do servidor para obter
 	// posteriormente no sistema e depois processar
-	
+
 	public PersonBean() {
 		this.skills();
 	}
@@ -86,8 +89,19 @@ public class PersonBean implements Crud, Serializable {
 	public String save() {
 		if (photo.getSize() != 0) {
 			savePhoto(photo);
-		} 
-		
+		}
+
+		if (!phones.isEmpty()) {
+			for (String phone : phones) {
+				List<Telephone> p = new ArrayList<Telephone>();
+				telephone = new Telephone();
+				telephone.setNumber(phone);
+				telephone.setPerson(person);
+				p.add(telephone);
+				person.setPhones(p);
+			}
+		}
+
 		if (dao.merge(person) != null) {
 			this.setSession("personOn", person);
 			this.showMessage("Usuário inserido com sucesso!");
@@ -262,6 +276,12 @@ public class PersonBean implements Crud, Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext ec = context.getExternalContext();
 		person = (Person) ec.getSessionMap().get("personOn");
+
+		if (person.getPhones().isEmpty()) {
+			for (Telephone phone : person.getPhones()) {
+				phones.add(phone.getNumber());
+			}
+		}
 	}
 
 	private void setSession(String key, Person person) {
@@ -270,8 +290,8 @@ public class PersonBean implements Crud, Serializable {
 		ec.getSessionMap().remove(key);
 		ec.getSessionMap().put(key, person);
 	}
-	
-	private void skills() {		
+
+	private void skills() {
 		skills.add("PHP");
 		skills.add("JAVA");
 	}
@@ -324,7 +344,13 @@ public class PersonBean implements Crud, Serializable {
 	public void setPhoto(UploadedFile photo) {
 		this.photo = photo;
 	}
-	
-	
-	
+
+	public List<String> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(List<String> phones) {
+		this.phones = phones;
+	}
+
 }
