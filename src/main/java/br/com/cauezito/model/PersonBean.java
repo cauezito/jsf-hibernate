@@ -90,7 +90,6 @@ public class PersonBean implements Crud, Serializable {
 			image.setPerson(person);
 			person.setImage(image);
 		}
-		
 
 		if (phones != null && !phones.isEmpty()) {
 			List<Telephone> p = new ArrayList<Telephone>();
@@ -101,6 +100,8 @@ public class PersonBean implements Crud, Serializable {
 				p.add(telephone);				
 			}
 			person.setPhones(p);
+		} else {
+			person.getPhones().clear();
 		}
 
 		if (dao.merge(person) != null) {
