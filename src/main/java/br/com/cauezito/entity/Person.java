@@ -80,7 +80,9 @@ public class Person implements Serializable {
 	@JoinColumn(name = "img_id")*/
 	@OneToOne(cascade = CascadeType.ALL)
 	private Image image;
-
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private Curriculum curriculum;
 
 
 	public Long getId() {
@@ -193,6 +195,14 @@ public class Person implements Serializable {
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public Curriculum getCurriculum() {
+		return curriculum;
+	}
+
+	public void setCurriculum(Curriculum curriculum) {
+		this.curriculum = curriculum;
 	}
 
 	@Override

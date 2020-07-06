@@ -31,6 +31,7 @@ import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 
 import br.com.cauezito.dao.GenericDao;
+import br.com.cauezito.util.TypeConverter;
 
 @Entity
 public class Image implements Serializable {
@@ -60,7 +61,7 @@ public class Image implements Serializable {
 	public void savePhoto(UploadedFile photo) {
 		byte[] imageByte;
 		try {
-			imageByte = this.getByte(photo.getInputstream());
+			imageByte = TypeConverter.inputStreamToByte(photo.getInputstream());
 			this.setPhotoIconB64Original(imageByte);
 
 			BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageByte));
@@ -83,18 +84,10 @@ public class Image implements Serializable {
 					+ DatatypeConverter.printBase64Binary(baos.toByteArray());
 			setPhotoIconB64(miniature);
 			setExtension(extension);
-			System.out.println(this);
 		} catch (IOException e) {
 			//this.showMessage("Erro ao salvar imagem");
 			e.printStackTrace();
 		}
-	}
-	
-	private byte[] getByte(InputStream file) throws IOException {
-
-		byte[] bytes = IOUtils.toByteArray(file);
-
-		return bytes;
 	}
 	
 	/*public void download() throws IOException {

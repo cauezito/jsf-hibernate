@@ -40,6 +40,7 @@ import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.City;
+import br.com.cauezito.entity.Curriculum;
 import br.com.cauezito.entity.Image;
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.State;
@@ -68,10 +69,11 @@ public class PersonBean implements Crud, Serializable {
 	private List<SelectItem> cities;
 	private List<String> skills = new ArrayList<String>();
 	private UploadedFile photo;
-	private UploadedFile curriculum;
+	private UploadedFile curric;
 	private List<String> phones = new ArrayList<String>();
 	private Telephone telephone;
 	private Image image;
+	private Curriculum curriculum;
 	
 	public PersonBean() {
 		this.skills();
@@ -89,6 +91,13 @@ public class PersonBean implements Crud, Serializable {
 			image.savePhoto(photo);
 			image.setPerson(person);
 			person.setImage(image);
+		}
+		
+		if(curric.getSize() != 0) {
+			curriculum = new Curriculum();
+			curriculum.saveCurriculum(curric);
+			curriculum.setPerson(person);
+			person.setCurriculum(curriculum);
 		}
 
 		if (phones != null && !phones.isEmpty()) {
@@ -138,7 +147,6 @@ public class PersonBean implements Crud, Serializable {
 	public String remove() {
 		return null;
 	}
-
 
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -301,11 +309,11 @@ public class PersonBean implements Crud, Serializable {
 	}
 
 	public UploadedFile getCurriculum() {
-		return curriculum;
+		return curric;
 	}
 
-	public void setCurriculum(UploadedFile curriculum) {
-		this.curriculum = curriculum;
+	public void setCurric(UploadedFile curric) {
+		this.curric = curric;
 	}
 
 	public Image getImage() {
@@ -315,4 +323,9 @@ public class PersonBean implements Crud, Serializable {
 	public void setImage(Image image) {
 		this.image = image;
 	}
+
+	public UploadedFile getCurric() {
+		return curric;
+	}
+
 }

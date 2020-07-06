@@ -8,6 +8,7 @@
 		<class>br.com.cauezito.entity.City</class>
 		<class>br.com.cauezito.entity.Telephone</class>
 		<class>br.com.cauezito.entity.Image</class>
+		<class>br.com.cauezito.entity.Curriculum</class>
 		
 		<properties>
 			<!-- Conexão com o banco -->
