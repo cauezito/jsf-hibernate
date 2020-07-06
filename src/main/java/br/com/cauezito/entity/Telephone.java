@@ -1,19 +1,30 @@
 package br.com.cauezito.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ForeignKey;
+
 @Entity
-public class Telephone {
+public class Telephone implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(nullable = false)
 	private String number;
+	
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name="person", nullable = false)
 	private Person person;
 	
 	public Long getId() {

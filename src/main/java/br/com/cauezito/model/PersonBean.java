@@ -92,22 +92,22 @@ public class PersonBean implements Crud, Serializable {
 		}
 
 		if (!phones.isEmpty()) {
+			List<Telephone> p = new ArrayList<Telephone>();
 			for (String phone : phones) {
-				List<Telephone> p = new ArrayList<Telephone>();
 				telephone = new Telephone();
 				telephone.setNumber(phone);
 				telephone.setPerson(person);
-				p.add(telephone);
-				person.setPhones(p);
+				p.add(telephone);				
 			}
+			person.setPhones(p);
 		}
 
 		if (dao.merge(person) != null) {
 			this.setSession("personOn", person);
-			this.showMessage("Usuário inserido com sucesso!");
+			this.showMessage("Informações atualizadas!");
 		} else {
 			this.listAll();
-			this.showMessage("Não foi possível salvar o usuário");
+			this.showMessage("Não foi possível atualizar as informações!");
 		}
 		return "";
 	}
@@ -276,12 +276,12 @@ public class PersonBean implements Crud, Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext ec = context.getExternalContext();
 		person = (Person) ec.getSessionMap().get("personOn");
-
-		if (person.getPhones().isEmpty()) {
+		if(person.getPhones() != null) {
+			phones.clear();
 			for (Telephone phone : person.getPhones()) {
-				phones.add(phone.getNumber());
+				this.phones.add(phone.getNumber());
 			}
-		}
+		}	
 	}
 
 	private void setSession(String key, Person person) {
@@ -293,7 +293,17 @@ public class PersonBean implements Crud, Serializable {
 
 	private void skills() {
 		skills.add("PHP");
-		skills.add("JAVA");
+		skills.add("Java");
+		skills.add("MySQL");
+		skills.add("Oracle");
+		skills.add("PostgreSQL");
+		skills.add("UML");
+		skills.add("Go");
+		skills.add("Python");
+		skills.add("iReport");
+		skills.add("CSS");
+		skills.add("Javascript");
+		skills.add("NodeJs");
 	}
 
 	public Person getPerson() {
