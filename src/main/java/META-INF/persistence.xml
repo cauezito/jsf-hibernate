@@ -4,10 +4,10 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>br.com.cauezito.entity.Person</class>
 		<class>br.com.cauezito.entity.Entry</class>
-		<class>br.com.cauezito.entity.Address</class>
 		<class>br.com.cauezito.entity.State</class>
 		<class>br.com.cauezito.entity.City</class>
 		<class>br.com.cauezito.entity.Telephone</class>
+		<class>br.com.cauezito.entity.Image</class>
 		
 		<properties>
 			<!-- Conexão com o banco -->

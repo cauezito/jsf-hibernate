@@ -14,12 +14,19 @@ import javax.persistence.EntityTransaction;
 import br.com.cauezito.entity.State;
 import br.com.cauezito.util.JPAUtil;
 
-@FacesConverter(forClass = State.class, value = "stateConverter")
+@FacesConverter(forClass = State.class, value = "stateConv")
 @Named
 public class StateConverter implements Converter, Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
-	@Inject
-	private EntityManager entityManager;
+	private EntityManager entityManager = null;
+	
+	public StateConverter() {
+		JPAUtil jpa = new JPAUtil();
+		entityManager = jpa.getEntityManager();
+	}
+	
 	/*
 	* Retorna o objeto inteiro (consultando no banco de dados a partir do id recebido).
 	*É executado quando o objeto vem da tela para o servidor.
@@ -28,14 +35,13 @@ public class StateConverter implements Converter, Serializable {
 	public Object getAsObject(FacesContext context, UIComponent component, String stateCod) {
 		EntityTransaction et = entityManager.getTransaction();
 		et.begin();
-		
 		State state = (State) entityManager.find(State.class, Long.parseLong(stateCod));
 		return state;
 	}
 
 	/*
 	* Retorna apenas o código em String.
-	*É executado quando o objeto vem do servidor para a tela
+	*É executado quando o objeto vai do servidor para a tela
 	*/
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object state) {

@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -36,63 +37,52 @@ public class Person implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true, nullable = false)
 	private Long id;
-	
+
 	@NotEmpty
 	@Size(min = 3, max = 30, message = "O nome deve ter entre 3 e 30 letras")
 	private String name;
-	
+
 	@Size(min = 5, max = 30, message = "O sobrenome deve ter entre 3 e 30 letras")
 	private String surname;
-	
+
 	private String gender;
-	
+
 	private String[] courses;
-	
+
 	@Size(max = 300, message = "O resumo não pode ter mais de 300 caracteres")
 	private String bio;
-	
+
 	@NotEmpty(message = "O login deve ser informado")
 	@NotNull(message = "O login deve ser informado")
 	private String login;
-	
+
 	@NotEmpty(message = "A senha deve ser informada")
 	@NotNull(message = "A senha deve ser informada")
 	private String password;
-	
-	private String cep;
-	
-	private String logradouro;
-	
-	private String localidade;
-	
-	private String uf;
-	
-	@Transient /*Não é criada uma coluna no banco de dados*/
+
+	@Transient 
 	private State state;
-	
+
 	@ManyToOne
 	private City city;
-	
+
 	@CPF(message = "Digite um CPF válido")
 	private String cpf;
-	
-	private String bairro;
-	
+
 	@Temporal(TemporalType.DATE)
-	private Date birth = new Date();
-	
-	@Column(columnDefinition = "text")
-	private String photoIconB64;
-	
-	private String extension;
-	
+	private Date birth;
+
+
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Telephone> phones;
 	
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	private byte[] photoIconB64Original;
-	
+	/*@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "img_id")*/
+	@OneToOne(cascade = CascadeType.ALL)
+	private Image image;
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -157,49 +147,10 @@ public class Person implements Serializable {
 		this.birth = birth;
 	}
 
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
-
-	public String getLocalidade() {
-		return localidade;
-	}
-
-	public void setLocalidade(String localidade) {
-		this.localidade = localidade;
-	}
-
-	public String getUf() {
-		return uf;
-	}
-
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-	
 	public void setState(State state) {
 		this.state = state;
 	}
+
 	public State getState() {
 		return state;
 	}
@@ -212,31 +163,6 @@ public class Person implements Serializable {
 		this.city = city;
 	}
 
-
-	public String getPhotoIconB64() {
-		return photoIconB64;
-	}
-
-	public void setPhotoIconB64(String photoIconB64) {
-		this.photoIconB64 = photoIconB64;
-	}
-
-	public String getExtension() {
-		return extension;
-	}
-
-	public void setExtension(String extension) {
-		this.extension = extension;
-	}
-
-	public byte[] getPhotoIconB64Original() {
-		return photoIconB64Original;
-	}
-
-	public void setPhotoIconB64Original(byte[] photoIconB64Original) {
-		this.photoIconB64Original = photoIconB64Original;
-	}
-
 	public String getCpf() {
 		return cpf;
 	}
@@ -244,19 +170,29 @@ public class Person implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	
+
 	public List<Telephone> getPhones() {
 		return phones;
 	}
+
 	public void setPhones(List<Telephone> phones) {
 		this.phones = phones;
 	}
+
 	public String getBio() {
 		return bio;
 	}
 
 	public void setBio(String bio) {
 		this.bio = bio;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 	@Override
@@ -284,12 +220,4 @@ public class Person implements Serializable {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Person [id=" + id + ", name=" + name + ", surname=" + surname + ", gender=" + gender + ", courses="
-				+ Arrays.toString(courses) + ", login=" + login + ", password=" + password
-				+ ", cep=" + cep + ", logradouro=" + logradouro + ", localidade=" + localidade + ", uf=" + uf
-				+ ", bairro=" + bairro + ", birth=" + birth + "]";
-	}
-	
 }

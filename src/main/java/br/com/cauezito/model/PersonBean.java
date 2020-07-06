@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,14 +36,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
-
-import com.google.gson.Gson;
-
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.City;
+import br.com.cauezito.entity.Image;
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.State;
 import br.com.cauezito.entity.Telephone;
@@ -70,12 +68,11 @@ public class PersonBean implements Crud, Serializable {
 	private List<SelectItem> cities;
 	private List<String> skills = new ArrayList<String>();
 	private UploadedFile photo;
+	private UploadedFile curriculum;
 	private List<String> phones = new ArrayList<String>();
 	private Telephone telephone;
-
-	// seleciona o arquivo e cria temporariamente no lado do servidor para obter
-	// posteriormente no sistema e depois processar
-
+	private Image image;
+	
 	public PersonBean() {
 		this.skills();
 	}
@@ -88,10 +85,14 @@ public class PersonBean implements Crud, Serializable {
 	@Override
 	public String save() {
 		if (photo.getSize() != 0) {
-			savePhoto(photo);
+			image = new Image();
+			image.savePhoto(photo);
+			image.setPerson(person);
+			person.setImage(image);
 		}
+		
 
-		if (!phones.isEmpty()) {
+		if (phones != null && !phones.isEmpty()) {
 			List<Telephone> p = new ArrayList<Telephone>();
 			for (String phone : phones) {
 				telephone = new Telephone();
@@ -112,38 +113,10 @@ public class PersonBean implements Crud, Serializable {
 		return "";
 	}
 
-	// passo o inputStream direto
-	private void savePhoto(UploadedFile photo) {
-		byte[] imageByte;
-		try {
-			imageByte = this.getByte(photo.getInputstream());
-			person.setPhotoIconB64Original(imageByte);
-
-			BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageByte));
-
-			int type = bi.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bi.getType();
-			int width = 200;
-			int height = 200;
-
-			// miniature
-			BufferedImage resizedImage = new BufferedImage(width, height, type);
-			Graphics2D g = resizedImage.createGraphics();
-			g.drawImage(bi, 0, 0, width, height, null);
-			g.dispose();
-
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			String extension = photo.getContentType().split("\\/")[1];
-			ImageIO.write(resizedImage, extension, baos);
-
-			String miniature = "data:" + photo.getContentType() + ";base64,"
-					+ DatatypeConverter.printBase64Binary(baos.toByteArray());
-			person.setPhotoIconB64(miniature);
-			person.setExtension(extension);
-		} catch (IOException e) {
-			this.showMessage("Erro ao salvar imagem");
-			e.printStackTrace();
-		}
+	private void saveCurriculum(UploadedFile curriculum) {
+		
 	}
+	
 
 	private void showMessage(String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -165,12 +138,6 @@ public class PersonBean implements Crud, Serializable {
 		return null;
 	}
 
-	private byte[] getByte(InputStream file) throws IOException {
-
-		byte[] bytes = IOUtils.toByteArray(file);
-
-		return bytes;
-	}
 
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -182,24 +149,7 @@ public class PersonBean implements Crud, Serializable {
 		return "login";
 	}
 
-	public void download() throws IOException {
-		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-		String id = params.get("fileDownloadId");
-
-		Person person = dao.search(Person.class, id);
-
-		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
-				.getResponse();
-
-		response.addHeader("Content-Disposition",
-				"attachment; filename=foto" + person.getName() + "." + person.getExtension());
-		response.setContentType("application/octet-stream");
-		response.setContentLengthLong(person.getPhotoIconB64Original().length);
-		response.getOutputStream().write(person.getPhotoIconB64Original());
-		response.getOutputStream().flush();
-		FacesContext.getCurrentInstance().responseComplete();
-	}
-
+	
 	@Override
 	@PostConstruct
 	public void listAll() {
@@ -212,22 +162,7 @@ public class PersonBean implements Crud, Serializable {
 		person = new Person();
 		return "";
 	}
-
-	public void searchZipCode(AjaxBehaviorEvent event) {
-		try {
-			String url = "http://viacep.com.br/ws/" + person.getCep() + "/json/";
-			String json = IOUtils.toString(new URL(url), "UTF-8");
-			Person gsonAux = new Gson().fromJson(json.toString(), Person.class);
-			person.setCep(gsonAux.getCep());
-			person.setLogradouro(gsonAux.getLogradouro());
-			person.setUf(gsonAux.getUf());
-			person.setBairro(gsonAux.getBairro());
-			person.setLocalidade(gsonAux.getLocalidade());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
+	
 	public void findCities(AjaxBehaviorEvent e) {
 
 		State state = (State) ((HtmlSelectOneMenu) e.getSource()).getValue();
@@ -267,7 +202,7 @@ public class PersonBean implements Crud, Serializable {
 			this.getSession();
 
 			return "home.xhtml?faces-redirect=true";
-		}
+		} 
 
 		return "login.xhtml";
 	}
@@ -276,6 +211,7 @@ public class PersonBean implements Crud, Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext ec = context.getExternalContext();
 		person = (Person) ec.getSessionMap().get("personOn");
+		
 		if(person.getPhones() != null) {
 			phones.clear();
 			for (Telephone phone : person.getPhones()) {
@@ -363,4 +299,19 @@ public class PersonBean implements Crud, Serializable {
 		this.phones = phones;
 	}
 
+	public UploadedFile getCurriculum() {
+		return curriculum;
+	}
+
+	public void setCurriculum(UploadedFile curriculum) {
+		this.curriculum = curriculum;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
 }

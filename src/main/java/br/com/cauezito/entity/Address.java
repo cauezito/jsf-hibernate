@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.ForeignKey;
 
-@Entity
+
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;

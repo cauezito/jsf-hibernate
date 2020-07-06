@@ -17,7 +17,8 @@ import br.com.cauezito.util.JPAUtil;
 @FacesConverter(forClass = City.class, value = "cityConverter")
 @Named
 public class CityConverter implements Converter, Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
 	@Inject
 	private EntityManager entityManager;
 

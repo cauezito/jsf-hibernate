@@ -62,6 +62,7 @@
 			<pr:outputLabel value="CPF" for="cpf" />
 			<pr:inputText value="#{personBean.person.cpf}" id="cpf" />
 
+
 			<pr:outputLabel value="Gênero" for="gender" />
 			<pr:selectOneRadio id="gender" value="#{personBean.person.gender}">
 				<f:selectItem itemValue="F" itemLabel="Feminino" />
@@ -81,6 +82,10 @@
 
 			<pr:outputLabel value="Foto" />
 			<pr:fileUpload id="photo" value="#{personBean.photo}" mode="simple"
+				skinSimple="true" />
+				
+			<pr:outputLabel value="Currículo" />
+			<pr:fileUpload id="curriculum" value="#{personBean.curriculum}" mode="simple"
 				skinSimple="true" />
 
 			<pr:outputLabel value="Resumo" />
