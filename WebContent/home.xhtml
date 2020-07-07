@@ -10,12 +10,8 @@
 <h:head>
 	<title>TechJobs</title>
 	<link rel="stylesheet" type="text/css"
-		href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/home.css"
 		media="screen" />
-	<link rel="stylesheet" type="text/css"
-		href="#{facesContext.externalContext.requestContextPath}/css/primeicons.css"
-		media="screen" />
-	<h:outputStylesheet name="/css/fontawesome/css/font-awesome.css" />
 </h:head>
 <h:body>
 	<ui:include src="/nav.xhtml" />
@@ -38,10 +34,63 @@
 								<h:outputText value="CPF:" />
 								<h:outputText value="#{personBean.person.cpf}" />
 
+								<h:outputText value="Gênero:" />
+								<h:outputText value="#{personBean.person.gender}" />
+
+								<h:outputText value="Relacionamento:" />
+								<h:outputText value="#{personBean.person.relationshipStatus}" />
+
+								<h:outputText value="Deficiente:" />
+								<h:outputText value="#{personBean.person.deficient}" />
+
+								<h:outputText value="Telefone(s):" />
+								<pr:commandButton value="Ver" type="button"
+									onclick="PF('phones').show();" />
+
+								<pr:dialog header="Números de telefone" widgetVar="phones" modal="true"
+									height="100">
+									<ui:repeat var="telephone" value="#{personBean.person.phones}">
+										<h:outputText value="#{telephone}" /><br/>
+									</ui:repeat>
+								</pr:dialog>
+			
+								<h:outputText/>
+								
+								
+								<h:outputText value="Conhecimentos:" />
+								<pr:commandButton value="Ver" type="button"
+									onclick="PF('skills').show();" />
+
+								<pr:dialog header="Habilidades" widgetVar="skills" modal="true"
+									height="100">
+									<ui:repeat var="course" value="#{personBean.person.courses}">
+										<h:outputText value="#{course}" /><br/>
+									</ui:repeat>									
+								</pr:dialog>
+								
+								<h:outputText/>
+
+								<h:outputText value="Currículo:" />
+								<pr:commandButton value="Ver" type="button"
+									onclick="PF('curriculum').show();" />
+
+								<pr:dialog header="Meu currículo" widgetVar="curriculum"
+									modal="true" height="100">									
+									<h:commandButton actionListener="#{personBean.person.curriculum.download}"
+									value="Visualizar">
+										<f:param name="fileId" value="#{personBean.person.curriculum.id}"></f:param>	
+									</h:commandButton>
+								</pr:dialog>
+
+
 							</h:panelGrid>
 						</div>
 
 						<div class="ui-g-12 ui-md-8">
+							<div class="round-container">
+								<h:graphicImage value="#{personBean.person.image.photoIconB64}" />
+							</div>
+							<h5 style="text-align:center">Meu resumo profissional</h5>
 							<h:outputText value="#{personBean.person.bio}" />
 						</div>
 

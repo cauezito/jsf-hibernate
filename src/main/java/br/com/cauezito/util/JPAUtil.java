@@ -6,27 +6,21 @@ import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
-@ApplicationScoped
 public class JPAUtil {
 
-	private EntityManagerFactory factory = null;
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("projetoJSF");
 	
-	public JPAUtil() {
-		if (factory == null) {
-			factory = Persistence
-					.createEntityManagerFactory("projetoJSF");
-		}
-	}
-	
+	@PersistenceContext
 	@Produces
 	@RequestScoped
 	public EntityManager getEntityManager() {
-		return factory.createEntityManager();
+		return emf.createEntityManager();
 	}
 	
 	public Object getPrimaryKey(Object entity){
-		return factory.getPersistenceUnitUtil().getIdentifier(entity);
+		return emf.getPersistenceUnitUtil().getIdentifier(entity);
 	}
 
 }

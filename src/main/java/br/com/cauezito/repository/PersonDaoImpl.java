@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
+import br.com.cauezito.entity.Curriculum;
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.State;
 import br.com.cauezito.util.JPAUtil;
@@ -51,6 +52,21 @@ public class PersonDaoImpl implements PersonDao, Serializable{
 		}
 		
 		return selectItems;
+	}
+
+	@Override
+	public Curriculum getCurriculum(String id) {
+		Curriculum curriculum = null;
+		EntityTransaction t = entityManager.getTransaction();
+		t.begin();
+		try {
+			curriculum = (Curriculum) entityManager.createQuery("select c from Curriculum c where c.id = " + id).getSingleResult();
+			t.commit();
+		} catch (NoResultException e) {
+			ShowMessages.showMessage("Não foi possível obter o currículo");
+		}		
+		
+		return curriculum;
 	}
 
 }

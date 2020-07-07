@@ -14,12 +14,13 @@ import br.com.cauezito.util.JPAUtil;
 public class GenericDao<E> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private JPAUtil jpa;
 
 	@Inject
 	private EntityManager entityManager;
 	
-	@Inject
-	private JPAUtil jpa;
 	
 	public void save(E entity){
 		EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -80,6 +81,7 @@ public class GenericDao<E> implements Serializable {
 		entityTransaction.begin();
 		
 		E object = (E) entityManager.find(entity, Long.parseLong(cod));
+
 		entityTransaction.commit();
 		
 		return object;

@@ -1,0 +1,17 @@
+.round-container {
+    width: 11rem;
+    height: 11rem;
+    align-self: center;
+    border-radius: 100%;
+    margin: 0 auto 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+.round-container img {
+    width: initial;
+    height: inherit;
+    max-width: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}

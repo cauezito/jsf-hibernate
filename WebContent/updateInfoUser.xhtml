@@ -10,14 +10,8 @@
 <h:head>
 	<title>Registrar-se</title>
 	<link rel="stylesheet" type="text/css"
-		href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/new-user.css"
 		media="screen" />
-	<link rel="stylesheet" type="text/css"
-		href="#{facesContext.externalContext.requestContextPath}/css/primeicons.css"
-		media="screen" />
-	<h:outputStylesheet name="/css/fontawesome/css/font-awesome.css" />
-	<h:outputStylesheet library="css" name="profile.css" />
-
 </h:head>
 <h:body>
 
@@ -97,8 +91,8 @@
 				mode="simple" skinSimple="true" />
 
 			<pr:outputLabel value="Resumo" />
-			<pr:inputTextarea rows="5" cols="30" counter="display" style="resize:none"
-				maxlength="350" counterTemplate="{0} caracteres restantes."
+			<pr:inputTextarea rows="5" cols="34" counter="display" style="resize:none"
+				maxlength="300" counterTemplate="{0} caracteres restantes."
 				autoResize="false" value="#{personBean.person.bio}" />
 			<br />
 			<h:outputText id="display" />
@@ -112,5 +106,6 @@
 
 		</h:panelGrid>
 	</h:form>
+	<script src="resources/js/updateInfoUser.js"></script>
 </h:body>
 </html>
