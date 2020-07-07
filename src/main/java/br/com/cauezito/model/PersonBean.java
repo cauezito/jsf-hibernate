@@ -1,51 +1,24 @@
 package br.com.cauezito.model;
 
-import java.awt.Graphics2D;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
-import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.model.SelectItem;
-import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import javax.xml.bind.DatatypeConverter;
-
-import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 import br.com.cauezito.dao.GenericDao;
-import br.com.cauezito.entity.City;
 import br.com.cauezito.entity.Curriculum;
 import br.com.cauezito.entity.Image;
 import br.com.cauezito.entity.Person;
-import br.com.cauezito.entity.State;
 import br.com.cauezito.entity.Telephone;
 import br.com.cauezito.repository.PersonDao;
+import br.com.cauezito.util.ShowMessages;
 
 @Named(value = "personBean")
 @SessionScoped
@@ -61,11 +34,6 @@ public class PersonBean implements Crud, Serializable {
 	@Inject
 	private PersonDao pdao;
 
-	@Inject
-	private EntityManager entityManager;
-
-	private List<SelectItem> states;
-	private List<SelectItem> cities;
 	private List<String> skills = new ArrayList<String>();
 	private List<String> relationship = new ArrayList<String>();
 	private UploadedFile photo;
@@ -78,12 +46,7 @@ public class PersonBean implements Crud, Serializable {
 	public PersonBean() {
 		this.skills();
 		this.relationship();		
-	}
-
-	public String recoverInfoUser() {
-		this.getSession();
-		return "updateInfoUser.xhtml";
-	}
+	}	
 
 	@Override
 	public String save() {
@@ -116,40 +79,25 @@ public class PersonBean implements Crud, Serializable {
 
 		if (dao.merge(person) != null) {
 			this.setSession("personOn", person);
-			this.showMessage("Informações atualizadas!");
+			ShowMessages.showMessage("Informações atualizadas!");
 		} else {
-			this.showMessage("Não foi possível atualizar as informações!");
+			ShowMessages.showMessage("Não foi possível atualizar as informações!");
 		}
 		return "";
 	}
 
-	private void showMessage(String msg) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		FacesMessage message = new FacesMessage(msg);
-		context.addMessage(null, message);
-	}
 
 	@Override
 	public String removeById() {
 		dao.removeById(person);
 		person = new Person();
-		this.showMessage("Usuário removido com sucesso!");
+		ShowMessages.showMessage("Usuário removido com sucesso!");
 		return "";
 	}
 
 	@Override
 	public String remove() {
 		return null;
-	}
-
-	public String logout() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		ExternalContext ec = context.getExternalContext();
-		ec.getSessionMap().remove("personOn");
-		HttpServletRequest req = (HttpServletRequest) context.getCurrentInstance().getExternalContext().getRequest();
-		req.getSession().invalidate();
-		this.showMessage("Você saiu");
-		return "login";
 	}
 	
 	@Override
@@ -169,8 +117,17 @@ public class PersonBean implements Crud, Serializable {
 
 			return "home.xhtml?faces-redirect=true";
 		} 
-
-		return "login.xhtml";
+			return "login.xhtml";
+	}
+	
+	public String logout() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext ec = context.getExternalContext();
+		ec.getSessionMap().remove("personOn");
+		HttpServletRequest req = (HttpServletRequest) context.getCurrentInstance().getExternalContext().getRequest();
+		req.getSession().invalidate();
+		ShowMessages.showMessage("Você saiu");
+		return "login";
 	}
 
 	private void getSession() {
@@ -178,7 +135,7 @@ public class PersonBean implements Crud, Serializable {
 		ExternalContext ec = context.getExternalContext();
 		person = (Person) ec.getSessionMap().get("personOn");
 		
-		if(person.getPhones() != null) {
+		if(person.getPhones() != null && !person.getPhones().isEmpty()) {
 			phones.clear();
 			for (Telephone phone : person.getPhones()) {
 				this.phones.add(phone.getNumber());
@@ -191,6 +148,11 @@ public class PersonBean implements Crud, Serializable {
 		ExternalContext ec = context.getExternalContext();
 		ec.getSessionMap().remove(key);
 		ec.getSessionMap().put(key, person);
+	}
+	
+	public String recoverInfoUser() {
+		this.getSession();
+		return "updateInfoUser.xhtml?faces-redirect=true";
 	}
 
 	private void skills() {
@@ -230,19 +192,6 @@ public class PersonBean implements Crud, Serializable {
 
 	public void setGenericDao(GenericDao<Person> dao) {
 		this.dao = dao;
-	}
-
-	public List<SelectItem> getStates() {
-		states = pdao.allStates();
-		return states;
-	}
-
-	public List<SelectItem> getCities() {
-		return cities;
-	}
-
-	public void setCities(List<SelectItem> cities) {
-		this.cities = cities;
 	}
 
 	public List<String> getSkills() {

@@ -9,10 +9,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.State;
 import br.com.cauezito.util.JPAUtil;
+import br.com.cauezito.util.ShowMessages;
 
 @Named
 public class PersonDaoImpl implements PersonDao, Serializable{
@@ -26,9 +28,13 @@ public class PersonDaoImpl implements PersonDao, Serializable{
 		Person person = null;
 		EntityTransaction t = entityManager.getTransaction();
 		t.begin();
-		person = (Person) entityManager.createQuery("select p from Person p where p.login = '" + login + 
-				"' and p.password = '" + password + "'").getSingleResult();
-		t.commit();
+		try {
+			person = (Person) entityManager.createQuery("select p from Person p where p.login = '" + login + 
+					"' and p.password = '" + password + "'").getSingleResult();
+			t.commit();
+		} catch (NoResultException e) {
+			ShowMessages.showMessage("Dados inválidos");
+		}		
 		
 		return person;
 	}

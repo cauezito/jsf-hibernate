@@ -69,6 +69,11 @@
 				<f:selectItem itemValue="M" itemLabel="Masculino" />
 				<f:selectItem itemValue="O" itemLabel="Outro" />
 			</pr:selectOneRadio>
+			
+			<pr:outputLabel for="@next" value="Status de relacionamento" />
+        <pr:selectOneMenu id="lazy" value="#{personBean.person.relationshipStatus}" dynamic="true" style="width:125px">
+            <f:selectItems value="#{personBean.relationship}" />
+        </pr:selectOneMenu>
 
 			<pr:outputLabel value="Possui deficiência?" for="deficient"/>
         	<pr:selectBooleanCheckbox value="#{personBean.person.deficient}" id="deficient"/>
@@ -92,7 +97,7 @@
 				mode="simple" skinSimple="true" />
 
 			<pr:outputLabel value="Resumo" />
-			<pr:inputTextarea rows="5" cols="30" counter="display"
+			<pr:inputTextarea rows="5" cols="30" counter="display" style="resize:none"
 				maxlength="350" counterTemplate="{0} caracteres restantes."
 				autoResize="false" value="#{personBean.person.bio}" />
 			<br />
