@@ -69,15 +69,17 @@ public class Person implements Serializable {
 	@CPF(message = "Digite um CPF válido")
 	private String cpf;
 
+	private String relationshipStatus;
+	
 	@Temporal(TemporalType.DATE)
 	private Date birth;
-
-
+	
+	@Column
+	private Boolean deficient;
+	
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Telephone> phones;
 	
-	/*@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "img_id")*/
 	@OneToOne(cascade = CascadeType.ALL)
 	private Image image;
 	
@@ -203,6 +205,21 @@ public class Person implements Serializable {
 
 	public void setCurriculum(Curriculum curriculum) {
 		this.curriculum = curriculum;
+	}
+	public String getRelationshipStatus() {
+		return relationshipStatus;
+	}
+
+	public void setRelationshipStatus(String relationshipStatus) {
+		this.relationshipStatus = relationshipStatus;
+	}
+
+	public Boolean getDeficient() {
+		return deficient;
+	}
+
+	public void setDeficient(Boolean deficient) {
+		this.deficient = deficient;
 	}
 
 	@Override

@@ -70,6 +70,9 @@
 				<f:selectItem itemValue="O" itemLabel="Outro" />
 			</pr:selectOneRadio>
 
+			<pr:outputLabel value="Possui deficiência?" for="deficient"/>
+        	<pr:selectBooleanCheckbox value="#{personBean.person.deficient}" id="deficient"/>
+
 			<pr:outputLabel for="chips" value="Telefones: " />
 			<pr:chips id="chips" value="#{personBean.phones}" />
 
@@ -83,10 +86,10 @@
 			<pr:outputLabel value="Foto" />
 			<pr:fileUpload id="photo" value="#{personBean.photo}" mode="simple"
 				skinSimple="true" />
-				
+
 			<pr:outputLabel value="Currículo" />
-			<pr:fileUpload id="curriculum" value="#{personBean.curric}" mode="simple"
-				skinSimple="true" />
+			<pr:fileUpload id="curriculum" value="#{personBean.curric}"
+				mode="simple" skinSimple="true" />
 
 			<pr:outputLabel value="Resumo" />
 			<pr:inputTextarea rows="5" cols="30" counter="display"

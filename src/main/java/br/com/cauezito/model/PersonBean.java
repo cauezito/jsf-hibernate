@@ -64,10 +64,10 @@ public class PersonBean implements Crud, Serializable {
 	@Inject
 	private EntityManager entityManager;
 
-	private List<Person> people = new ArrayList<Person>();
 	private List<SelectItem> states;
 	private List<SelectItem> cities;
 	private List<String> skills = new ArrayList<String>();
+	private List<String> relationship = new ArrayList<String>();
 	private UploadedFile photo;
 	private UploadedFile curric;
 	private List<String> phones = new ArrayList<String>();
@@ -77,6 +77,7 @@ public class PersonBean implements Crud, Serializable {
 	
 	public PersonBean() {
 		this.skills();
+		this.relationship();		
 	}
 
 	public String recoverInfoUser() {
@@ -117,16 +118,10 @@ public class PersonBean implements Crud, Serializable {
 			this.setSession("personOn", person);
 			this.showMessage("Informações atualizadas!");
 		} else {
-			this.listAll();
 			this.showMessage("Não foi possível atualizar as informações!");
 		}
 		return "";
 	}
-
-	private void saveCurriculum(UploadedFile curriculum) {
-		
-	}
-	
 
 	private void showMessage(String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -138,7 +133,6 @@ public class PersonBean implements Crud, Serializable {
 	public String removeById() {
 		dao.removeById(person);
 		person = new Person();
-		this.listAll();
 		this.showMessage("Usuário removido com sucesso!");
 		return "";
 	}
@@ -157,48 +151,11 @@ public class PersonBean implements Crud, Serializable {
 		this.showMessage("Você saiu");
 		return "login";
 	}
-
 	
-	@Override
-	@PostConstruct
-	public void listAll() {
-		people = dao.getListEntity(Person.class);
-	}
-
 	@Override
 	public String clear() {
-		System.out.println("oaksoaksask");
 		person = new Person();
 		return "";
-	}
-	
-	public void findCities(AjaxBehaviorEvent e) {
-
-		State state = (State) ((HtmlSelectOneMenu) e.getSource()).getValue();
-		if (state.getId() != null) {
-			person.setState(state);
-			List<City> cities = entityManager.createQuery("from City where state.id = " + state.getId())
-					.getResultList();
-			List<SelectItem> selectItemsCities = new ArrayList<SelectItem>();
-			for (City city : cities) {
-				selectItemsCities.add(new SelectItem(city, city.getName()));
-			}
-			setCities(selectItemsCities);
-		}
-	}
-
-	public void edit() {
-		if (person.getCity() != null) {
-			State state = person.getCity().getState();
-			person.setState(state);
-			List<City> cities = entityManager.createQuery("from City where state.id = " + state.getId())
-					.getResultList();
-			List<SelectItem> selectItemsCities = new ArrayList<SelectItem>();
-			for (City city : cities) {
-				selectItemsCities.add(new SelectItem(city, city.getName()));
-			}
-			setCities(selectItemsCities);
-		}
 	}
 
 	public String login() {
@@ -250,6 +207,14 @@ public class PersonBean implements Crud, Serializable {
 		skills.add("Javascript");
 		skills.add("NodeJs");
 	}
+	
+	private void relationship() {
+		relationship.add("Solteiro(a)");
+		relationship.add("Casado(a)");
+		relationship.add("Divorciado(a)");
+		relationship.add("Viúvo(a)");
+		relationship.add("Outro");
+	}
 
 	public Person getPerson() {
 		return person;
@@ -265,10 +230,6 @@ public class PersonBean implements Crud, Serializable {
 
 	public void setGenericDao(GenericDao<Person> dao) {
 		this.dao = dao;
-	}
-
-	public List<Person> getPeople() {
-		return people;
 	}
 
 	public List<SelectItem> getStates() {
@@ -290,6 +251,14 @@ public class PersonBean implements Crud, Serializable {
 
 	public void setSkills(List<String> skills) {
 		this.skills = skills;
+	}
+	
+	public List<String> getRelationship() {
+		return relationship;
+	}
+
+	public void setRelationship(List<String> relationship) {
+		this.relationship = relationship;
 	}
 
 	public UploadedFile getPhoto() {
@@ -326,6 +295,12 @@ public class PersonBean implements Crud, Serializable {
 
 	public UploadedFile getCurric() {
 		return curric;
+	}
+
+	@Override
+	public void listAll() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
