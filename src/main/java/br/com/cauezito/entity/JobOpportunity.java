@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
+@Entity(name = "job")
 public class JobOpportunity implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -31,6 +31,8 @@ public class JobOpportunity implements Serializable{
 	private String[] skills;
 	private String resume;
 	private String level;
+	private Integer quantity;
+	private boolean remote;
 	
 	@Temporal(TemporalType.DATE)
 	private Date publicationDate = new Date();
@@ -82,5 +84,17 @@ public class JobOpportunity implements Serializable{
 	}
 	public void setLevel(String level) {
 		this.level = level;
-	}		
+	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+	public boolean getRemote() {
+		return remote;
+	}
+	public void setRemote(boolean remote) {
+		this.remote = remote;
+	}	
 }

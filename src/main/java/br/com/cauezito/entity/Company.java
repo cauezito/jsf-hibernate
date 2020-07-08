@@ -39,8 +39,7 @@ public class Company implements Serializable {
 	private List<JobOpportunity> jobs;
 	private String details;
 	private String email;
-	private String password;
-	
+	private String password;	
 	
 	public Long getId() {
 		return id;
@@ -125,5 +124,5 @@ public class Company implements Serializable {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}	
+	}
 }

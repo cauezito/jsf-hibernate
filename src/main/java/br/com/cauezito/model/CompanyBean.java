@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.Company;
 import br.com.cauezito.entity.JobOpportunity;
-import br.com.cauezito.entity.Person;
-import br.com.cauezito.entity.Telephone;
 import br.com.cauezito.repository.CompanyDao;
 import br.com.cauezito.util.ShowMessages;
 
@@ -95,12 +93,12 @@ public class CompanyBean implements Serializable {
 		ExternalContext ec = context.getExternalContext();
 		company = (Company) ec.getSessionMap().get("companyOn");
 		
-		/*if(company.getPhones() != null && !person.getPhones().isEmpty()) {
-			phones.clear();
-			for (Telephone phone : company.getPhones()) {
-				this.phones.add(phone.getNumber());
+		if(company.getJobs() != null && !company.getJobs().isEmpty()) {
+			jobs.clear();
+			for (JobOpportunity job : company.getJobs()) {
+				this.jobs.add(job);
 			}
-		}	*/
+		}	
 	}
 
 	private void setSession(String key, Company company) {
@@ -147,6 +145,14 @@ public class CompanyBean implements Serializable {
 
 	public void setSkills(List<String> skills) {
 		this.skills = skills;
-	}	
+	}
+
+	public List<JobOpportunity> getJobs() {
+		return jobs;
+	}
+
+	public void setJobs(List<JobOpportunity> jobs) {
+		this.jobs = jobs;
+	}
 
 }
