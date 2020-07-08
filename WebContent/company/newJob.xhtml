@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pr="http://primefaces.org/ui">
+
+<h:head>
+	<title>Empresa - Publicar vaga de emprego</title>
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/new-company.css"
+		media="screen" />
+</h:head>
+<h:body>
+
+	<ui:include src="/company/companyNav.xhtml" />
+
+	<h:form id="formNewJob" enctype="multipart/form-data">
+
+		<pr:messages autoUpdate="true" />
+
+		<h:panelGrid columns="2"
+			columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+			styleClass="customPanelGrid, text-14" contentStyleClass="ui-fluid">
+			<f:facet name="header">
+
+			</f:facet>
+
+			<h:panelGroup layout="block" styleClass="hidden">
+				<pr:outputLabel value="id" for="id" />
+				<pr:inputText value="#{companyBean.job.id}" readonly="true" id="id" />
+			</h:panelGroup>
+			<pr:outputLabel />
+
+
+			<pr:outputLabel value="Cargo" for="responsibility" />
+			<pr:inputText value="#{companyBean.job.responsibility}"
+				required="true" id="responsibility" />
+
+			<pr:outputLabel value="Nível" for="nivel" />
+			<pr:selectOneRadio id="nivel" value="#{companyBean.job.level}">
+				<f:selectItem itemValue="estagio" itemLabel="Estágio" />
+				<f:selectItem itemValue="junior" itemLabel="Júnior" />
+				<f:selectItem itemValue="pleno" itemLabel="Pleno" />
+				<f:selectItem itemValue="senior" itemLabel="Sênior" />
+				<f:selectItem itemValue="trainee" itemLabel="Trainee" />
+			</pr:selectOneRadio>
+
+
+			<pr:outputLabel value="Local de trabalho" for="address" />
+			<pr:inputText value="#{companyBean.job.address}" id="address"
+				required="true" />
+
+			<pr:outputLabel for="skills" value="Habilidades requeridas " />
+			<pr:chips id="skills" value="#{companyBean.skills}" />
+
+			<pr:outputLabel value="Detalhes da vaga" />
+			<pr:inputTextarea rows="5" cols="34" counter="display"
+				style="resize:none" maxlength="600"
+				counterTemplate="{0} caracteres restantes." autoResize="true"
+				value="#{companyBean.job.resume}" />
+			<br />
+			<h:outputText id="display" />
+
+			<h:panelGroup>
+				<pr:commandButton value="Salvar" ajax="false"
+					action="#{companyBean.save}" />
+			</h:panelGroup>
+
+		</h:panelGrid>
+	</h:form>
+	<script src="resources/js/updateInfoCompany.js"></script>
+</h:body>
+</html>

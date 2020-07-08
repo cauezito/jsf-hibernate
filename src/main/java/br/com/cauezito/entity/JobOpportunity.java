@@ -1,5 +1,6 @@
 package br.com.cauezito.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -13,7 +14,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class JobOpportunity {
+public class JobOpportunity implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -26,6 +30,7 @@ public class JobOpportunity {
 	private String address;
 	private String[] skills;
 	private String resume;
+	private String level;
 	
 	@Temporal(TemporalType.DATE)
 	private Date publicationDate = new Date();
@@ -71,6 +76,11 @@ public class JobOpportunity {
 	}
 	public void setPublicationDate(Date publicationDate) {
 		this.publicationDate = publicationDate;
-	}	
-	
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}		
 }

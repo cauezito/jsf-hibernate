@@ -1,6 +1,8 @@
 package br.com.cauezito.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.Company;
+import br.com.cauezito.entity.JobOpportunity;
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.Telephone;
 import br.com.cauezito.repository.CompanyDao;
@@ -27,11 +30,27 @@ public class CompanyBean implements Serializable {
 	
 	@Inject
 	private GenericDao<Company> dao;
+	@Inject
+	private JobOpportunity job;
+	
+	private List<JobOpportunity> jobs = new ArrayList<JobOpportunity>();
+	
+	private List<String> skills = new ArrayList<String>();
 	
 	@Inject
 	private CompanyDao cdao;
 	
+	public CompanyBean() {
+		this.skills();
+	}
+	
 	public String save() {
+		if(job != null) {
+			jobs.add(job);
+			job.setCompany(company);
+			company.setJobs(jobs);			
+		}
+		
 		if (dao.merge(company) != null) {
 			this.setSession("companyOn", company);
 			ShowMessages.showMessage("Informações atualizadas!");
@@ -68,7 +87,7 @@ public class CompanyBean implements Serializable {
 	
 	public String recoverInfoCompany() {
 		this.getSession();
-		return "company/updateInfoCompany.xhtml?faces-redirect=true";
+		return "/company/updateInfoCompany.xhtml?faces-redirect=true";
 	}
 	
 	private void getSession() {
@@ -90,6 +109,21 @@ public class CompanyBean implements Serializable {
 		ec.getSessionMap().remove(key);
 		ec.getSessionMap().put(key, company);
 	}
+	
+	private void skills() {
+		skills.add("PHP");
+		skills.add("Java");
+		skills.add("MySQL");
+		skills.add("Oracle");
+		skills.add("PostgreSQL");
+		skills.add("UML");
+		skills.add("Go");
+		skills.add("Python");
+		skills.add("iReport");
+		skills.add("CSS");
+		skills.add("Javascript");
+		skills.add("NodeJs");
+	}
 
 	public Company getCompany() {
 		return company;
@@ -98,6 +132,21 @@ public class CompanyBean implements Serializable {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
-	
+
+	public JobOpportunity getJob() {
+		return job;
+	}
+
+	public void setJob(JobOpportunity job) {
+		this.job = job;
+	}
+
+	public List<String> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<String> skills) {
+		this.skills = skills;
+	}	
 
 }

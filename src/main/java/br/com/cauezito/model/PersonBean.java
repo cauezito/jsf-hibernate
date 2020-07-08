@@ -152,7 +152,7 @@ public class PersonBean implements Crud, Serializable {
 	
 	public String recoverInfoUser() {
 		this.getSession();
-		return "user/updateInfoUser.xhtml?faces-redirect=true";
+		return "/user/updateInfoUser.xhtml?faces-redirect=true";
 	}
 
 	private void skills() {
