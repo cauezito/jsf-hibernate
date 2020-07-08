@@ -9,6 +9,9 @@
 		<class>br.com.cauezito.entity.Telephone</class>
 		<class>br.com.cauezito.entity.Image</class>
 		<class>br.com.cauezito.entity.Curriculum</class>
+		<class>br.com.cauezito.entity.Company</class>
+		<class>br.com.cauezito.entity.Owner</class>
+		<class>br.com.cauezito.entity.JobOpportunity</class>
 		
 		<properties>
 			<!-- Conexão com o banco -->
