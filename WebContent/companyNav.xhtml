@@ -8,19 +8,33 @@
 
 <h:form>
 	<pr:megaMenu orientation="horizontal" style="margin-top:20px">
-		<pr:submenu label="Vagas" icon="pi pi-check">
+		<pr:submenu label="Minhas vagas" icon="pi pi-check">
 			<pr:column>
 				<pr:submenu>
-					<pr:menuitem value="Buscar" url="#" />
-					<pr:menuitem value="Candidaturas" url="#" />
+					<pr:menuitem value="Ver" url="#" />
+					<pr:menuitem value="Nova" url="#" />
 				</pr:submenu>
 			</pr:column>
 		</pr:submenu>
 		<pr:submenu label="Perfil" icon="pi pi-check">
 			<pr:column>
 				<pr:submenu>
-					<pr:menuitem value="Ver" url="home.xhtml" />
-					<pr:menuitem value="Editar" action="#{personBean.recoverInfoUser}" /> 
+					<pr:menuitem value="Ver" url="company.xhtml" />
+					<pr:menuitem value="Editar" action="#{companyBean.recoverInfoCompany}" /> 
+				</pr:submenu>
+			</pr:column>
+		</pr:submenu>
+		<pr:submenu label="Mensagens" icon="pi pi-check">
+			<pr:column>
+				<pr:submenu>
+					<pr:menuitem value="Candidaturas" url="#" />
+				</pr:submenu>
+			</pr:column>
+		</pr:submenu>
+		<pr:submenu label="Configurações" icon="pi pi-check">
+			<pr:column>
+				<pr:submenu>
+					<pr:menuitem value="Alterar dados da conta" url="#" />
 				</pr:submenu>
 			</pr:column>
 		</pr:submenu>

@@ -7,10 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 public class Owner {
@@ -19,10 +15,6 @@ public class Owner {
 	private Long id;
 	private String name;
 	private String surname;
-	@Temporal(TemporalType.DATE)
-	private Date birth;
-	@CPF
-	private String cpf;
 	@OneToOne(mappedBy = "owner")
 	private Company company;
 	
@@ -43,18 +35,6 @@ public class Owner {
 	}
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}
-	public Date getBirth() {
-		return birth;
-	}
-	public void setBirth(Date birth) {
-		this.birth = birth;
-	}
-	public String getCpf() {
-		return cpf;
-	}
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 	public Company getCompany() {
 		return company;

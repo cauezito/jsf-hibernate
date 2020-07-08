@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pr="http://primefaces.org/ui">
+
+<h:head>
+	<title>TechJobs - Empresa</title>
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/home.css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:include src="/companyNav.xhtml" />
+	<pr:panel>
+		<h:form>
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-10 ui-g-nopad">
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-5">
+							<h:panelGrid columns="2" cellpadding="7">
+								<h:outputText value="Razão social:" />
+								<h:outputText value="#{companyBean.company.company}" />
+
+								<h:outputText value="Nome fantasia:" />
+								<h:outputText value="#{companyBean.company.trade}" />
+
+								<h:outputText value="Data de fundação:" />
+								<h:outputText value="#{companyBean.company.openingDate}" />
+
+								<h:outputText value="CNPJ:" />
+								<h:outputText value="#{companyBean.company.cnpj}" />
+
+								<h:outputText value="Tipo:" />
+								<h:outputText value="#{companyBean.company.companyType}" />
+
+								<h:outputText value="Número aproximado de funcionários:" />
+								<h:outputText value="#{companyBean.company.numOfEmployees}" />
+								
+								<h:outputText value="Porte:" />
+								<h:outputText value="Pequeno" />
+
+								<h:outputText value="Telefone(s):" />
+								<pr:commandButton value="Ver" type="button"
+									onclick="PF('phones').show();" />
+
+								<pr:dialog header="Números de telefone" widgetVar="phones" modal="true"
+									height="100">
+									<!-- <ui:repeat var="telephone" value="#{personBean.person.phones}">
+										<h:outputText value="#{telephone}" /><br/>
+									</ui:repeat> -->
+									<h:outputText value="11981093305"/>
+								</pr:dialog>
+			
+								<h:outputText/>
+								
+
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-12 ui-md-7">
+							<div class="round-container">
+								<h:graphicImage value="" />
+							</div>
+							<h5 style="text-align:center">Sobre a empresa</h5>
+							<h:outputText value="#{companyBean.company.details}" />
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</pr:panel>
+</h:body>
+</html>

@@ -115,7 +115,7 @@ public class PersonBean implements Crud, Serializable {
 			ec.getSessionMap().put("personOn", p);
 			this.getSession();
 
-			return "home.xhtml?faces-redirect=true";
+			return "user.xhtml?faces-redirect=true";
 		} 
 			return "login.xhtml";
 	}

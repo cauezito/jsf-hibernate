@@ -1,5 +1,6 @@
 package br.com.cauezito.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,9 @@ import javax.persistence.TemporalType;
 import org.hibernate.validator.constraints.br.CNPJ;
 
 @Entity	
-public class Company {
+public class Company implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -34,6 +37,9 @@ public class Company {
 	private String companyType;
 	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobOpportunity> jobs;
+	private String details;
+	private String email;
+	private String password;
 	
 	
 	public Long getId() {
@@ -101,6 +107,23 @@ public class Company {
 	}
 	public void setCompanySize(String companySize) {
 		this.companySize = companySize;
-	}		
-	
+	}
+	public String getDetails() {
+		return details;
+	}
+	public void setDetails(String details) {
+		this.details = details;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}	
 }
