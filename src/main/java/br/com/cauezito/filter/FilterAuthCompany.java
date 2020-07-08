@@ -14,18 +14,22 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import br.com.cauezito.entity.Person;
+import br.com.cauezito.entity.Company;
 import br.com.cauezito.util.JPAUtil;
 
-@WebFilter(urlPatterns = {"/*"})
-public class FilterAuth implements Filter {
-	
+@WebFilter(urlPatterns = { "/company/*" })
+public class FilterAuthCompany implements Filter {
+
 	@Inject
 	private JPAUtil jpaUtil;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		jpaUtil.getEntityManager();		
+		jpaUtil.getEntityManager();
+	}
+
+	@Override
+	public void destroy() {
 	}
 
 	@Override
@@ -33,19 +37,17 @@ public class FilterAuth implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
-		
-		Person person = (Person) session.getAttribute("personOn");
+
+		Company company = (Company) session.getAttribute("companyOn");
 		String url = req.getServletPath();
-		if(!url.equalsIgnoreCase("index.xhtml") && person == null){
+		if (!url.equalsIgnoreCase("company/company.xhtml") && company == null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/login.xhtml");
 			dispatcher.forward(request, response);
 			return;
 		} else {
 			chain.doFilter(request, response);
 		}
+		
 	}
-
-	@Override
-	public void destroy() {}
 
 }

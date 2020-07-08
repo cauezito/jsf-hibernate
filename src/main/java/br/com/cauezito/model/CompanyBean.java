@@ -50,7 +50,7 @@ public class CompanyBean implements Serializable {
 			ec.getSessionMap().put("companyOn", c);
 			this.getSession();
 
-			return "company.xhtml?faces-redirect=true";
+			return "company/company.xhtml?faces-redirect=true";
 		} 
 			return "login.xhtml";
 	}
@@ -68,7 +68,7 @@ public class CompanyBean implements Serializable {
 	
 	public String recoverInfoCompany() {
 		this.getSession();
-		return "updateInfoCompany.xhtml?faces-redirect=true";
+		return "company/updateInfoCompany.xhtml?faces-redirect=true";
 	}
 	
 	private void getSession() {
