@@ -30,9 +30,11 @@ public class JobOpportunity implements Serializable{
 	private String address;
 	private String[] skills;
 	private String resume;
+	private String details;
 	private String level;
 	private Integer quantity;
 	private boolean remote;
+	private Integer numberCandidates;
 	
 	@Temporal(TemporalType.DATE)
 	private Date publicationDate = new Date();
@@ -96,5 +98,18 @@ public class JobOpportunity implements Serializable{
 	}
 	public void setRemote(boolean remote) {
 		this.remote = remote;
-	}	
+	}
+	public Integer getNumberCandidates() {
+		return numberCandidates;
+	}
+	public void setNumberCandidates(Integer numberCandidates) {
+		this.numberCandidates = numberCandidates;
+	}
+	public String getDetails() {
+		return details;
+	}
+	public void setDetails(String details) {
+		this.details = details;
+	}
+	
 }

@@ -71,6 +71,11 @@ public class CompanyBean implements Serializable {
 		return "/company/controlPanel.xhtml?faces-redirect=true";
 	}
 	
+	public String allJobs() {
+		jobs = jobDao.getListEntity(JobOpportunity.class);
+		return "/user/search.xhtml?faces-redirect=true";
+	}
+	
 	public String login() {
 		Company c = cdao.findCompany(company.getEmail(), company.getPassword(), company.getCnpj());
 

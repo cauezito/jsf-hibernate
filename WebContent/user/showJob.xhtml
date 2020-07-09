@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pr="http://primefaces.org/ui">
+
+<h:head>
+	<title>TechJobs</title>
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/home.css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:include src="/user/userNav.xhtml" />
+
+	<h:form>
+		<pr:panel>
+			<h:form>
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-10 ui-g-nopad">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-4">
+								<h:panelGrid columns="2" cellpadding="7">
+									<h:outputText />
+									<h2>
+										<h:outputText value="#{jobBean.job.responsibility}" />
+									</h2>
+									<h4>
+										<h:outputText value="#{jobBean.job.company.trade}" />
+									</h4>
+
+									<h:outputText value="Endereço:" />
+									<h:outputText value="#{jobBean.job.address}" />
+
+									<h:outputText value="Tecnologias utilizadas:" />
+									<h:outputText value="-" />
+
+									<h:outputText value="Nível:" />
+									<h:outputText value="#{jobBean.job.level}" />
+
+									<h:outputText value="Vagas:" />
+									<h:outputText value="#{jobBean.job.quantity}" />
+
+									<h:outputText value="Remoto?" />
+									<h:outputText value="#{jobBean.job.remote}" />
+
+								</h:panelGrid>
+							</div>
+							<div class="ui-g-12 ui-md-4">
+								<h:outputLabel />
+								<h:outputText value="#{jobBean.job.resume}"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</pr:panel>
+	</h:form>
+</h:body>
+</html>

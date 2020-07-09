@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pr="http://primefaces.org/ui">
+
+<h:head>
+	<title>TechJobs - Buscar vagas</title>
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/home.css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:include src="/user/userNav.xhtml" />
+
+	<h:form>
+		<pr:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-10 ui-g-nopad">
+				<div class="ui-g-12 ui-g-nopad">
+					<div class="ui-g">
+						<ui:repeat var="job" value="#{jobBean.jobs}">
+							<div class="ui-g-12 ui-md-4">
+								<pr:panel id="basic" header="#{job.responsibility}"
+									style="margin-bottom:20px">
+									<h:panelGrid columns="2" cellpadding="12" cellspacing="1">
+										<h:graphicImage url="/resources/img/hierarchy.png" />
+										<h:outputText value="#{job.level}" />
+										<h:graphicImage url="/resources/img/remote.png" />
+										<h:outputText value="#{job.remote}" />
+										<h:graphicImage url="/resources/img/map.png" />
+										<h:outputText value="#{job.address}" />
+										<h:graphicImage url="/resources/img/question.png" />
+										<h:outputText value="#{job.quantity} vagas" />
+										<h:commandButton value="Detalhes"
+											action="#{jobBean.showJob}">
+											<f:param name="jobId" value="#{job.id}"></f:param>
+										</h:commandButton>
+									</h:panelGrid>
+								</pr:panel>
+							</div>
+						</ui:repeat>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</h:body>
+</html>
