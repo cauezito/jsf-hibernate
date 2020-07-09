@@ -26,16 +26,18 @@
 							<div class="ui-g-12 ui-md-4">
 								<pr:panel id="basic" header="#{job.responsibility}"
 									style="margin-bottom:20px">
-									<h:panelGrid columns="4" cellpadding="10">
-										<h:outputText value="icon" />
+									<h:panelGrid columns="2" cellpadding="12" cellspacing="1">
+										<h:graphicImage url="/resources/img/hierarchy.png"/>
 										<h:outputText value="#{job.level}" />
-										<h:outputText value="icon" />
+										<h:graphicImage url="/resources/img/remote.png"/>
 										<h:outputText value="#{job.remote}" />
-										<h:outputText value="icon" />
+										<h:graphicImage url="/resources/img/map.png"/>
 										<h:outputText value="#{job.address}" />
-										<h:outputText value="icon" />
-										<h:outputText value="#{job.quantity}" />
-										<h:commandButton value="Gerenciar" />
+										<h:graphicImage url="/resources/img/question.png"/>
+										<h:outputText value="#{job.quantity} vagas" />
+										<h:commandButton value="Gerenciar" action="#{companyBean.manageJobVacancy}">
+											<f:param name="jobId" value="#{job.id}"></f:param>	
+										</h:commandButton>
 									</h:panelGrid>
 								</pr:panel>
 							</div>

@@ -3,10 +3,12 @@ package br.com.cauezito.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +30,10 @@ public class CompanyBean implements Serializable {
 	
 	@Inject
 	private GenericDao<Company> dao;
+	
+	@Inject
+	private GenericDao<JobOpportunity> jobDao;
+	
 	@Inject
 	private JobOpportunity job;
 	
@@ -56,6 +62,13 @@ public class CompanyBean implements Serializable {
 			ShowMessages.showMessage("Não foi possível atualizar as informações!");
 		}
 		return "";
+	}
+	
+	public String manageJobVacancy() {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String id = params.get("jobId");
+		job = jobDao.search(JobOpportunity.class, id);
+		return "/company/controlPanel.xhtml?faces-redirect=true";
 	}
 	
 	public String login() {
