@@ -16,23 +16,35 @@
 <h:body>
 	<ui:include src="/company/companyNav.xhtml" />
 
-	<pr:panelGrid columns="2">
-		<f:facet name="header">
-			
-		</f:facet>
-
-		<h:outputText value="Cargo" />
-		<h:outputText value="#{companyBean.job.responsibility}" />
-
-		<h:outputText value="Remoto?" />
-		<h:outputText value="#{companyBean.job.remote}" />
-
-		<h:outputText value="Nível" />
-		<h:outputText value="#{companyBean.job.level}"  />
-
-		<h:outputText value="Quantidade" />
-		<h:outputText value="#{companyBean.job.quantity}" />
-	</pr:panelGrid>
+	<h:form>
+		<pr:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-10 ui-g-nopad">
+				<div class="ui-g-12 ui-g-nopad">
+					<div class="ui-g">
+						<ui:repeat var="job" value="#{companyBean.jobs}">
+							<div class="ui-g-12 ui-md-4">
+								<pr:panel id="basic" header="#{job.responsibility}"
+									style="margin-bottom:20px">
+									<h:panelGrid columns="4" cellpadding="10">
+										<h:outputText value="icon" />
+										<h:outputText value="#{job.level}" />
+										<h:outputText value="icon" />
+										<h:outputText value="#{job.remote}" />
+										<h:outputText value="icon" />
+										<h:outputText value="#{job.address}" />
+										<h:outputText value="icon" />
+										<h:outputText value="#{job.quantity}" />
+										<h:commandButton value="Gerenciar" />
+									</h:panelGrid>
+								</pr:panel>
+							</div>
+						</ui:repeat>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
 
 
 </h:body>

@@ -88,6 +88,11 @@ public class CompanyBean implements Serializable {
 		return "/company/updateInfoCompany.xhtml?faces-redirect=true";
 	}
 	
+	public String newJob() {
+		job = new JobOpportunity();
+		return "/company/newJob.xhtml?faces-redirect=true";
+	}
+	
 	private void getSession() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext ec = context.getExternalContext();
@@ -122,6 +127,7 @@ public class CompanyBean implements Serializable {
 		skills.add("Javascript");
 		skills.add("NodeJs");
 	}
+
 
 	public Company getCompany() {
 		return company;
