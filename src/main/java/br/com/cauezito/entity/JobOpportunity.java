@@ -2,13 +2,16 @@ package br.com.cauezito.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,6 +41,9 @@ public class JobOpportunity implements Serializable{
 	
 	@Temporal(TemporalType.DATE)
 	private Date publicationDate = new Date();
+	
+	@ManyToMany(mappedBy = "candidatures")
+	private List<Person> candidates;
 	
 	public Long getId() {
 		return id;
@@ -111,5 +117,11 @@ public class JobOpportunity implements Serializable{
 	public void setDetails(String details) {
 		this.details = details;
 	}
-	
+	public List<Person> getCandidates() {
+		return candidates;
+	}
+	public void setCandidates(List<Person> candidates) {
+		this.candidates = candidates;
+	}
+		
 }

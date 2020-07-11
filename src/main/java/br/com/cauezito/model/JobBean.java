@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.JobOpportunity;
+import br.com.cauezito.entity.Person;
+import br.com.cauezito.entity.Telephone;
+import br.com.cauezito.util.ShowMessages;
 
 @SessionScoped
 @Named(value = "jobBean")
@@ -20,23 +24,73 @@ public class JobBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private GenericDao<JobOpportunity> dao;
-	
+	private GenericDao<JobOpportunity> jobDao;
+
+	@Inject
+	private GenericDao<Person> personDao;
+
+	@Inject
+	private Person person;
+
+	private List<String> phones = new ArrayList<String>();
+
 	@Inject
 	private JobOpportunity job;
-	
+
 	private List<JobOpportunity> jobs = new ArrayList<JobOpportunity>();
-	
+	private List<JobOpportunity> candidatures = new ArrayList<JobOpportunity>();
+	private List<Person> people = new ArrayList<Person>();
+
 	public String allJobs() {
-		jobs = dao.getListEntity(JobOpportunity.class);
+		jobs = jobDao.getListEntity(JobOpportunity.class);
 		return "/user/search.xhtml?faces-redirect=true";
 	}
-	
+
 	public String showJob() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String id = params.get("jobId");
-		job = dao.search(JobOpportunity.class, id);
+		job = jobDao.search(JobOpportunity.class, id);
 		return "/user/showJob.xhtml?faces-redirect=true";
+	}
+
+	public String applyForJob() {
+		this.getSession();
+		
+		candidatures.add(job);
+		people.add(person);
+
+		job.setCandidates(people);
+		person.setCandidatures(candidatures);
+
+		if (this.save()) {
+			ShowMessages.showMessage("Você se candidatou!");
+		} else {
+			ShowMessages.showMessage("Não foi possível se candidatar. Tente novamente mais tarde.");
+		}
+
+		return "/user/search.xhtml?faces-redirect=true";
+	}
+
+	private boolean save() {
+		if (personDao.merge(person) != null) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	private void getSession() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext ec = context.getExternalContext();
+		person = (Person) ec.getSessionMap().get("personOn");
+
+		if (person.getPhones() != null && !person.getPhones().isEmpty()) {
+			phones.clear();
+			for (Telephone phone : person.getPhones()) {
+				this.phones.add(phone.getNumber());
+			}
+		}
 	}
 
 	public List<JobOpportunity> getJobs() {
@@ -53,5 +107,5 @@ public class JobBean implements Serializable {
 
 	public void setJob(JobOpportunity job) {
 		this.job = job;
-	}	
+	}
 }

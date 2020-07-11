@@ -9,5 +9,4 @@ import javax.faces.model.SelectItem;
 public interface PersonDao {
 	Person findUser(String login, String password);
 	Curriculum getCurriculum(String id);
-	List<SelectItem> allStates();
 }

@@ -19,13 +19,11 @@ import br.com.cauezito.util.JPAUtil;
 
 @WebFilter(urlPatterns = {"/user/*"})
 public class FilterAuthPerson implements Filter {
-	
-	@Inject
-	private JPAUtil jpaUtil;
+
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		jpaUtil.getEntityManager();		
+	
 	}
 
 	@Override

@@ -69,7 +69,7 @@ public class Curriculum {
 
 			response.addHeader("Content-Disposition", "attachment; filename=curriculo_" + person.getName() + ".pdf");
 			response.setContentType("application/octet-stream");
-			response.setContentLengthLong(getBase64().length());
+			//response.setContentLengthLong(getBase64().length());
 			byte[] file = new Base64().decodeBase64(getBase64());
 
 			try {

@@ -13,7 +13,6 @@ import javax.persistence.NoResultException;
 
 import br.com.cauezito.entity.Curriculum;
 import br.com.cauezito.entity.Person;
-import br.com.cauezito.entity.State;
 import br.com.cauezito.util.JPAUtil;
 import br.com.cauezito.util.ShowMessages;
 
@@ -38,20 +37,6 @@ public class PersonDaoImpl implements PersonDao, Serializable{
 		}		
 		
 		return person;
-	}
-
-	@Override
-	public List<SelectItem> allStates() {
-		List<SelectItem> selectItems = new ArrayList<SelectItem>();
-		EntityTransaction t = entityManager.getTransaction();
-		t.begin();
-		
-		List<State> state = entityManager.createQuery("from State").getResultList();
-		for (State st : state) {
-			selectItems.add(new SelectItem(st, st.getName()));
-		}
-		
-		return selectItems;
 	}
 
 	@Override

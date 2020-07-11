@@ -20,12 +20,10 @@ import br.com.cauezito.util.JPAUtil;
 @WebFilter(urlPatterns = { "/company/*" })
 public class FilterAuthCompany implements Filter {
 
-	@Inject
-	private JPAUtil jpaUtil;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		jpaUtil.getEntityManager();
+
 	}
 
 	@Override

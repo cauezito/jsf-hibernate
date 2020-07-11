@@ -47,7 +47,10 @@ public class PersonBean implements Crud, Serializable {
 		this.skills();
 		this.relationship();		
 	}	
-
+	public String test() {
+		System.out.println("foi");
+		return "";
+	}
 	@Override
 	public String save() {
 		if (photo.getSize() != 0) {

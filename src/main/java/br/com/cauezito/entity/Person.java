@@ -3,22 +3,23 @@ package br.com.cauezito.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
@@ -53,32 +54,31 @@ public class Person implements Serializable {
 	@NotNull(message = "A senha deve ser informada")
 	private String password;
 
-	@Transient 
-	private State state;
-
-	@ManyToOne
-	private City city;
-
 	@CPF(message = "Digite um CPF válido")
 	private String cpf;
 
 	private String relationshipStatus;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date birth;
-	
+
 	@Column
 	private Boolean deficient;
-	
+
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Telephone> phones;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private Image image;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private Curriculum curriculum;
 
+	@ManyToMany
+	@JoinTable(name = "person_job", joinColumns = {
+			@javax.persistence.JoinColumn(name = "person_id") }, inverseJoinColumns = {
+					@javax.persistence.JoinColumn(name = "job_id") })
+	private List<JobOpportunity> candidatures;
 
 	public Long getId() {
 		return id;
@@ -144,22 +144,6 @@ public class Person implements Serializable {
 		this.birth = birth;
 	}
 
-	public void setState(State state) {
-		this.state = state;
-	}
-
-	public State getState() {
-		return state;
-	}
-
-	public City getCity() {
-		return city;
-	}
-
-	public void setCity(City city) {
-		this.city = city;
-	}
-
 	public String getCpf() {
 		return cpf;
 	}
@@ -199,6 +183,7 @@ public class Person implements Serializable {
 	public void setCurriculum(Curriculum curriculum) {
 		this.curriculum = curriculum;
 	}
+
 	public String getRelationshipStatus() {
 		return relationshipStatus;
 	}
@@ -213,6 +198,14 @@ public class Person implements Serializable {
 
 	public void setDeficient(Boolean deficient) {
 		this.deficient = deficient;
+	}
+
+	public List<JobOpportunity> getCandidatures() {
+		return candidatures;
+	}
+
+	public void setCandidatures(List<JobOpportunity> candidatures) {
+		this.candidatures = candidatures;
 	}
 
 	@Override
