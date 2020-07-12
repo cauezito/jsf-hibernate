@@ -22,7 +22,7 @@
 			<div class="ui-g-12 ui-md-10 ui-g-nopad">
 				<div class="ui-g-12 ui-g-nopad">
 					<div class="ui-g">
-						<ui:repeat var="job" value="#{companyBean.jobs}">
+						<ui:repeat var="job" value="#{jobBean.jobs}">
 							<div class="ui-g-12 ui-md-4">
 								<pr:panel id="basic" header="#{job.responsibility}"
 									style="margin-bottom:20px">
@@ -33,7 +33,7 @@
 										<h:outputText value="#{job.remote}" />
 										<h:graphicImage url="/resources/img/map.png"/>
 										<h:outputText value="#{job.address}" />
-										<h:commandButton value="Gerenciar" action="#{companyBean.manageJobVacancy}">
+										<h:commandButton value="Gerenciar" action="#{jobBean.manageJobVacancy}">
 											<f:param name="jobId" value="#{job.id}"></f:param>	
 										</h:commandButton>
 									</h:panelGrid>

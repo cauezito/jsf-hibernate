@@ -12,6 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.com.cauezito.entity.JobOpportunity;
+import br.com.cauezito.entity.Person;
 import br.com.cauezito.util.ShowMessages;
 
 @Named
@@ -23,6 +24,7 @@ public class JobDaoImpl implements Serializable, JobDao {
 	private EntityManager entityManager;
 
 	private List<JobOpportunity> jobs;
+	private List<Person> candidates;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -72,6 +74,31 @@ public class JobDaoImpl implements Serializable, JobDao {
 		}
 
 		return jobs;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Person> getCandidates(Long jobId) {
+		candidates = new ArrayList<Person>();
+		EntityTransaction t = entityManager.getTransaction();
+		t.begin();
+		try {
+
+			TypedQuery<Person> query = (TypedQuery<Person>) entityManager
+					.createQuery("FROM Person p where exists "
+							+ "(from PersonJob pjob where pjob.job.id = :jobId "
+							+ "and pjob.person.id = p.id)");
+
+			query.setParameter("jobId", jobId);
+
+			candidates = query.getResultList();
+
+			t.commit();
+		} catch (NoResultException e) {
+			ShowMessages.showMessage("Não há candidatos para esta vaga");
+		}
+
+		return candidates;
 	}
 
 }

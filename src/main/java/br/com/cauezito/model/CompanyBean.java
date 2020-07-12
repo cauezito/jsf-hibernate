@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.Company;
 import br.com.cauezito.entity.JobOpportunity;
+import br.com.cauezito.entity.Person;
 import br.com.cauezito.repository.CompanyDao;
 import br.com.cauezito.util.ShowMessages;
 
@@ -61,18 +62,6 @@ public class CompanyBean implements Serializable {
 			ShowMessages.showMessage("Não foi possível atualizar as informações!");
 		}
 		return "";
-	}
-	
-	public String manageJobVacancy() {
-		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-		String id = params.get("jobId");
-		job = jobDao.search(JobOpportunity.class, id);
-		return "/company/controlPanel.xhtml?faces-redirect=true";
-	}
-	
-	public String allJobs() {
-		jobs = jobDao.getListEntity(JobOpportunity.class);
-		return "/user/search.xhtml?faces-redirect=true";
 	}
 	
 	public String login() {

@@ -46,15 +46,15 @@ public class JobBean implements Serializable {
 	private PersonJob personJob;
 
 	private List<JobOpportunity> jobs = new ArrayList<JobOpportunity>();
+	private List<Person> candidates = new ArrayList<Person>();
 
-	public String allJobs() {
+	public String unsubscribedJobs() {
 		this.getSession();
-		jobs = jobDao.getUnsubscribedJobs(person.getId());
-		
+		jobs = jobDao.getUnsubscribedJobs(person.getId());		
 		return "/user/search.xhtml?faces-redirect=true";
 	}
 	
-	public String showCandidatures() {
+	public String subscribedJobs() {
 		this.getSession();
 		jobs = jobDao.getSubscribedJobs(person.getId());
 		return "/user/candidatures.xhtml?faces-redirect=true";
@@ -65,6 +65,11 @@ public class JobBean implements Serializable {
 		String id = params.get("jobId");
 		job = jobGenericDao.search(JobOpportunity.class, id);
 		return "/user/showJob.xhtml?faces-redirect=true";
+	}
+	
+	public String allJobs() {
+		jobs = jobGenericDao.getListEntity(JobOpportunity.class);
+		return "/company/jobs.xhtml?faces-redirect=true";
 	}
 
 	public String applyForJob() {
@@ -78,6 +83,14 @@ public class JobBean implements Serializable {
 		}
 
 		return "/user/search.xhtml?faces-redirect=true";
+	}
+	
+	public String manageJobVacancy() {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String id = params.get("jobId");
+		job = jobGenericDao.search(JobOpportunity.class, id);
+		candidates = jobDao.getCandidates(Long.parseLong(id));
+		return "/company/controlPanel.xhtml?faces-redirect=true";
 	}
 
 	private boolean save() {
@@ -116,5 +129,13 @@ public class JobBean implements Serializable {
 
 	public void setJob(JobOpportunity job) {
 		this.job = job;
+	}
+
+	public List<Person> getCandidates() {
+		return candidates;
+	}
+
+	public void setCandidates(List<Person> candidates) {
+		this.candidates = candidates;
 	}
 }

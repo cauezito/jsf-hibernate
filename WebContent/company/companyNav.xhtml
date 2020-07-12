@@ -11,7 +11,7 @@
 		<pr:submenu label="Minhas vagas" icon="pi pi-check">
 			<pr:column>
 				<pr:submenu>
-					<pr:menuitem value="Ver" url="jobs.xhtml" />
+					<pr:menuitem value="Ver" action="#{jobBean.allJobs}" />
 					<pr:menuitem value="Nova" action="#{companyBean.newJob}" />
 				</pr:submenu>
 			</pr:column>
