@@ -18,36 +18,59 @@ import br.com.cauezito.util.ShowMessages;
 public class JobDaoImpl implements Serializable, JobDao {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private EntityManager entityManager;
-	
+
 	private List<JobOpportunity> jobs;
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<JobOpportunity> getUsubscribedJobs(Long userId) {
+	public List<JobOpportunity> getUnsubscribedJobs(Long userId) {
 		jobs = new ArrayList<JobOpportunity>();
-		
+
 		EntityTransaction t = entityManager.getTransaction();
 		t.begin();
 		try {
-		
-			TypedQuery<JobOpportunity> query = (TypedQuery<JobOpportunity>) entityManager.createQuery(
-					  "FROM JobOpportunity job where not exists " +
-			"(from PersonJob pjob where pjob.job.id = job.id and pjob.person.id = :userId)");
-			
+
+			TypedQuery<JobOpportunity> query = (TypedQuery<JobOpportunity>) entityManager
+					.createQuery("FROM JobOpportunity job where not exists "
+							+ "(from PersonJob pjob where pjob.job.id = job.id and pjob.person.id = :userId)");
+
 			query.setParameter("userId", userId);
 
 			jobs = query.getResultList();
-			
-					
+
 			t.commit();
 		} catch (NoResultException e) {
-			ShowMessages.showMessage("Dados inválidos");
+			ShowMessages.showMessage("Não há vagas disponíveis");
 		}
 
-		
-		
+		return jobs;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<JobOpportunity> getSubscribedJobs(Long userId) {
+		jobs = new ArrayList<JobOpportunity>();
+
+		EntityTransaction t = entityManager.getTransaction();
+		t.begin();
+		try {
+
+			TypedQuery<JobOpportunity> query = (TypedQuery<JobOpportunity>) entityManager
+					.createQuery("FROM JobOpportunity job where exists "
+							+ "(from PersonJob pjob where pjob.job.id = job.id and pjob.person.id = :userId)");
+
+			query.setParameter("userId", userId);
+
+			jobs = query.getResultList();
+
+			t.commit();
+		} catch (NoResultException e) {
+			ShowMessages.showMessage("Você ainda não se candidatou a uma vaga!");
+		}
+
 		return jobs;
 	}
 

@@ -5,5 +5,6 @@ import java.util.List;
 import br.com.cauezito.entity.JobOpportunity;
 
 public interface JobDao {
-	List<JobOpportunity> getUsubscribedJobs(Long userId);
+	List<JobOpportunity> getUnsubscribedJobs(Long userId);
+	List<JobOpportunity> getSubscribedJobs(Long userId);
 }

@@ -49,9 +49,15 @@ public class JobBean implements Serializable {
 
 	public String allJobs() {
 		this.getSession();
-		jobs = jobDao.getUsubscribedJobs(person.getId());
+		jobs = jobDao.getUnsubscribedJobs(person.getId());
 		
 		return "/user/search.xhtml?faces-redirect=true";
+	}
+	
+	public String showCandidatures() {
+		this.getSession();
+		jobs = jobDao.getSubscribedJobs(person.getId());
+		return "/user/candidatures.xhtml?faces-redirect=true";
 	}
 
 	public String showJob() {
