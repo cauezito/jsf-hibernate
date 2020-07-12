@@ -1,6 +1,5 @@
 package br.com.cauezito.util;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;

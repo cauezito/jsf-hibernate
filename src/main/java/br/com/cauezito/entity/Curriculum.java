@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.binary.Base64;
 import org.primefaces.model.UploadedFile;
 
-import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.repository.PersonDaoImpl;
 import br.com.cauezito.util.ShowMessages;
 import br.com.cauezito.util.TypeConverter;

@@ -14,7 +14,9 @@ import javax.inject.Named;
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.JobOpportunity;
 import br.com.cauezito.entity.Person;
+import br.com.cauezito.entity.PersonJob;
 import br.com.cauezito.entity.Telephone;
+import br.com.cauezito.repository.JobDao;
 import br.com.cauezito.util.ShowMessages;
 
 @SessionScoped
@@ -24,10 +26,13 @@ public class JobBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private GenericDao<JobOpportunity> jobDao;
+	private GenericDao<JobOpportunity> jobGenericDao;
+	
+	@Inject
+	private JobDao jobDao;
 
 	@Inject
-	private GenericDao<Person> personDao;
+	private GenericDao<PersonJob> personJobDao;
 
 	@Inject
 	private Person person;
@@ -36,31 +41,29 @@ public class JobBean implements Serializable {
 
 	@Inject
 	private JobOpportunity job;
+	
+	@Inject
+	private PersonJob personJob;
 
 	private List<JobOpportunity> jobs = new ArrayList<JobOpportunity>();
-	private List<JobOpportunity> candidatures = new ArrayList<JobOpportunity>();
-	private List<Person> people = new ArrayList<Person>();
 
 	public String allJobs() {
-		jobs = jobDao.getListEntity(JobOpportunity.class);
+		this.getSession();
+		jobs = jobDao.getUsubscribedJobs(person.getId());
+		
 		return "/user/search.xhtml?faces-redirect=true";
 	}
 
 	public String showJob() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String id = params.get("jobId");
-		job = jobDao.search(JobOpportunity.class, id);
+		job = jobGenericDao.search(JobOpportunity.class, id);
 		return "/user/showJob.xhtml?faces-redirect=true";
 	}
 
 	public String applyForJob() {
-		this.getSession();
-		
-		candidatures.add(job);
-		people.add(person);
-
-		job.setCandidates(people);
-		person.setCandidatures(candidatures);
+		personJob.setJob(job);
+		personJob.setPerson(person);		
 
 		if (this.save()) {
 			ShowMessages.showMessage("Você se candidatou!");
@@ -72,7 +75,7 @@ public class JobBean implements Serializable {
 	}
 
 	private boolean save() {
-		if (personDao.merge(person) != null) {
+		if (personJobDao.merge(personJob) != null) {
 			return true;
 		}
 

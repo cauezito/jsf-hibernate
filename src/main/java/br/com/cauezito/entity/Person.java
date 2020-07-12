@@ -1,6 +1,7 @@
 package br.com.cauezito.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -74,11 +75,14 @@ public class Person implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Curriculum curriculum;
 
-	@ManyToMany
+	/*@ManyToMany
 	@JoinTable(name = "person_job", joinColumns = {
 			@javax.persistence.JoinColumn(name = "person_id") }, inverseJoinColumns = {
 					@javax.persistence.JoinColumn(name = "job_id") })
-	private List<JobOpportunity> candidatures;
+	private List<JobOpportunity> candidatures;*/
+	
+	@OneToMany(mappedBy = "person")
+	private List <PersonJob> personJob = new ArrayList<PersonJob>();
 
 	public Long getId() {
 		return id;
@@ -200,13 +204,13 @@ public class Person implements Serializable {
 		this.deficient = deficient;
 	}
 
-	public List<JobOpportunity> getCandidatures() {
+	/*public List<JobOpportunity> getCandidatures() {
 		return candidatures;
 	}
 
 	public void setCandidatures(List<JobOpportunity> candidatures) {
 		this.candidatures = candidatures;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {

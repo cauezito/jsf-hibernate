@@ -33,8 +33,6 @@
 										<h:outputText value="#{job.remote}" />
 										<h:graphicImage url="/resources/img/map.png"/>
 										<h:outputText value="#{job.address}" />
-										<h:graphicImage url="/resources/img/question.png"/>
-										<h:outputText value="#{job.quantity} vagas" />
 										<h:commandButton value="Gerenciar" action="#{companyBean.manageJobVacancy}">
 											<f:param name="jobId" value="#{job.id}"></f:param>	
 										</h:commandButton>

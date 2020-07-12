@@ -9,7 +9,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
 import br.com.cauezito.entity.Company;
-import br.com.cauezito.entity.JobOpportunity;
 import br.com.cauezito.util.ShowMessages;
 
 @Named

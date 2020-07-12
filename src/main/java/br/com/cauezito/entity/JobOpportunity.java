@@ -1,10 +1,10 @@
 package br.com.cauezito.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,10 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity(name = "job")
+@Entity
 public class JobOpportunity implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -35,15 +36,17 @@ public class JobOpportunity implements Serializable{
 	private String resume;
 	private String details;
 	private String level;
-	private Integer quantity;
 	private boolean remote;
 	private Integer numberCandidates;
 	
 	@Temporal(TemporalType.DATE)
 	private Date publicationDate = new Date();
 	
-	@ManyToMany(mappedBy = "candidatures")
-	private List<Person> candidates;
+	/*@ManyToMany(mappedBy = "candidatures")
+	private List<Person> candidates;*/
+	
+	@OneToMany(mappedBy = "job")
+	private List<PersonJob> personJob = new ArrayList<PersonJob>();
 	
 	public Long getId() {
 		return id;
@@ -93,12 +96,6 @@ public class JobOpportunity implements Serializable{
 	public void setLevel(String level) {
 		this.level = level;
 	}
-	public Integer getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
 	public boolean getRemote() {
 		return remote;
 	}
@@ -117,11 +114,11 @@ public class JobOpportunity implements Serializable{
 	public void setDetails(String details) {
 		this.details = details;
 	}
-	public List<Person> getCandidates() {
+	/*public List<Person> getCandidates() {
 		return candidates;
 	}
 	public void setCandidates(List<Person> candidates) {
 		this.candidates = candidates;
-	}
+	}*/
 		
 }

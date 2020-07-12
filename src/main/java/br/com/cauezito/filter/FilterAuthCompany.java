@@ -2,7 +2,6 @@ package br.com.cauezito.filter;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import br.com.cauezito.entity.Company;
-import br.com.cauezito.util.JPAUtil;
 
 @WebFilter(urlPatterns = { "/company/*" })
 public class FilterAuthCompany implements Filter {

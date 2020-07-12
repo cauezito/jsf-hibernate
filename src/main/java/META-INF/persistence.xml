@@ -4,13 +4,15 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/x
 	<!--Nome do contexto que configura o Provedor de Persistencia -->
 	<persistence-unit name="projetoJSF">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>br.com.cauezito.entity.JobOpportunity</class>
 		<class>br.com.cauezito.entity.Person</class>
 		<class>br.com.cauezito.entity.Telephone</class>
 		<class>br.com.cauezito.entity.Image</class>
 		<class>br.com.cauezito.entity.Curriculum</class>
 		<class>br.com.cauezito.entity.Company</class>
 		<class>br.com.cauezito.entity.Owner</class>
-		<class>br.com.cauezito.entity.JobOpportunity</class>
+		<class>br.com.cauezito.entity.PersonJob</class>
+		
 		
 		<properties>
 			<!-- Conexão com o banco -->

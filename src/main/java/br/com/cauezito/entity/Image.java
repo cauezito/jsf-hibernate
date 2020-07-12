@@ -5,14 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.util.Map;
-
-import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
-import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,17 +14,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 
-import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.util.TypeConverter;
 
 @Entity

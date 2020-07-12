@@ -1,10 +1,6 @@
 package br.com.cauezito.repository;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -13,7 +9,6 @@ import javax.persistence.NoResultException;
 
 import br.com.cauezito.entity.Curriculum;
 import br.com.cauezito.entity.Person;
-import br.com.cauezito.util.JPAUtil;
 import br.com.cauezito.util.ShowMessages;
 
 @Named

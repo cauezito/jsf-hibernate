@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -47,10 +46,7 @@ public class PersonBean implements Crud, Serializable {
 		this.skills();
 		this.relationship();		
 	}	
-	public String test() {
-		System.out.println("foi");
-		return "";
-	}
+
 	@Override
 	public String save() {
 		if (photo.getSize() != 0) {
@@ -123,6 +119,7 @@ public class PersonBean implements Crud, Serializable {
 			return "login.xhtml";
 	}
 	
+	@SuppressWarnings("static-access")
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext ec = context.getExternalContext();
@@ -143,7 +140,7 @@ public class PersonBean implements Crud, Serializable {
 			for (Telephone phone : person.getPhones()) {
 				this.phones.add(phone.getNumber());
 			}
-		}	
+		}
 	}
 
 	private void setSession(String key, Person person) {
