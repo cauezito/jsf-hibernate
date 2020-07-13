@@ -175,7 +175,6 @@ public class PersonBean implements Crud, Serializable {
 		relationship.add("Casado(a)");
 		relationship.add("Divorciado(a)");
 		relationship.add("Viúvo(a)");
-		relationship.add("Outro");
 	}
 
 	public Person getPerson() {

@@ -8,7 +8,7 @@
 	xmlns:pr="http://primefaces.org/ui">
 
 <h:head>
-	<title>Registrar-se</title>
+	<title>TechJobs - Atualizar informações</title>
 	<link rel="stylesheet" type="text/css"
 		href="#{facesContext.externalContext.requestContextPath}/resources/css/new-user.css"
 		media="screen" />
@@ -59,9 +59,9 @@
 
 			<pr:outputLabel value="Gênero" for="gender" />
 			<pr:selectOneRadio id="gender" value="#{personBean.person.gender}">
-				<f:selectItem itemValue="F" itemLabel="Feminino" />
-				<f:selectItem itemValue="M" itemLabel="Masculino" />
-				<f:selectItem itemValue="O" itemLabel="Outro" />
+				<f:selectItem itemValue="feminino" itemLabel="Feminino" />
+				<f:selectItem itemValue="masculino" itemLabel="Masculino" />
+				<f:selectItem itemValue="não-binário" itemLabel="Não-binário" />
 			</pr:selectOneRadio>
 			
 			<pr:outputLabel for="@next" value="Status de relacionamento" />

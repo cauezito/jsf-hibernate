@@ -15,7 +15,9 @@ import javax.inject.Named;
 import org.jboss.weld.context.RequestContext;
 
 import br.com.cauezito.dao.GenericDao;
+import br.com.cauezito.entity.Company;
 import br.com.cauezito.entity.JobOpportunity;
+import br.com.cauezito.entity.Message;
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.PersonJob;
 import br.com.cauezito.entity.Telephone;
@@ -32,6 +34,9 @@ public class JobBean implements Serializable {
 	private GenericDao<JobOpportunity> jobGenericDao;
 	
 	@Inject
+	private GenericDao<Company> companyGenericDao;
+	
+	@Inject
 	private GenericDao<Person> personGenericDao;
 	
 	@Inject
@@ -41,10 +46,21 @@ public class JobBean implements Serializable {
 	private GenericDao<PersonJob> personJobDao;
 	
 	@Inject
+	private GenericDao<Message> messageDao;
+	
+	@Inject
 	private Person selectedPerson;
 	
 	@Inject
 	private Person person;
+	
+	@Inject
+	private Company company;
+	
+	@Inject
+	private Message message;
+	
+	private List<Message> messages = new ArrayList<Message>();
 
 	private List<String> phones = new ArrayList<String>();
 
@@ -53,6 +69,7 @@ public class JobBean implements Serializable {
 	
 	@Inject
 	private PersonJob personJob;
+	
 
 	private List<JobOpportunity> jobs = new ArrayList<JobOpportunity>();
 	private List<Person> candidates = new ArrayList<Person>();
@@ -73,6 +90,7 @@ public class JobBean implements Serializable {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String id = params.get("jobId");
 		job = jobGenericDao.search(JobOpportunity.class, id);
+		
 		return "/user/showJob.xhtml?faces-redirect=true";
 	}
 	
@@ -105,6 +123,19 @@ public class JobBean implements Serializable {
 		String id = params.get("jobId");
 		job = jobGenericDao.search(JobOpportunity.class, id);
 		candidates = jobDao.getCandidates(Long.parseLong(id));
+		return "/company/controlPanel.xhtml?faces-redirect=true";
+	}
+	
+	public String sendMessage() {
+		
+		message.setSubject(job.getResponsibility());
+		message.setReceiver(selectedPerson);
+		company = companyGenericDao.search(Company.class, job.getCompany().getId().toString());
+		message.setSender(company);
+		
+	
+		//personGenericDao.merge(selectedPerson);
+		messageDao.merge(message);
 		return "/company/controlPanel.xhtml?faces-redirect=true";
 	}
 
@@ -168,6 +199,14 @@ public class JobBean implements Serializable {
 
 	public void setSelectedPerson(Person selectedPerson) {
 		this.selectedPerson = selectedPerson;
+	}
+
+	public Message getMessage() {
+		return message;
+	}
+
+	public void setMessage(Message message) {
+		this.message = message;
 	}
 	
 }

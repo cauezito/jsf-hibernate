@@ -41,7 +41,7 @@
 								<h:outputText value="#{jobBean.job.level}" />
 
 								<h:outputText value="Remoto?" />
-								<h:outputText value="#{jobBean.job.remote}" />
+								<h:outputText value="#{jobBean.job.remoteAux}" />
 
 							</h:panelGrid>
 						</div>
@@ -68,7 +68,7 @@
 			</pr:column>
 
 			<pr:column headerText="Deficiente?">
-				<h:outputText value="#{p.deficient}" />
+				<h:outputText value="#{p.deficientAux}" />
 			</pr:column>
 
 			<pr:column headerText="Ações">
@@ -88,24 +88,45 @@
 		</pr:dataTable>
 
 		<pr:dialog widgetVar="showDetails" header="Detalhes" resizable="false"
-			showEffect="clip" hideEffect="clip" id="moreDetails">
-			<pr:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+			showEffect="clip" hideEffect="clip" id="moreDetails"
+			style="width:400px;height:600px">
+			<pr:growl id="msgs" showDetail="true"
+				skipDetailIfEqualsSummary="true" />
+			<h:panelGrid columns="1" cellpadding="20">
+				<h:outputLabel
+					value="#{jobBean.selectedPerson.name} #{jobBean.selectedPerson.surname}" />
 
-			
-				<h:panelGrid columns="1" cellpadding="20">
+				<h:outputLabel value="#{jobBean.selectedPerson.birth}" />
+				<h:outputLabel value="#{jobBean.selectedPerson.relationshipStatus}" />
 
-					<h:outputLabel value="#{jobBean.selectedPerson.name} #{jobBean.selectedPerson.surname}"/>
-					
-					<h:outputLabel value="#{jobBean.selectedPerson.birth}"/>
-					<h:outputLabel value="#{jobBean.selectedPerson.relationshipStatus}"/>
-					
-					<h:outputLabel value="#{jobBean.selectedPerson.gender}"/>
-					<h:outputLabel value="#{jobBean.selectedPerson.deficient}"/>
-					
-					<h:outputText value="#{jobBean.selectedPerson.bio}"/>
+				<h:outputLabel value="#{jobBean.selectedPerson.gender}" />
+				<h:outputLabel value="#{jobBean.selectedPerson.deficientAux}" />
 
+				<h:outputText value="#{jobBean.selectedPerson.bio}" />
+
+				<h:panelGrid columns="2">
+					<pr:commandButton value="Agendar entrevista"
+						onclick="PF('message').show();" />
+					<h:commandButton value="O candidato não atende aos requisitos" />
 				</h:panelGrid>
+			</h:panelGrid>
+		</pr:dialog>
 
+		<pr:dialog header="Enviar mensagem para #{jobBean.selectedPerson.name}" widgetVar="message" resizable="false">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="subject" value="Assunto:" />
+				<pr:inputText id="subject"
+					 label="subject" readonly="true" placeholder="#{jobBean.job.responsibility}"
+					 value="#{jobBean.job.responsibility}"/>
+
+
+				<h:outputLabel for="body" value="Assunto:" />
+				<pr:inputTextarea id="body" value="#{jobBean.message.body}"></pr:inputTextarea>
+
+				<f:facet name="footer">
+					<pr:commandButton value="Enviar" action="#{jobBean.sendMessage}" />
+				</f:facet>
+			</h:panelGrid>
 		</pr:dialog>
 	</h:form>
 

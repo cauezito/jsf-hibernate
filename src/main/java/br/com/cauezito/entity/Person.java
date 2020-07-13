@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -64,7 +65,10 @@ public class Person implements Serializable {
 	private Date birth;
 
 	@Column
-	private Boolean deficient;
+	private Boolean deficient = false;
+	
+	@Transient
+	private String deficientAux;
 
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Telephone> phones;
@@ -74,15 +78,17 @@ public class Person implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Curriculum curriculum;
-
-	/*@ManyToMany
-	@JoinTable(name = "person_job", joinColumns = {
-			@javax.persistence.JoinColumn(name = "person_id") }, inverseJoinColumns = {
-					@javax.persistence.JoinColumn(name = "job_id") })
-	private List<JobOpportunity> candidatures;*/
 	
 	@OneToMany(mappedBy = "person")
 	private List <PersonJob> personJob = new ArrayList<PersonJob>();
+	
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Message> messages = new ArrayList<Message>();
+	
+	public Person() {
+		this.setDeficientAux();
+	}
+	
 
 	public Long getId() {
 		return id;
@@ -203,14 +209,19 @@ public class Person implements Serializable {
 	public void setDeficient(Boolean deficient) {
 		this.deficient = deficient;
 	}
-
-	/*public List<JobOpportunity> getCandidatures() {
-		return candidatures;
+	
+	public String getDeficientAux() {
+		return deficientAux;
 	}
 
-	public void setCandidatures(List<JobOpportunity> candidatures) {
-		this.candidatures = candidatures;
-	}*/
+	public void setDeficientAux() {
+		System.out.println("Deficiente? " + this.getDeficient());
+		if(this.getDeficient()) {
+			this.deficientAux = "Sim";
+		} else {
+			this.deficientAux = "Não";
+		}
+	}
 
 	@Override
 	public int hashCode() {
@@ -236,5 +247,14 @@ public class Person implements Serializable {
 			return false;
 		return true;
 	}
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+	
 
 }

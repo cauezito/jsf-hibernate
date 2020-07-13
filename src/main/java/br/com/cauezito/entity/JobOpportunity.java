@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class JobOpportunity implements Serializable{
@@ -37,16 +38,25 @@ public class JobOpportunity implements Serializable{
 	private String details;
 	private String level;
 	private boolean remote;
+	@Transient
+	private String remoteAux;
 	private Integer numberCandidates;
 	
 	@Temporal(TemporalType.DATE)
 	private Date publicationDate = new Date();
 	
-	/*@ManyToMany(mappedBy = "candidatures")
-	private List<Person> candidates;*/
 	
 	@OneToMany(mappedBy = "job")
 	private List<PersonJob> personJob = new ArrayList<PersonJob>();
+	
+	public JobOpportunity() {
+		if(this.remote) {
+			this.remoteAux = "Sim";
+		} else {
+			this.remoteAux = "Não";
+		}
+	}
+	
 	
 	public Long getId() {
 		return id;
@@ -114,11 +124,11 @@ public class JobOpportunity implements Serializable{
 	public void setDetails(String details) {
 		this.details = details;
 	}
-	/*public List<Person> getCandidates() {
-		return candidates;
+	public String getRemoteAux() {
+		return remoteAux;
 	}
-	public void setCandidates(List<Person> candidates) {
-		this.candidates = candidates;
-	}*/
+	public void setRemoteAux(String remoteAux) {
+		this.remoteAux = remoteAux;
+	}
 		
 }
