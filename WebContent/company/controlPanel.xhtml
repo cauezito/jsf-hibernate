@@ -16,7 +16,7 @@
 <h:body>
 	<ui:include src="/company/companyNav.xhtml" />
 
-	<h:form>
+	<h:form id="job">
 		<pr:panel>
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-10 ui-g-nopad">
@@ -54,18 +54,60 @@
 			</div>
 		</pr:panel>
 
-		<ui:repeat var="c" value="#{jobBean.candidates}">
-			<div class="ui-g-12 ui-md-4">
-				<pr:panel id="basic" header="#{job.responsibility}"
-					style="margin-bottom:20px">
-					<h:panelGrid columns="2" cellpadding="12" cellspacing="1">
-						<h:outputText value="#{c.name}" />
-						<h:outputText value="#{c.surname}" />
-					</h:panelGrid>
-				</pr:panel>
-			</div>
-		</ui:repeat>
+		<pr:dataTable var="p" value="#{jobBean.candidates}">
+			<pr:column headerText="Nome">
+				<h:outputText value="#{p.name} #{p.surname}" />
+			</pr:column>
 
+			<pr:column headerText="Idade">
+				<h:outputText value="23" />
+			</pr:column>
+
+			<pr:column headerText="Gênero">
+				<h:outputText value="#{p.gender}" />
+			</pr:column>
+
+			<pr:column headerText="Deficiente?">
+				<h:outputText value="#{p.deficient}" />
+			</pr:column>
+
+			<pr:column headerText="Ações">
+				<pr:growl id="growl" sticky="true" showDetail="true" />
+
+
+				<pr:commandButton update=":job:moreDetails"
+					oncomplete="PF('showDetails').show()" value="Detalhes">
+					<f:setPropertyActionListener value="#{p}"
+						target="#{jobBean.selectedPerson}" />
+				</pr:commandButton>
+
+
+
+
+			</pr:column>
+		</pr:dataTable>
+
+		<pr:dialog widgetVar="showDetails" header="Detalhes" resizable="false"
+			showEffect="clip" hideEffect="clip" id="moreDetails">
+			<pr:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+
+			
+				<h:panelGrid columns="1" cellpadding="20">
+
+					<h:outputLabel value="#{jobBean.selectedPerson.name} #{jobBean.selectedPerson.surname}"/>
+					
+					<h:outputLabel value="#{jobBean.selectedPerson.birth}"/>
+					<h:outputLabel value="#{jobBean.selectedPerson.relationshipStatus}"/>
+					
+					<h:outputLabel value="#{jobBean.selectedPerson.gender}"/>
+					<h:outputLabel value="#{jobBean.selectedPerson.deficient}"/>
+					
+					<h:outputText value="#{jobBean.selectedPerson.bio}"/>
+
+				</h:panelGrid>
+
+		</pr:dialog>
 	</h:form>
+
 </h:body>
 </html>

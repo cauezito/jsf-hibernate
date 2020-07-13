@@ -8,8 +8,11 @@ import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.jboss.weld.context.RequestContext;
 
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.JobOpportunity;
@@ -29,11 +32,17 @@ public class JobBean implements Serializable {
 	private GenericDao<JobOpportunity> jobGenericDao;
 	
 	@Inject
+	private GenericDao<Person> personGenericDao;
+	
+	@Inject
 	private JobDao jobDao;
 
 	@Inject
 	private GenericDao<PersonJob> personJobDao;
-
+	
+	@Inject
+	private Person selectedPerson;
+	
 	@Inject
 	private Person person;
 
@@ -70,6 +79,12 @@ public class JobBean implements Serializable {
 	public String allJobs() {
 		jobs = jobGenericDao.getListEntity(JobOpportunity.class);
 		return "/company/jobs.xhtml?faces-redirect=true";
+	}
+	
+	public void showCandidate() {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String id = params.get("userId");
+		person = personGenericDao.search(Person.class, id);
 	}
 
 	public String applyForJob() {
@@ -138,4 +153,21 @@ public class JobBean implements Serializable {
 	public void setCandidates(List<Person> candidates) {
 		this.candidates = candidates;
 	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public Person getSelectedPerson() {
+		return selectedPerson;
+	}
+
+	public void setSelectedPerson(Person selectedPerson) {
+		this.selectedPerson = selectedPerson;
+	}
+	
 }
