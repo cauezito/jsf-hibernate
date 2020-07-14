@@ -35,7 +35,7 @@ public class MessageDaoImpl implements MessageDao, Serializable {
 		try {
 
 			TypedQuery<Message> query = (TypedQuery<Message>) entityManager
-					.createQuery("FROM Message m order by m.date desc where m.receiver.id = :userId");
+					.createQuery("FROM Message m where m.receiver.id = :userId order by m.date desc");
 
 			query.setParameter("userId", userId);
 
