@@ -8,92 +8,92 @@
 	xmlns:pr="http://primefaces.org/ui">
 
 <h:head>
-	<title>Empresa</title>
+	<title>Techjobs - Empresa</title>
 	<link rel="stylesheet" type="text/css"
-		href="#{facesContext.externalContext.requestContextPath}/resources/css/new-company.css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/updateInfoCompany.css"
 		media="screen" />
 </h:head>
 <h:body>
 
 	<ui:include src="/company/companyNav.xhtml" />
+	<div class="container">
+		<h:form id="formCompany" enctype="multipart/form-data">
 
-	<h:form id="formCompany" enctype="multipart/form-data">
+			<pr:messages autoUpdate="true" />
 
-		<pr:messages autoUpdate="true" />
+			<h:panelGrid columns="2"
+				columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+				styleClass="customPanelGrid, text-14" contentStyleClass="ui-fluid">
+				<f:facet name="header">
 
-		<h:panelGrid columns="2"
-			columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
-			styleClass="customPanelGrid, text-14" contentStyleClass="ui-fluid">
-			<f:facet name="header">
+				</f:facet>
 
-			</f:facet>
-
-			<h:panelGroup layout="block" styleClass="hidden">
-				<pr:outputLabel value="id" for="id" />
-				<pr:inputText value="#{companyBean.company.id}" readonly="true"
-					id="id" />
-			</h:panelGroup>
-			<pr:outputLabel />
-
-
-			<pr:outputLabel value="Razão social" for="company" />
-			<pr:inputText value="#{companyBean.company.company}" required="true"
-				id="company" />
+				<h:panelGroup layout="block" styleClass="hidden">
+					<pr:outputLabel value="id" for="id" />
+					<pr:inputText value="#{companyBean.company.id}" readonly="true"
+						id="id" />
+				</h:panelGroup>
+				<pr:outputLabel />
 
 
-			<pr:outputLabel value="Nome fantasia" for="trade" />
-			<pr:inputText value="#{companyBean.company.trade}" id="trade"
-				required="true" />
+				<pr:outputLabel value="Razão social" for="company" />
+				<pr:inputText value="#{companyBean.company.company}" required="true"
+					id="company" styleClass="input" />
 
 
-			<pr:outputLabel value="Data de fundação" for="date" />
-			<pr:inputText value="#{companyBean.company.openingDate}" id="date"
-				converterMessage="Data incorreta">
-				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
-					timeZone="GMT-03:00" />
-			</pr:inputText>
-
-			<pr:outputLabel value="CNPJ" for="cnpj" />
-			<pr:inputText value="#{companyBean.company.cnpj}" id="cnpj" />
+				<pr:outputLabel value="Nome fantasia" for="trade" />
+				<pr:inputText value="#{companyBean.company.trade}" id="trade"
+					required="true" styleClass="input" />
 
 
-			<pr:outputLabel for="@next" value="Tipo" />
-			<pr:selectOneMenu id="lazy"
-				value="#{companyBean.company.companyType}" dynamic="true"
-				style="width:125px">
-				<f:selectItem itemValue="Suporte" itemLabel="Suporte Técnico" />
-				<f:selectItem itemValue="Desenvolvimento"
-					itemLabel="Desenvolvimento e licenciamento de programas" />
-				<f:selectItem itemValue="Treinamento"
-					itemLabel="Treinamento em informática" />
-				<f:selectItem itemValue="Tratamento de dados"
-					itemLabel="Tratamento de dados" />
-				<f:selectItem itemValue="Outro" itemLabel="Outro" />
-			</pr:selectOneMenu>
+				<pr:outputLabel value="Data de fundação" for="date" />
+				<pr:inputText value="#{companyBean.company.openingDate}" id="date"
+					styleClass="input" converterMessage="Data incorreta">
+					<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+						timeZone="GMT-03:00" />
+				</pr:inputText>
 
-			<pr:outputLabel for="@next" value="Número de funcionários" />
-			<pr:inputNumber value="#{companyBean.company.numOfEmployees}" />
+				<pr:outputLabel value="CNPJ" for="cnpj" />
+				<pr:inputText value="#{companyBean.company.cnpj}" id="cnpj"
+					styleClass="input" />
 
 
-			<!-- <pr:outputLabel value="Foto" />
+				<pr:outputLabel for="@next" value="Tipo" />
+				<pr:selectOneMenu id="lazy"
+					value="#{companyBean.company.companyType}" dynamic="true"
+					styleClass="input">
+					<f:selectItem itemValue="Suporte" itemLabel="Suporte Técnico" />
+					<f:selectItem itemValue="Desenvolvimento"
+						itemLabel="Desenvolvimento e licenciamento de programas" />
+					<f:selectItem itemValue="Treinamento"
+						itemLabel="Treinamento em informática" />
+					<f:selectItem itemValue="Tratamento de dados"
+						itemLabel="Tratamento de dados" />
+					<f:selectItem itemValue="Outro" itemLabel="Outro" />
+				</pr:selectOneMenu>
+				<h:outputLabel />
+
+				<!-- <pr:outputLabel value="Foto" />
 			<pr:fileUpload id="photo" value="#{personBean.photo}" mode="simple"
 				skinSimple="true" /> -->
 
-			<pr:outputLabel value="Detalhes" />
-			<pr:inputTextarea rows="5" cols="34" counter="display"
-				style="resize:none" maxlength="300"
-				counterTemplate="{0} caracteres restantes." autoResize="false"
-				value="#{companyBean.company.details}" />
-			<br />
-			<h:outputText id="display" />
+				<pr:outputLabel value="Detalhes" />
+				<pr:inputTextarea rows="5" cols="34" counter="display"
+					style="resize:none" maxlength="300" styleClass="input"
+					counterTemplate="{0} caracteres restantes." autoResize="false"
+					value="#{companyBean.company.details}" />
+				<br />
+				<h:outputText id="display" />
+				<h:outputText />
 
-			<h:panelGroup>
-				<pr:commandButton value="Salvar" ajax="false"
-					action="#{companyBean.save}" />
-			</h:panelGroup>
+				<h:panelGroup>
+					<pr:commandButton value="Salvar" ajax="false"
+						action="#{companyBean.save}" />
+				</h:panelGroup>
 
-		</h:panelGrid>
-	</h:form>
+			</h:panelGrid>
+		</h:form>
+	</div>
 	<script src="resources/js/updateInfoCompany.js"></script>
 </h:body>
 </html>

@@ -30,7 +30,6 @@ public class Company implements Serializable {
 	private String company;
 	private String trade;
 	private String address;
-	private Integer numOfEmployees;
 	@Temporal(TemporalType.DATE)
 	private Date openingDate;
 	private String companySize;
@@ -82,12 +81,6 @@ public class Company implements Serializable {
 	}
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	public Integer getNumOfEmployees() {
-		return numOfEmployees;
-	}
-	public void setNumOfEmployees(Integer numOfEmployees) {
-		this.numOfEmployees = numOfEmployees;
 	}
 	public Date getOpeningDate() {
 		return openingDate;
