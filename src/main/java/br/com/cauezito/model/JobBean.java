@@ -16,12 +16,14 @@ import org.jboss.weld.context.RequestContext;
 
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.Company;
+import br.com.cauezito.entity.FinalistCandidates;
 import br.com.cauezito.entity.JobOpportunity;
 import br.com.cauezito.entity.Message;
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.PersonJob;
 import br.com.cauezito.entity.Telephone;
 import br.com.cauezito.repository.JobDao;
+import br.com.cauezito.repository.MessageDao;
 import br.com.cauezito.util.ShowMessages;
 
 @SessionScoped
@@ -40,13 +42,16 @@ public class JobBean implements Serializable {
 	private GenericDao<Person> personGenericDao;
 	
 	@Inject
+	private GenericDao<FinalistCandidates> finalistGenericDao;
+	
+	@Inject
 	private JobDao jobDao;
 
 	@Inject
 	private GenericDao<PersonJob> personJobDao;
 	
 	@Inject
-	private GenericDao<Message> messageDao;
+	private GenericDao<Message> messageGenericDao;
 	
 	@Inject
 	private Person selectedPerson;
@@ -55,14 +60,18 @@ public class JobBean implements Serializable {
 	private Person person;
 	
 	@Inject
+	private FinalistCandidates finalist;
+	
+	@Inject
 	private Company company;
 	
 	@Inject
 	private Message message;
 	
-	private List<Message> messages = new ArrayList<Message>();
-
+	
 	private List<String> phones = new ArrayList<String>();
+	
+	private List<FinalistCandidates> finalistList = new ArrayList<FinalistCandidates>();
 
 	@Inject
 	private JobOpportunity job;
@@ -135,7 +144,9 @@ public class JobBean implements Serializable {
 		
 	
 		//personGenericDao.merge(selectedPerson);
-		messageDao.merge(message);
+		if(messageGenericDao.merge(message) != null) {
+			ShowMessages.showMessage("A mensagem foi enviada!");
+		}
 		return "/company/controlPanel.xhtml?faces-redirect=true";
 	}
 
@@ -147,6 +158,8 @@ public class JobBean implements Serializable {
 		return false;
 
 	}
+	
+	
 
 	private void getSession() {
 		FacesContext context = FacesContext.getCurrentInstance();

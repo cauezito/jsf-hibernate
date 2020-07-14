@@ -14,8 +14,10 @@ import org.primefaces.model.UploadedFile;
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.Curriculum;
 import br.com.cauezito.entity.Image;
+import br.com.cauezito.entity.Message;
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.Telephone;
+import br.com.cauezito.repository.MessageDao;
 import br.com.cauezito.repository.PersonDao;
 import br.com.cauezito.util.ShowMessages;
 
@@ -29,12 +31,16 @@ public class PersonBean implements Crud, Serializable {
 
 	@Inject
 	private GenericDao<Person> dao;
+	
+	@Inject
+	private MessageDao messageDao;
 
 	@Inject
 	private PersonDao pdao;
 
 	private List<String> skills = new ArrayList<String>();
 	private List<String> relationship = new ArrayList<String>();
+	private List<Message> messages = new ArrayList<Message>();
 	private UploadedFile photo;
 	private UploadedFile curric;
 	private List<String> phones = new ArrayList<String>();
@@ -83,6 +89,11 @@ public class PersonBean implements Crud, Serializable {
 			ShowMessages.showMessage("Não foi possível atualizar as informações!");
 		}
 		return "";
+	}
+	
+	public String messages() {
+		messages = messageDao.allMessages(person.getId());
+		return "/user/messages.xhtml?faces-redirect=true";
 	}
 
 
@@ -243,6 +254,14 @@ public class PersonBean implements Crud, Serializable {
 
 	public UploadedFile getCurric() {
 		return curric;
+	}
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
 	}
 
 	@Override
