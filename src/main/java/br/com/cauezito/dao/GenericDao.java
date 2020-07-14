@@ -64,6 +64,7 @@ public class GenericDao<E> implements Serializable {
 		entityTransaction.commit();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<E> getListEntity(Class<E> entity){
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();

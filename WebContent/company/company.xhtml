@@ -36,7 +36,7 @@
 
 								<h:outputText value="Tipo:" />
 								<h:outputText value="#{companyBean.company.companyType}" />
-								
+
 								<h:outputText value="Porte:" />
 								<h:outputText value="Pequeno" />
 
@@ -44,16 +44,16 @@
 								<pr:commandButton value="Ver" type="button"
 									onclick="PF('phones').show();" />
 
-								<pr:dialog header="Números de telefone" widgetVar="phones" modal="true"
-									height="100">
+								<pr:dialog header="Números de telefone" widgetVar="phones"
+									modal="true" height="100">
 									<!-- <ui:repeat var="telephone" value="#{personBean.person.phones}">
 										<h:outputText value="#{telephone}" /><br/>
 									</ui:repeat> -->
-									<h:outputText value="11981093305"/>
+									<h:outputText value="11981093305" />
 								</pr:dialog>
-			
-								<h:outputText/>
-								
+
+								<h:outputText />
+
 
 							</h:panelGrid>
 						</div>
@@ -62,7 +62,7 @@
 							<div class="round-container">
 								<h:graphicImage value="" />
 							</div>
-							<h5 style="text-align:center">Sobre a empresa</h5>
+							<h5 style="text-align: center">Sobre a empresa</h5>
 							<h:outputText value="#{companyBean.company.details}" />
 						</div>
 

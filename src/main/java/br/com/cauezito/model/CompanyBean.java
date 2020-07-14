@@ -57,10 +57,11 @@ public class CompanyBean implements Serializable {
 		
 		if (dao.merge(company) != null) {
 			this.setSession("companyOn", company);
-			ShowMessages.showMessage("Informações atualizadas!");
+			ShowMessages.showMessage("Vaga cadastrada!");
+			job = new JobOpportunity();
 		} else {
-			ShowMessages.showMessage("Não foi possível atualizar as informações!");
-		}
+			ShowMessages.showMessage("Não foi possível cadastrar a vaga;");
+		}	
 		return "";
 	}
 	
