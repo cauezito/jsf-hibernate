@@ -55,5 +55,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/classmate-1.0.9.14.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/antlr-3.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.el-3.0.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/all-themes-1.0.10.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
