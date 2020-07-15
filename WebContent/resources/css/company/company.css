@@ -1,0 +1,10 @@
+@charset "ISO-8859-1";
+
+body {
+	background: #6C7A89;
+}
+
+#panel {
+	margin: 60px 0 0 0;
+	background: #f4f6ff;
+}

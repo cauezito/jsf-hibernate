@@ -10,70 +10,77 @@
 <h:head>
 	<title>Empresa - Publicar vaga de emprego</title>
 	<link rel="stylesheet" type="text/css"
-		href="#{facesContext.externalContext.requestContextPath}/resources/css/new-company.css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/centralizedForm.css"
 		media="screen" />
 </h:head>
 <h:body>
 
 	<ui:include src="/company/companyNav.xhtml" />
+	<div class="container">
 
-	<h:form id="formNewJob" enctype="multipart/form-data">
+		<h:form id="centralizedForm" enctype="multipart/form-data">
 
-		<pr:messages autoUpdate="true" />
-
-		<h:panelGrid columns="2"
-			columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
-			styleClass="customPanelGrid, text-14" contentStyleClass="ui-fluid">
-			<f:facet name="header">
-
-			</f:facet>
-
-			<h:panelGroup layout="block" styleClass="hidden">
-				<pr:outputLabel value="id" for="id" />
-				<pr:inputText value="#{companyBean.job.id}" readonly="true" id="id" />
-			</h:panelGroup>
-			<pr:outputLabel />
+			<pr:messages autoUpdate="true" />
 
 
-			<pr:outputLabel value="Cargo" for="responsibility" />
-			<pr:inputText value="#{companyBean.job.responsibility}"
-				required="true" id="responsibility" />
 
-			<pr:outputLabel value="Nível" for="nivel" />
-			<pr:selectOneRadio id="nivel" value="#{companyBean.job.level}">
-				<f:selectItem itemValue="estagio" itemLabel="Estágio" />
-				<f:selectItem itemValue="junior" itemLabel="Júnior" />
-				<f:selectItem itemValue="pleno" itemLabel="Pleno" />
-				<f:selectItem itemValue="senior" itemLabel="Sênior" />
-				<f:selectItem itemValue="trainee" itemLabel="Trainee" />
-			</pr:selectOneRadio>
+			<h:panelGrid columns="2"
+				columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+				styleClass="customPanelGrid, text-14" contentStyleClass="ui-fluid">
+				<f:facet name="header">
+
+				</f:facet>
+
+				<h:panelGroup layout="block" styleClass="hidden">
+					<pr:outputLabel value="id" for="id" />
+					<pr:inputText value="#{companyBean.job.id}" readonly="true" id="id" />
+				</h:panelGroup>
+				<pr:outputLabel />
 
 
-			<pr:outputLabel value="Local de trabalho" for="address" />
-			<pr:inputText value="#{companyBean.job.address}" id="address"
-				required="true" />
+				<pr:outputLabel value="Cargo" for="responsibility" />
+				<pr:inputText value="#{companyBean.job.responsibility}"
+					required="true" id="responsibility" styleClass="input" />
 
-			<pr:outputLabel for="skills" value="Habilidades requeridas " />
-			<pr:chips id="skills" value="#{companyBean.skills}" />
-			
-			<pr:outputLabel value="Remoto?" for="remote"/>
-        	<pr:selectBooleanCheckbox value="#{companyBean.job.remote}" id="remote"/>
-        	
-			<pr:outputLabel value="Detalhes da vaga" />
-			<pr:inputTextarea rows="5" cols="34" counter="display"
-				style="resize:none" maxlength="600"
-				counterTemplate="{0} caracteres restantes." autoResize="true"
-				value="#{companyBean.job.resume}" />
-			<br />
-			<h:outputText id="display" />
+				<pr:outputLabel value="Nível" for="nivel" />
+				<pr:selectOneRadio id="nivel" value="#{companyBean.job.level}"
+					styleClass="input">
+					<f:selectItem itemValue="estagio" itemLabel="Estágio" />
+					<f:selectItem itemValue="junior" itemLabel="Júnior" />
+					<f:selectItem itemValue="pleno" itemLabel="Pleno" />
+					<f:selectItem itemValue="senior" itemLabel="Sênior" />
+					<f:selectItem itemValue="trainee" itemLabel="Trainee" />
+				</pr:selectOneRadio>
 
-			<h:panelGroup>
-				<pr:commandButton value="Salvar" ajax="false"
-					action="#{companyBean.save}"/>
-			</h:panelGroup>
 
-		</h:panelGrid>
-	</h:form>
+				<pr:outputLabel value="Local de trabalho" for="address" />
+				<pr:inputText value="#{companyBean.job.address}" id="address"
+					required="true" styleClass="input" />
+
+				<pr:outputLabel for="skills" value="Habilidades requeridas " />
+				<pr:chips id="skills" value="#{companyBean.skills}"
+					styleClass="input" />
+
+				<pr:outputLabel value="Remoto?" for="remote" />
+				<pr:selectBooleanCheckbox value="#{companyBean.job.remote}"
+					id="remote" styleClass="input" />
+
+				<pr:outputLabel value="Detalhes da vaga" />
+				<pr:inputTextarea rows="5" cols="34" counter="display"
+					style="resize:none" maxlength="600"
+					counterTemplate="{0} caracteres restantes." autoResize="true"
+					value="#{companyBean.job.resume}" />
+				<br />
+				<h:outputText id="display" />
+
+				<h:panelGroup>
+					<pr:commandButton value="Salvar" ajax="false"
+						action="#{companyBean.save}" />
+				</h:panelGroup>
+
+			</h:panelGrid>
+		</h:form>
+	</div>
 	<script src="resources/js/updateInfoCompany.js"></script>
 </h:body>
 </html>

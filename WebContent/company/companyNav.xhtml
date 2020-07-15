@@ -5,9 +5,14 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:b="http://bootsfaces.net/ui" xmlns:pr="http://primefaces.org/ui">
+<h:head>
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/nav.css"
+		media="screen" />
+</h:head>
 
 <h:form>
-	<pr:megaMenu orientation="horizontal" style="margin-top:20px">
+	<pr:megaMenu orientation="horizontal" id="menu">
 		<pr:submenu label="Minhas vagas" icon="pi pi-check">
 			<pr:column>
 				<pr:submenu>
@@ -20,7 +25,8 @@
 			<pr:column>
 				<pr:submenu>
 					<pr:menuitem value="Ver" url="company.xhtml" />
-					<pr:menuitem value="Editar" action="#{companyBean.recoverInfoCompany}" /> 
+					<pr:menuitem value="Editar"
+						action="#{companyBean.recoverInfoCompany}" />
 				</pr:submenu>
 			</pr:column>
 		</pr:submenu>
