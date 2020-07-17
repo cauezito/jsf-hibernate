@@ -8,70 +8,65 @@
 <h:head>
 	<title>Login</title>
 	<link rel="stylesheet" type="text/css"
-		href="#{facesContext.externalContext.requestContextPath}/css/style-new-user.css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/login.css"
 		media="screen" />
-	<h:outputStylesheet library="css" name="login.css" />
+	
 </h:head>
 <h:body>
+		<div class="ui-g container">
+			<h:form id="formLoginUser" styleClass="centralized">
+				<pr:growl id="msgs" showDetail="true"
+					skipDetailIfEqualsSummary="true" />
+				<div class="ui-g-4">
+					<pr:fieldset legend="Candidato"
+						style="margin-bottom:20px; height: 192px">
+						<h:panelGrid columns="3" cellpadding="10">
 
-	<h:form id="formLoginUser">
-		<pr:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+							<h:outputLabel value="Usuário:" />
+							<h:inputText value="#{personBean.person.login}" />
+							<h:outputLabel />
 
-		<pr:panel id="panelogin" style="margin-bottom:20px">
-			<h:panelGrid columns="2" cellpadding="10">
-				<h:outputText>
-          	It is a long established fact that a reader will be distracted by the readable content 
-          	of a page when looking at its layout. The point of using Lorem Ipsum is that it has a 
-          	more-or-less normal distribution of letters, as opposed to using 'Content here, content here', 
-          	making it look like readable English. Many desktop publishing packages and web page editors 
-          	now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover
-          	 many web sites still in their infancy. Various versions have evolved over the years, 
-          	 sometimes by accident, sometimes on purpose (injected humour and the like).
-          	</h:outputText>
-				<h:outputLabel />
 
-				<h:outputLabel value="Usuário:" />
-				<h:inputText value="#{personBean.person.login}" />
+							<h:outputLabel value="Senha:" />
+							<h:inputSecret value="#{personBean.person.password}" />
 
-				<h:outputLabel value="Senha:" />
-				<h:inputSecret value="#{personBean.person.password}" />
+							<h:commandButton value="Entrar" styleClass="btn"
+								action="#{personBean.login}" />
 
-				<h:commandButton value="Entrar" action="#{personBean.login}"/>
 
-			</h:panelGrid>
-		</pr:panel>
-	</h:form>
-	
-	<h:form id="formLoginCompany"> 
-    <pr:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
- 
-    <pr:panel id="panelogin" style="margin-bottom:20px">
-        <h:panelGrid columns="2" cellpadding="10">
-          	<h:outputText>
-          	It is a long established fact that a reader will be distracted by the readable content 
-          	of a page when looking at its layout. The point of using Lorem Ipsum is that it has a 
-          	more-or-less normal distribution of letters, as opposed to using 'Content here, content here', 
-          	making it look like readable English. Many desktop publishing packages and web page editors 
-          	now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover
-          	 many web sites still in their infancy. Various versions have evolved over the years, 
-          	 sometimes by accident, sometimes on purpose (injected humour and the like).
-          	</h:outputText>
-            <h:outputLabel/>
-                
-                <h:outputLabel value="CNPJ:"/>
-				<h:inputText value="#{companyBean.company.cnpj}"/>
-				
-				<h:outputLabel value="Email:"/>
-				<h:inputText value="#{companyBean.company.email}"/>
-				
-				<h:outputLabel value="Senha:"/>
-				<h:inputSecret value="#{companyBean.company.password}"/>
-				
-				<h:commandButton value="Entrar" action="#{companyBean.login}"/>
-        	
-        </h:panelGrid>
-    </pr:panel>                                       
 
-	</h:form>		
+						</h:panelGrid>
+					</pr:fieldset>
+				</div>
+			</h:form>
+
+			<h:form id="formLoginCompany" styleClass="centralized">
+				<pr:growl id="msgs" showDetail="true"
+					skipDetailIfEqualsSummary="true" />
+
+
+				<div class="ui-g-4">
+					<pr:fieldset legend="Empresa" style="margin-bottom:20px">
+						<h:panelGrid columns="3" cellpadding="10" style="width: 50px">
+
+							<h:outputLabel value="CNPJ:" />
+							<h:inputText value="#{companyBean.company.cnpj}" />
+							<h:outputLabel />
+
+							<h:outputLabel value="Email:" />
+							<h:inputText value="#{companyBean.company.email}" />
+							<h:outputLabel />
+
+							<h:outputLabel value="Senha:" />
+							<h:inputSecret value="#{companyBean.company.password}" />
+
+							<h:commandButton value="Entrar" styleClass="btn"
+								action="#{companyBean.login}" />
+
+						</h:panelGrid>
+					</pr:fieldset>
+				</div>
+			</h:form>
+		</div>
 </h:body>
 </html>

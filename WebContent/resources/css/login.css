@@ -1,5 +1,26 @@
 @charset "ISO-8859-1";
 
 body{
-	background-color: #F2F2F2;
+	background-color: #48466d;
+	margin: 0px;
+}
+
+.input {
+	width: 390px;
+	line-height: 28px;
+}
+
+.centralized {
+	text-align: center;
+	width: 590px; 
+	padding: 40px;
+}
+
+.container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
