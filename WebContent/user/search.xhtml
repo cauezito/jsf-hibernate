@@ -10,7 +10,7 @@
 <h:head>
 	<title>TechJobs - Buscar vagas</title>
 	<link rel="stylesheet" type="text/css"
-		href="#{facesContext.externalContext.requestContextPath}/resources/css/home.css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/user/search.css"
 		media="screen" />
 </h:head>
 <h:body>
@@ -20,25 +20,34 @@
 		<pr:messages autoUpdate="true" />
 		<pr:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
 		<div class="ui-g">
-			<div class="ui-g-12 ui-md-10 ui-g-nopad">
+			<div class="ui-g-12 ui-md-12 ui-g-nopad">
 				<div class="ui-g-12 ui-g-nopad">
 					<div class="ui-g">
 						<ui:repeat var="job" value="#{jobBean.jobs}">
 							<div class="ui-g-12 ui-md-4">
-								<pr:panel id="basic" header="#{job.responsibility}"
-									style="margin-bottom:20px">
-									<h:panelGrid columns="2" cellpadding="12" cellspacing="1">
-										<h:graphicImage url="/resources/img/hierarchy.png" />
-										<h:outputText value="#{job.level}" />
-										<h:graphicImage url="/resources/img/remote.png" />
-										<h:outputText value="#{job.remote}" />
-										<h:graphicImage url="/resources/img/map.png" />
-										<h:outputText value="#{job.address}" />
-										<h:graphicImage url="/resources/img/question.png" />
-										<h:commandButton value="Detalhes"
+
+								<pr:panel id="panel" style="margin-bottom:20px">
+
+									<h2 class="title">
+										<h:commandLink styleClass="link" value="#{job.responsibility}"
 											action="#{jobBean.showJob}">
 											<f:param name="jobId" value="#{job.id}"></f:param>
-										</h:commandButton>
+										</h:commandLink>
+									</h2>
+
+									<h:panelGrid columns="2" cellpadding="12" cellspacing="1">
+										<h:outputText value="Nível:" />
+										<h:outputText value="#{job.level}" />
+
+										<h:outputText value="Stacks:" />
+										<h:outputText value="SQL, HIBERNATE, JAVA" />
+
+										<h:outputText value="Localização:" />
+										<h:outputText value="#{job.address}" />
+
+										<h:outputText value="Remoto?" />
+										<h:outputText value="#{job.remote}" />
+
 									</h:panelGrid>
 								</pr:panel>
 							</div>
