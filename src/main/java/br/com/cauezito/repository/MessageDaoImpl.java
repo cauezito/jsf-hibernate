@@ -43,7 +43,7 @@ public class MessageDaoImpl implements MessageDao, Serializable {
 
 			t.commit();
 		} catch (NoResultException e) {
-			ShowMessages.showMessage("Você ainda não recebeu mensagens!");
+			ShowMessages.showMessageError("Você ainda não recebeu mensagens!");
 		}
 
 		return message;

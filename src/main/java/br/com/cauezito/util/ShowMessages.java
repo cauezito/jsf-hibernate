@@ -5,9 +5,17 @@ import javax.faces.context.FacesContext;
 
 public class ShowMessages {
 	
-	public static void showMessage(String msg) {		
-		FacesContext context = FacesContext.getCurrentInstance();
-		FacesMessage message = new FacesMessage(msg);
-		context.addMessage(null, message);
+	public static void showMessageInfo(String msg) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", msg));	
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		
 	}
+	
+	public static void showMessageError(String msg) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", msg));	
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		
+	}
+	
+	
 }

@@ -28,7 +28,7 @@ public class PersonDaoImpl implements PersonDao, Serializable{
 					"' and p.password = '" + password + "'").getSingleResult();
 			t.commit();
 		} catch (NoResultException e) {
-			ShowMessages.showMessage("Dados inválidos");
+			ShowMessages.showMessageError("Dados não encontrados!");
 		}		
 		
 		return person;
@@ -43,7 +43,7 @@ public class PersonDaoImpl implements PersonDao, Serializable{
 			curriculum = (Curriculum) entityManager.createQuery("select c from Curriculum c where c.id = " + id).getSingleResult();
 			t.commit();
 		} catch (NoResultException e) {
-			ShowMessages.showMessage("Não foi possível obter o currículo");
+			ShowMessages.showMessageError("Não foi possível obter o currículo");
 		}		
 		
 		return curriculum;

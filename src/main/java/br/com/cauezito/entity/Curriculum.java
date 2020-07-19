@@ -86,7 +86,7 @@ public class Curriculum {
 				os.close();
 
 			} catch (IOException err) {
-				ShowMessages.showMessage("Não foi possível fazer download do arquivo");
+				ShowMessages.showMessageError("Não foi possível fazer download do arquivo");
 				err.printStackTrace();
 			}
 			FacesContext.getCurrentInstance().responseComplete();

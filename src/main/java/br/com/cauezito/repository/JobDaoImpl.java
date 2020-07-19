@@ -45,7 +45,7 @@ public class JobDaoImpl implements Serializable, JobDao {
 
 			t.commit();
 		} catch (NoResultException e) {
-			ShowMessages.showMessage("Não há vagas disponíveis");
+			ShowMessages.showMessageError("Não há vagas disponíveis");
 		}
 
 		return jobs;
@@ -70,7 +70,7 @@ public class JobDaoImpl implements Serializable, JobDao {
 
 			t.commit();
 		} catch (NoResultException e) {
-			ShowMessages.showMessage("Você ainda não se candidatou a uma vaga!");
+			ShowMessages.showMessageError("Você ainda não se candidatou a uma vaga!");
 		}
 
 		return jobs;
@@ -95,7 +95,7 @@ public class JobDaoImpl implements Serializable, JobDao {
 
 			t.commit();
 		} catch (NoResultException e) {
-			ShowMessages.showMessage("Não há candidatos para esta vaga");
+			ShowMessages.showMessageError("Não há candidatos para esta vaga");
 		}
 
 		return candidates;

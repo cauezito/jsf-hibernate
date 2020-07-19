@@ -85,14 +85,22 @@ public class JobBean implements Serializable {
 
 	public String unsubscribedJobs() {
 		this.getSession();
-		jobs = jobDao.getUnsubscribedJobs(person.getId());		
+		this.getUnsubscribedJobs();
 		return "/user/search.xhtml?faces-redirect=true";
+	}
+	
+	private void getUnsubscribedJobs() {
+		jobs = jobDao.getUnsubscribedJobs(person.getId());	
 	}
 	
 	public String subscribedJobs() {
 		this.getSession();
-		jobs = jobDao.getSubscribedJobs(person.getId());
+		this.getSubscribedJobs();
 		return "/user/candidatures.xhtml?faces-redirect=true";
+	}
+	
+	private void getSubscribedJobs() {
+		jobs = jobDao.getSubscribedJobs(person.getId());
 	}
 
 	public String showJob() {
@@ -103,9 +111,14 @@ public class JobBean implements Serializable {
 		return "/user/showJob.xhtml?faces-redirect=true";
 	}
 	
+	private void findAllJobs() {
+		jobs = jobGenericDao.getListEntity(JobOpportunity.class);		
+	}
+	
 	public String allJobs() {
-		jobs = jobGenericDao.getListEntity(JobOpportunity.class);
+		this.findAllJobs();
 		return "/company/jobs.xhtml?faces-redirect=true";
+		
 	}
 	
 	public void showCandidate() {
@@ -119,9 +132,10 @@ public class JobBean implements Serializable {
 		personJob.setPerson(person);		
 
 		if (this.save()) {
-			ShowMessages.showMessage("Você se candidatou!");
+			ShowMessages.showMessageInfo("Você se candidatou!");
+			this.getUnsubscribedJobs();
 		} else {
-			ShowMessages.showMessage("Não foi possível se candidatar. Tente novamente mais tarde.");
+			ShowMessages.showMessageError("Não foi possível se candidatar. Tente novamente mais tarde.");
 		}
 
 		return "/user/search.xhtml?faces-redirect=true";
@@ -145,7 +159,7 @@ public class JobBean implements Serializable {
 	
 		//personGenericDao.merge(selectedPerson);
 		if(messageGenericDao.merge(message) != null) {
-			ShowMessages.showMessage("A mensagem foi enviada!");
+			ShowMessages.showMessageInfo("A mensagem foi enviada!");
 		}
 		return "/company/controlPanel.xhtml?faces-redirect=true";
 	}

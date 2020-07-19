@@ -84,9 +84,9 @@ public class PersonBean implements Crud, Serializable {
 
 		if (dao.merge(person) != null) {
 			this.setSession("personOn", person);
-			ShowMessages.showMessage("Informações atualizadas!");
+			ShowMessages.showMessageInfo("Informações atualizadas!");
 		} else {
-			ShowMessages.showMessage("Não foi possível atualizar as informações!");
+			ShowMessages.showMessageError("Não foi possível atualizar as informações!");
 		}
 		return "";
 	}
@@ -101,7 +101,7 @@ public class PersonBean implements Crud, Serializable {
 	public String removeById() {
 		dao.removeById(person);
 		person = new Person();
-		ShowMessages.showMessage("Usuário removido com sucesso!");
+		ShowMessages.showMessageInfo("Usuário removido com sucesso!");
 		return "";
 	}
 
@@ -137,7 +137,7 @@ public class PersonBean implements Crud, Serializable {
 		ec.getSessionMap().remove("personOn");
 		HttpServletRequest req = (HttpServletRequest) context.getCurrentInstance().getExternalContext().getRequest();
 		req.getSession().invalidate();
-		ShowMessages.showMessage("Você saiu");
+		ShowMessages.showMessageInfo("Você saiu");
 		return "login";
 	}
 

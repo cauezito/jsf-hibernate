@@ -15,10 +15,12 @@
 </h:head>
 <h:body>
 	<ui:include src="/user/userNav.xhtml" />
-
 	<h:form>
-		<pr:messages autoUpdate="true" />
-		<pr:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+		<pr:messages id="messages" showDetail="true" closable="true" autoUpdate="true">
+			<pr:autoUpdate />
+		</pr:messages>
+	</h:form>
+	<h:form>
 		<div class="ui-g">
 			<div class="ui-g-12 ui-md-12 ui-g-nopad">
 				<div class="ui-g-12 ui-g-nopad">

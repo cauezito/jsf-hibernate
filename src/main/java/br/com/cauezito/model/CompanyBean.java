@@ -57,10 +57,10 @@ public class CompanyBean implements Serializable {
 		
 		if (dao.merge(company) != null) {
 			this.setSession("companyOn", company);
-			ShowMessages.showMessage("Vaga cadastrada!");
+			ShowMessages.showMessageInfo("Vaga cadastrada!");
 			job = new JobOpportunity();
 		} else {
-			ShowMessages.showMessage("Não foi possível cadastrar a vaga;");
+			ShowMessages.showMessageError("Não foi possível cadastrar a vaga;");
 		}	
 		return "";
 	}
@@ -85,7 +85,7 @@ public class CompanyBean implements Serializable {
 		ec.getSessionMap().remove("companyOn");
 		HttpServletRequest req = (HttpServletRequest) context.getCurrentInstance().getExternalContext().getRequest();
 		req.getSession().invalidate();
-		ShowMessages.showMessage("Você saiu");
+		ShowMessages.showMessageInfo("Você saiu");
 		return "login";
 	}
 
