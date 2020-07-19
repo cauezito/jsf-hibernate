@@ -150,17 +150,19 @@ public class JobBean implements Serializable {
 	}
 	
 	public String sendMessage() {
-		
+	
 		message.setSubject(job.getResponsibility());
 		message.setReceiver(selectedPerson);
 		company = companyGenericDao.search(Company.class, job.getCompany().getId().toString());
 		message.setSender(company);
 		
-	
-		//personGenericDao.merge(selectedPerson);
 		if(messageGenericDao.merge(message) != null) {
 			ShowMessages.showMessageInfo("A mensagem foi enviada!");
+			jobDao.removeCandidate(selectedPerson.getId(), job.getId());	
+			candidates = jobDao.getCandidates(job.getId());		
+			message = new Message();
 		}
+		
 		return "/company/controlPanel.xhtml?faces-redirect=true";
 	}
 

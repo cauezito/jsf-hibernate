@@ -84,10 +84,8 @@ public class JobDaoImpl implements Serializable, JobDao {
 		t.begin();
 		try {
 
-			TypedQuery<Person> query = (TypedQuery<Person>) entityManager
-					.createQuery("FROM Person p where exists "
-							+ "(from PersonJob pjob where pjob.job.id = :jobId "
-							+ "and pjob.person.id = p.id)");
+			TypedQuery<Person> query = (TypedQuery<Person>) entityManager.createQuery("FROM Person p where exists "
+					+ "(from PersonJob pjob where pjob.job.id = :jobId " + "and pjob.person.id = p.id)");
 
 			query.setParameter("jobId", jobId);
 
@@ -99,6 +97,17 @@ public class JobDaoImpl implements Serializable, JobDao {
 		}
 
 		return candidates;
+	}
+
+	@Override
+	public void removeCandidate(Long personId, Long jobId) {
+		EntityTransaction t = entityManager.getTransaction();
+		t.begin();
+
+		entityManager.createQuery("delete from PersonJob ps where ps.job.id = :jobId" + " and ps.person.id = :personId")
+				.setParameter("jobId", jobId).setParameter("personId", personId).executeUpdate();
+
+		t.commit();
 	}
 
 }

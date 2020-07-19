@@ -9,4 +9,5 @@ public interface JobDao {
 	List<JobOpportunity> getUnsubscribedJobs(Long userId);
 	List<JobOpportunity> getSubscribedJobs(Long userId);
 	List<Person> getCandidates(Long jobId);
+	void removeCandidate (Long personId, Long jobId);
 }
