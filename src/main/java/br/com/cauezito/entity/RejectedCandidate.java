@@ -1,48 +1,59 @@
 package br.com.cauezito.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
-public class FinalistCandidates implements Serializable {
+public class RejectedCandidate implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@ManyToOne
 	@JoinColumn
 	private JobOpportunity job;
-	
+
 	@ManyToOne
 	@JoinColumn
 	private Person candidate;
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public JobOpportunity getJob() {
 		return job;
 	}
+
 	public void setJob(JobOpportunity job) {
 		this.job = job;
 	}
+
 	public Person getCandidate() {
 		return candidate;
 	}
+
 	public void setCandidate(Person candidate) {
 		this.candidate = candidate;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -50,6 +61,7 @@ public class FinalistCandidates implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -58,7 +70,7 @@ public class FinalistCandidates implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FinalistCandidates other = (FinalistCandidates) obj;
+		RejectedCandidate other = (RejectedCandidate) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -66,5 +78,5 @@ public class FinalistCandidates implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

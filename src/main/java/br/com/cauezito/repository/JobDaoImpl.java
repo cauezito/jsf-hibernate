@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 
 import br.com.cauezito.entity.JobOpportunity;
 import br.com.cauezito.entity.Person;
+import br.com.cauezito.entity.RejectedCandidate;
 import br.com.cauezito.util.ShowMessages;
 
 @Named
@@ -37,7 +38,8 @@ public class JobDaoImpl implements Serializable, JobDao {
 
 			TypedQuery<JobOpportunity> query = (TypedQuery<JobOpportunity>) entityManager
 					.createQuery("FROM JobOpportunity job where not exists "
-							+ "(from PersonJob pjob where pjob.job.id = job.id and pjob.person.id = :userId)");
+							+ "(from PersonJob pjob where pjob.job.id = job.id and pjob.person.id = :userId)"
+							+ " and not exists (from FinalistCandidates fc where fc.job.id = job.id and fc.candidate.id = :userId)");
 
 			query.setParameter("userId", userId);
 
@@ -108,6 +110,17 @@ public class JobDaoImpl implements Serializable, JobDao {
 				.setParameter("jobId", jobId).setParameter("personId", personId).executeUpdate();
 
 		t.commit();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<RejectedCandidate> getRejectedCandidates(Long jobId) {
+		List<RejectedCandidate> rejected = new ArrayList<RejectedCandidate>();
+		EntityTransaction t = entityManager.getTransaction();
+		t.begin();
+		
+		rejected = entityManager.createNamedQuery("").setParameter("", jobId).getResultList();
+		return null;
 	}
 
 }

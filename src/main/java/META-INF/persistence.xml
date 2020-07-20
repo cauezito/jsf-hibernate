@@ -13,6 +13,8 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/x
 		<class>br.com.cauezito.entity.Owner</class>
 		<class>br.com.cauezito.entity.PersonJob</class>
 		<class>br.com.cauezito.entity.Message</class>
+		<class>br.com.cauezito.entity.RejectedCandidate</class>
+		<class>br.com.cauezito.entity.FinalistCandidates</class>
 		
 		
 		<properties>

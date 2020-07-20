@@ -85,6 +85,12 @@ public class Person implements Serializable {
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Message> messages = new ArrayList<Message>();
 	
+	@OneToMany(mappedBy = "candidate")
+	private List <RejectedCandidate> rejected = new ArrayList<RejectedCandidate>();
+	
+	@OneToMany(mappedBy = "candidate")
+	private List <FinalistCandidates> finalist = new ArrayList<FinalistCandidates>();
+	
 	public Person() {
 		this.setDeficientAux();
 	}
@@ -255,6 +261,8 @@ public class Person implements Serializable {
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}
+	
+	
 	
 
 }

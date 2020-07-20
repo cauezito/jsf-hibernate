@@ -21,6 +21,7 @@ import br.com.cauezito.entity.JobOpportunity;
 import br.com.cauezito.entity.Message;
 import br.com.cauezito.entity.Person;
 import br.com.cauezito.entity.PersonJob;
+import br.com.cauezito.entity.RejectedCandidate;
 import br.com.cauezito.entity.Telephone;
 import br.com.cauezito.repository.JobDao;
 import br.com.cauezito.repository.MessageDao;
@@ -48,7 +49,10 @@ public class JobBean implements Serializable {
 	private JobDao jobDao;
 
 	@Inject
-	private GenericDao<PersonJob> personJobDao;
+	private GenericDao<PersonJob> personJobGenericDao;
+	
+	@Inject
+	private GenericDao<RejectedCandidate> rejectedCandidateGenericDao;
 	
 	@Inject
 	private GenericDao<Message> messageGenericDao;
@@ -61,6 +65,9 @@ public class JobBean implements Serializable {
 	
 	@Inject
 	private FinalistCandidates finalist;
+	
+	@Inject
+	private RejectedCandidate rejected;
 	
 	@Inject
 	private Company company;
@@ -159,7 +166,13 @@ public class JobBean implements Serializable {
 		if(messageGenericDao.merge(message) != null) {
 			ShowMessages.showMessageInfo("A mensagem foi enviada!");
 			jobDao.removeCandidate(selectedPerson.getId(), job.getId());	
-			candidates = jobDao.getCandidates(job.getId());		
+			candidates = jobDao.getCandidates(job.getId());	
+			
+			finalist.setJob(job);
+			finalist.setCandidate(selectedPerson);
+			
+			finalistGenericDao.merge(finalist);
+			
 			message = new Message();
 		}
 		
@@ -167,7 +180,7 @@ public class JobBean implements Serializable {
 	}
 
 	private boolean save() {
-		if (personJobDao.merge(personJob) != null) {
+		if (personJobGenericDao.merge(personJob) != null) {
 			return true;
 		}
 

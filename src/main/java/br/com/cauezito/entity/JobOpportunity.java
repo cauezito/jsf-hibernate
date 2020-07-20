@@ -49,8 +49,11 @@ public class JobOpportunity implements Serializable{
 	@OneToMany(mappedBy = "job")
 	private List<PersonJob> personJob = new ArrayList<PersonJob>();
 	
-	/*@ManyToMany
-	private List<FinalistCandidates> finalistCandidates = new ArrayList<FinalistCandidates>();*/
+	@OneToMany(mappedBy = "job")
+	private List<FinalistCandidates> finalistCandidates = new ArrayList<FinalistCandidates>();
+	
+	@OneToMany(mappedBy = "job")
+	private List<RejectedCandidate> rejectedCandidates = new ArrayList<RejectedCandidate>();
 	
 	public JobOpportunity() {
 		if(this.remote) {
@@ -139,4 +142,13 @@ public class JobOpportunity implements Serializable{
 	public void setFinalistCandidates(List<FinalistCandidates> finalistCandidates) {
 		this.finalistCandidates = finalistCandidates;
 	}		*/
+
+
+	public List<RejectedCandidate> getRejectedCandidates() {
+		return rejectedCandidates;
+	}
+
+	public void setRejectedCandidates(List<RejectedCandidate> rejectedCandidates) {
+		this.rejectedCandidates = rejectedCandidates;
+	}
 }
