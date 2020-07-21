@@ -89,7 +89,7 @@ public class Person implements Serializable {
 	private List <RejectedCandidate> rejected = new ArrayList<RejectedCandidate>();
 	
 	@OneToMany(mappedBy = "candidate")
-	private List <FinalistCandidates> finalist = new ArrayList<FinalistCandidates>();
+	private List <FinalistCandidate> finalist = new ArrayList<FinalistCandidate>();
 	
 	public Person() {
 		this.setDeficientAux();

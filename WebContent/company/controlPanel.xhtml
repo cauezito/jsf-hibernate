@@ -107,7 +107,8 @@
 				<h:panelGrid columns="2">
 					<pr:commandButton value="Agendar entrevista"
 						onclick="PF('message').show();" />
-					<h:commandButton value="O candidato não atende aos requisitos" />
+					<pr:commandButton value="O candidato não atende aos requisitos" 
+					action="#{jobBean.rejectCandidate}" />
 				</h:panelGrid>
 			</h:panelGrid>
 		</pr:dialog>

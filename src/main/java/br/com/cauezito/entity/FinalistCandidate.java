@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class FinalistCandidates implements Serializable {
+public class FinalistCandidate implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -58,7 +58,7 @@ public class FinalistCandidates implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FinalistCandidates other = (FinalistCandidates) obj;
+		FinalistCandidate other = (FinalistCandidate) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

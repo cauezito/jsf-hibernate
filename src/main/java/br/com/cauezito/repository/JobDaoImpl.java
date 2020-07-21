@@ -39,7 +39,8 @@ public class JobDaoImpl implements Serializable, JobDao {
 			TypedQuery<JobOpportunity> query = (TypedQuery<JobOpportunity>) entityManager
 					.createQuery("FROM JobOpportunity job where not exists "
 							+ "(from PersonJob pjob where pjob.job.id = job.id and pjob.person.id = :userId)"
-							+ " and not exists (from FinalistCandidates fc where fc.job.id = job.id and fc.candidate.id = :userId)");
+							+ " and not exists (from FinalistCandidate fc where fc.job.id = job.id and fc.candidate.id = :userId)"
+							+ " and not exists (from RejectedCandidate rc where rc.job.id = job.id and rc.candidate.id = :userId)");
 
 			query.setParameter("userId", userId);
 

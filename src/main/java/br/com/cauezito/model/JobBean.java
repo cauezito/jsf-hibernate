@@ -16,7 +16,7 @@ import org.jboss.weld.context.RequestContext;
 
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.Company;
-import br.com.cauezito.entity.FinalistCandidates;
+import br.com.cauezito.entity.FinalistCandidate;
 import br.com.cauezito.entity.JobOpportunity;
 import br.com.cauezito.entity.Message;
 import br.com.cauezito.entity.Person;
@@ -43,7 +43,7 @@ public class JobBean implements Serializable {
 	private GenericDao<Person> personGenericDao;
 	
 	@Inject
-	private GenericDao<FinalistCandidates> finalistGenericDao;
+	private GenericDao<FinalistCandidate> finalistGenericDao;
 	
 	@Inject
 	private JobDao jobDao;
@@ -64,7 +64,7 @@ public class JobBean implements Serializable {
 	private Person person;
 	
 	@Inject
-	private FinalistCandidates finalist;
+	private FinalistCandidate finalist;
 	
 	@Inject
 	private RejectedCandidate rejected;
@@ -78,7 +78,7 @@ public class JobBean implements Serializable {
 	
 	private List<String> phones = new ArrayList<String>();
 	
-	private List<FinalistCandidates> finalistList = new ArrayList<FinalistCandidates>();
+	private List<FinalistCandidate> finalistList = new ArrayList<FinalistCandidate>();
 
 	@Inject
 	private JobOpportunity job;
@@ -174,6 +174,17 @@ public class JobBean implements Serializable {
 			finalistGenericDao.merge(finalist);
 			
 			message = new Message();
+		}
+		
+		return "/company/controlPanel.xhtml?faces-redirect=true";
+	}
+	
+	public String rejectCandidate() {		
+		rejected.setCandidate(selectedPerson);
+		rejected.setJob(job);
+		if(rejectedCandidateGenericDao.merge(rejected) != null) {
+			jobDao.removeCandidate(selectedPerson.getId(), job.getId());
+			ShowMessages.showMessageInfo("O usuário foi desqualificado.");
 		}
 		
 		return "/company/controlPanel.xhtml?faces-redirect=true";
