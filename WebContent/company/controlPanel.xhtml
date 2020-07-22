@@ -53,8 +53,10 @@
 				</div>
 			</div>
 		</pr:panel>
+	</h:form>
 
-		<pr:dataTable var="p" value="#{jobBean.candidates}">
+	<h:form id="candidates">
+		<pr:dataTable id="table" var="p" value="#{jobBean.candidates}">
 			<pr:column headerText="Nome">
 				<h:outputText value="#{p.name} #{p.surname}" />
 			</pr:column>
@@ -75,14 +77,11 @@
 				<pr:growl id="growl" sticky="true" showDetail="true" />
 
 
-				<pr:commandButton update=":job:moreDetails"
+				<pr:commandButton update=":candidates:moreDetails"
 					oncomplete="PF('showDetails').show()" value="Detalhes">
 					<f:setPropertyActionListener value="#{p}"
 						target="#{jobBean.selectedPerson}" />
 				</pr:commandButton>
-
-
-
 
 			</pr:column>
 		</pr:dataTable>
@@ -105,20 +104,25 @@
 				<h:outputText value="#{jobBean.selectedPerson.bio}" />
 
 				<h:panelGrid columns="2">
-					<pr:commandButton value="Agendar entrevista"
+					<pr:commandButton value="Convidar para processo seletivo"
 						onclick="PF('message').show();" />
-					<pr:commandButton value="O candidato não atende aos requisitos" 
-					action="#{jobBean.rejectCandidate}" />
+
+					<pr:commandButton value="O candidato não atende aos requisitos"
+						action="#{jobBean.rejectCandidate}"
+						update="@all" process="@all" />
+
 				</h:panelGrid>
 			</h:panelGrid>
 		</pr:dialog>
 
-		<pr:dialog header="Enviar mensagem para #{jobBean.selectedPerson.name}" widgetVar="message" resizable="false">
+		<pr:dialog
+			header="Enviar mensagem para #{jobBean.selectedPerson.name}"
+			widgetVar="message" resizable="false">
 			<h:panelGrid columns="2" cellpadding="5">
 				<h:outputLabel for="subject" value="Assunto:" />
-				<pr:inputText id="subject"
-					 label="subject" readonly="true" placeholder="#{jobBean.job.responsibility}"
-					 value="#{jobBean.job.responsibility}"/>
+				<pr:inputText id="subject" label="subject" readonly="true"
+					placeholder="#{jobBean.job.responsibility}"
+					value="#{jobBean.job.responsibility}" />
 
 
 				<h:outputLabel for="body" value="Assunto:" />

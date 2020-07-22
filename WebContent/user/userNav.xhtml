@@ -4,34 +4,30 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:pr="http://primefaces.org/ui">
+	xmlns:pr="http://primefaces.org/ui">
 
 <h:form style="margin: -8px 0 50px -8px; width: 101%;">
-	<pr:megaMenu orientation="horizontal">
-		<pr:submenu label="Vagas" icon="pi pi-check">
-			<pr:column>
-				<pr:submenu>
-					<pr:menuitem value="Buscar" action="#{jobBean.unsubscribedJobs}" />
-					<pr:menuitem value="Candidaturas" action="#{jobBean.subscribedJobs}" />
-					<pr:menuitem value="Mensagens" action="#{personBean.messages}" />
-				</pr:submenu>
-			</pr:column>
+
+	<pr:menubar>
+		<pr:submenu label="Vagas">
+			<pr:menuitem value="Buscar" action="#{jobBean.unsubscribedJobs}" />
+			<pr:separator />
+			<pr:menuitem value="Candidaturas" action="#{jobBean.subscribedJobs}" />
 		</pr:submenu>
-		<pr:submenu label="Perfil" icon="pi pi-check">
-			<pr:column>
-				<pr:submenu>
-					<pr:menuitem value="Ver" url="user.xhtml" />
-					<pr:menuitem value="Editar" action="#{personBean.recoverInfoUser}" /> 
-				</pr:submenu>
-			</pr:column>
+
+		<pr:submenu label="Perfil">
+			<pr:menuitem value="Ver" url="user.xhtml"
+				icon="pi pi-angle-double-left" />
+			<pr:menuitem value="Editar" action="#{personBean.recoverInfoUser}"
+				icon="pi pi-angle-double-right" />
 		</pr:submenu>
-		<pr:submenu label="Configurações" icon="pi pi-check">
-			<pr:column>
-				<pr:submenu>
-					<pr:menuitem value="Alterar dados da conta" url="#" />
-				</pr:submenu>
-			</pr:column>
+
+		<pr:submenu label="Configurações">
+			<pr:menuitem value="Alterar dados da conta" url="#" />
 		</pr:submenu>
-	</pr:megaMenu>
+
+		<pr:menuitem value="Sair" action="#{personBean.logout}"
+			icon="pi pi-times" />
+	</pr:menubar>
 </h:form>
 </html>

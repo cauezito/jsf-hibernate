@@ -78,8 +78,6 @@ public class JobBean implements Serializable {
 	
 	private List<String> phones = new ArrayList<String>();
 	
-	private List<FinalistCandidate> finalistList = new ArrayList<FinalistCandidate>();
-
 	@Inject
 	private JobOpportunity job;
 	
@@ -185,6 +183,7 @@ public class JobBean implements Serializable {
 		if(rejectedCandidateGenericDao.merge(rejected) != null) {
 			jobDao.removeCandidate(selectedPerson.getId(), job.getId());
 			ShowMessages.showMessageInfo("O usuário foi desqualificado.");
+			
 		}
 		
 		return "/company/controlPanel.xhtml?faces-redirect=true";
