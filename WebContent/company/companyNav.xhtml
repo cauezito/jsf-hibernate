@@ -16,25 +16,21 @@
 	<pr:menubar>
 		<pr:submenu label="Minhas vagas">
 			<pr:menuitem value="Ver" action="#{jobBean.allJobs}" />
-			<pr:separator />
 			<pr:menuitem value="Nova" action="#{companyBean.newJob}" />
 			<pr:menuitem value="Finalizadas" url="#" />
 		</pr:submenu>
 
 		<pr:submenu label="Perfil">
-			<pr:menuitem value="Ver" url="company.xhtml"
-				icon="pi pi-angle-double-left" />
+			<pr:menuitem value="Ver" url="company.xhtml" />
 			<pr:menuitem value="Editar"
-				action="#{companyBean.recoverInfoCompany}"
-				icon="pi pi-angle-double-right" />
+				action="#{companyBean.recoverInfoCompany}" />
 		</pr:submenu>
 
 		<pr:submenu label="Configurações">
 			<pr:menuitem value="Alterar dados da conta" url="#" />
 		</pr:submenu>
 
-		<pr:menuitem value="Sair" action="#{companyBean.logout}"
-			icon="pi pi-times" />
+		<pr:menuitem value="Sair" action="#{companyBean.logout}"/>
 	</pr:menubar>
 </h:form>
 </html>

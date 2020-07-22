@@ -50,9 +50,10 @@ public class CompanyBean implements Serializable {
 	
 	public String save() {
 		if(job != null) {
-			jobs.add(job);
+			job.setSkills(skills);
 			job.setCompany(company);
-			company.setJobs(jobs);			
+			jobs.add(job);			
+			company.setJobs(jobs);				
 		}
 		
 		if (dao.merge(company) != null) {
@@ -97,6 +98,7 @@ public class CompanyBean implements Serializable {
 	
 	public String newJob() {
 		job = new JobOpportunity();
+		skills.clear();
 		return "/company/newJob.xhtml?faces-redirect=true";
 	}
 	

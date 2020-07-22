@@ -30,7 +30,7 @@ public class CompanyDaoImpl implements CompanyDao, Serializable {
 					.getSingleResult();
 			t.commit();
 		} catch (NoResultException e) {
-			ShowMessages.showMessageError("Dados inválidos");
+			ShowMessages.showMessageError("Opa! Os dados não foram encontrados");
 		}
 
 		return company;

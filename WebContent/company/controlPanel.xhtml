@@ -10,81 +10,112 @@
 <h:head>
 	<title>TechJobs</title>
 	<link rel="stylesheet" type="text/css"
-		href="#{facesContext.externalContext.requestContextPath}/resources/css/home.css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/company/controlPanel.css"
 		media="screen" />
 </h:head>
 <h:body>
 	<ui:include src="/company/companyNav.xhtml" />
 
 	<h:form id="job">
-		<pr:panel>
+		<div class="ui-g-12 ui-g-nopad info">
 			<div class="ui-g">
-				<div class="ui-g-12 ui-md-10 ui-g-nopad">
-					<div class="ui-g">
-						<div class="ui-g-12 ui-md-4">
-							<h:panelGrid columns="2" cellpadding="7">
-								<h:outputText />
-								<h2>
-									<h:outputText value="#{jobBean.job.responsibility}" />
-								</h2>
-								<h4>
-									<h:outputText value="#{jobBean.job.company.trade}" />
-								</h4>
-
-								<h:outputText value="Endereço:" />
-								<h:outputText value="#{jobBean.job.address}" />
-
-								<h:outputText value="Tecnologias utilizadas:" />
-								<h:outputText value="-" />
-
-								<h:outputText value="Nível:" />
-								<h:outputText value="#{jobBean.job.level}" />
-
-								<h:outputText value="Remoto?" />
-								<h:outputText value="#{jobBean.job.remoteAux}" />
-
-							</h:panelGrid>
+				<div class="ui-g-12 ui-md-9">
+					<!-- <pr:panel header="Dados da vaga">  -->
+					<pr:panel>
+						<div class="p-col">
+							<div class="box">
+								<pr:commandButton value="Alterar informações"
+									style="background-color:red;" />
+								<pr:commandButton value="Deletar vaga" styleClass="delete-btn" />
+							</div>
 						</div>
-						<div class="ui-g-12 ui-md-4">
-							<h:outputLabel />
-							<h:outputText value="#{jobBean.job.resume}" />
+						<div class="p-col">
+							<div class="box">
+								<h1>#{jobBean.job.responsibility} (#{jobBean.job.level})</h1>
+
+							</div>
 						</div>
-					</div>
+
+						<div class="p-col">
+							<div class="box">
+								<h:outputText value="Localizada em: " />
+								<h:outputText value="#{jobBean.job.address}" styleClass="bold" />
+							</div>
+						</div>
+
+						<div class="p-col">
+							<div class="box">
+								<h:outputText value="Utilizando " />
+								<ui:repeat var="skill" value="#{jobBean.job.skills}">
+									<h:outputText value="#{skill}, " styleClass="bold"/>
+								</ui:repeat>
+								<h:outputText value=" como tecnologias." />
+							</div>
+						</div>
+
+						<div class="p-col">
+							<div class="box">
+								<h:outputText value="Possibilidade de trabalho remoto? " />
+								<h:outputText value="#{jobBean.job.remoteAux}" styleClass="bold" />
+							</div>
+						</div>
+
+						<div class="p-col">
+							<div class="box">
+								<h:outputText value="#{jobBean.job.resume}" />
+							</div>
+						</div>
+					</pr:panel>
+				</div>
+				<div class="ui-g-12 ui-md-3">
+					<pr:panel>
+						<h1>Estatísticas</h1>
+					</pr:panel>
+
 				</div>
 			</div>
-		</pr:panel>
+		</div>
 	</h:form>
-
+	<div class="ui-g-12 ui-md-12" style="text-align: center;">
+		<h1>Candidatos</h1>
+	</div>
 	<h:form id="candidates">
-		<pr:dataTable id="table" var="p" value="#{jobBean.candidates}">
-			<pr:column headerText="Nome">
-				<h:outputText value="#{p.name} #{p.surname}" />
-			</pr:column>
+		<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-12">
 
-			<pr:column headerText="Idade">
-				<h:outputText value="23" />
-			</pr:column>
+					<pr:dataTable id="table" var="p" value="#{jobBean.candidates}">
+						<pr:column headerText="Nome">
+							<h:outputText value="#{p.name} #{p.surname}" />
+						</pr:column>
 
-			<pr:column headerText="Gênero">
-				<h:outputText value="#{p.gender}" />
-			</pr:column>
+						<pr:column headerText="Idade">
+							<h:outputText value="23" />
+						</pr:column>
 
-			<pr:column headerText="Deficiente?">
-				<h:outputText value="#{p.deficientAux}" />
-			</pr:column>
+						<pr:column headerText="Gênero">
+							<h:outputText value="#{p.gender}" />
+						</pr:column>
 
-			<pr:column headerText="Ações">
-				<pr:growl id="growl" sticky="true" showDetail="true" />
+						<pr:column headerText="Deficiente?">
+							<h:outputText value="#{p.deficientAux}" />
+						</pr:column>
+
+						<pr:column headerText="Ações">
+							<pr:growl id="growl" sticky="true" showDetail="true" />
 
 
-				<pr:commandButton update=":candidates:moreDetails"
-					oncomplete="PF('showDetails').show()" value="Detalhes">
-					<f:setPropertyActionListener value="#{p}"
-						target="#{jobBean.selectedPerson}" />
-				</pr:commandButton>
+							<pr:commandButton update=":candidates:moreDetails"
+								oncomplete="PF('showDetails').show()" value="Detalhes">
+								<f:setPropertyActionListener value="#{p}"
+									target="#{jobBean.selectedPerson}" />
+							</pr:commandButton>
 
-			</pr:column>
-		</pr:dataTable>
+						</pr:column>
+					</pr:dataTable>
+				</div>
+			</div>
+		</div>
 
 		<pr:dialog widgetVar="showDetails" header="Detalhes" resizable="false"
 			showEffect="clip" hideEffect="clip" id="moreDetails"
@@ -108,8 +139,7 @@
 						onclick="PF('message').show();" />
 
 					<pr:commandButton value="O candidato não atende aos requisitos"
-						action="#{jobBean.rejectCandidate}"
-						update="@all" process="@all" />
+						action="#{jobBean.rejectCandidate}" update="@all" process="@all" />
 
 				</h:panelGrid>
 			</h:panelGrid>
@@ -134,6 +164,5 @@
 			</h:panelGrid>
 		</pr:dialog>
 	</h:form>
-
 </h:body>
 </html>

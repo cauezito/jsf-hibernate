@@ -5,18 +5,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class JobOpportunity implements Serializable{
@@ -33,7 +38,8 @@ public class JobOpportunity implements Serializable{
 	
 	private String responsibility;
 	private String address;
-	private String[] skills;
+	@ElementCollection
+	private List<String> skills = new ArrayList<String>();
 	private String resume;
 	private String details;
 	private String level;
@@ -87,12 +93,6 @@ public class JobOpportunity implements Serializable{
 	}
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	public String[] getSkills() {
-		return skills;
-	}
-	public void setSkills(String[] skills) {
-		this.skills = skills;
 	}
 	public String getResume() {
 		return resume;
@@ -151,4 +151,15 @@ public class JobOpportunity implements Serializable{
 	public void setRejectedCandidates(List<RejectedCandidate> rejectedCandidates) {
 		this.rejectedCandidates = rejectedCandidates;
 	}
+
+	public List<String> getSkills() {
+		return skills;
+	}
+
+
+	public void setSkills(List<String> skills) {
+		this.skills = skills;
+	}
+
+	
 }

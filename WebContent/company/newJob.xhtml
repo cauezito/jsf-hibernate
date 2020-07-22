@@ -45,10 +45,10 @@
 				<pr:outputLabel value="Nível" for="nivel" />
 				<pr:selectOneRadio id="nivel" value="#{companyBean.job.level}"
 					styleClass="input">
-					<f:selectItem itemValue="estagio" itemLabel="Estágio" />
-					<f:selectItem itemValue="junior" itemLabel="Júnior" />
-					<f:selectItem itemValue="pleno" itemLabel="Pleno" />
-					<f:selectItem itemValue="senior" itemLabel="Sênior" />
+					<f:selectItem itemValue="Estágio" itemLabel="Estágio" />
+					<f:selectItem itemValue="Júnior" itemLabel="Júnior" />
+					<f:selectItem itemValue="Pleno" itemLabel="Pleno" />
+					<f:selectItem itemValue="Sênior" itemLabel="Sênior" />
 					<f:selectItem itemValue="trainee" itemLabel="Trainee" />
 				</pr:selectOneRadio>
 
@@ -67,7 +67,7 @@
 
 				<pr:outputLabel value="Detalhes da vaga" />
 				<pr:inputTextarea rows="5" cols="34" counter="display"
-					style="resize:none" maxlength="600"
+					style="resize:none" maxlength="1500"
 					counterTemplate="{0} caracteres restantes." autoResize="true"
 					value="#{companyBean.job.resume}" />
 				<br />

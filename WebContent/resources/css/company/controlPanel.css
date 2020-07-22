@@ -1,0 +1,12 @@
+
+.bold{
+	font-weight: bold;
+	line-height: 3;
+}
+	
+.info:not(h1){
+	font-size: 20px;
+}
+.delete-btn{
+	float: right;
+}
