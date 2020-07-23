@@ -24,6 +24,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/x
 			<property name="hibernate.connection.url" 
 			value="jdbc:postgresql://localhost:5432/hibernatejsf"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.connection.autocommit" value="false"/>
 			<property name="hibernate.connection.username" value="postgres"/>
 			<property name="hibernate.connection.password" value="134679ca"/>
 			<!-- Cria e atualiza as tabelas -->

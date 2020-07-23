@@ -40,6 +40,7 @@ public class JobOpportunity implements Serializable{
 	private String address;
 	@ElementCollection
 	private List<String> skills = new ArrayList<String>();
+	@Lob
 	private String resume;
 	private String details;
 	private String level;
