@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pr="http://primefaces.org/ui">
+
+<h:head>
+	<title>Techjobs - Empresa</title>
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/centralizedForm.css"
+		media="screen" />
+</h:head>
+<h:body>
+
+	<ui:include src="/company/companyNav.xhtml" />
+	<div class="container">
+		<h:form id="centralizedForm">
+
+			<pr:messages autoUpdate="true" />
+			 <pr:panel header="Minha conta">
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="CNPJ:" />
+                    <pr:inputText value="#{companyBean.company.cnpj}" required="true" label="Firstname"/>
+ 
+                    <h:outputText value="E-mail:" />
+                    <pr:inputText value="#{companyBean.company.email}" required="true" label="Lastname"/>
+ 
+                    <h:outputText value="Senha: " />
+                    <pr:inputText value="#{companyBean.company.password}" />
+                    
+                    <h:outputText value="Confirme a senha: " />
+                    <pr:inputText value="#{companyBean.aux}" />
+ 
+                   <pr:commandButton value="Alterar" action="#{companyBean.updateAccount}" ajax="false"/>
+                </h:panelGrid>
+            </pr:panel>
+
+		</h:form>
+	</div>
+	<script src="resources/js/updateInfoCompany.js"></script>
+</h:body>
+</html>

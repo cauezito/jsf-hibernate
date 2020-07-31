@@ -22,7 +22,7 @@
 			<div class="ui-g">
 				<div class="ui-g-12 ui-md-12">
 					<!-- <pr:panel header="Dados da vaga">  -->
-					<pr:panel>
+					<pr:panel id="panel">
 						<div class="p-col">
 							<div class="box"></div>
 						</div>
@@ -30,7 +30,7 @@
 						<div class="p-col">
 							<div class="box">
 								<h1>#{jobBean.job.responsibility} (#{jobBean.job.level})</h1>
-								<pr:commandButton value="Voltar"
+								<pr:commandButton value="Voltar" action="#{jobBean.unsubscribedJobs}"
 									style="float: right; margin-top: -60px;" />
 							</div>
 						</div>
@@ -75,7 +75,7 @@
 
 						<div class="p-col" style="margin: 40px 0 20px 0">
 							<div class="box">
-								<h3>O que você precisa saber sobre essa vaga</h3>
+								<h3>O que você precisa saber sobre esta vaga</h3>
 								<h:outputText value="#{jobBean.job.resume}" />
 							</div>
 						</div>

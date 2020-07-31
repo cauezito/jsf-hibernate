@@ -29,10 +29,10 @@ public class CompanyBean implements Serializable {
 	private Company company;
 	
 	@Inject
-	private GenericDao<Company> dao;
+	private GenericDao<Company> companyGenericDao;
 	
-	@Inject
-	private GenericDao<JobOpportunity> jobDao;
+	
+	private String aux;
 	
 	@Inject
 	private JobOpportunity job;
@@ -56,7 +56,7 @@ public class CompanyBean implements Serializable {
 			company.setJobs(jobs);				
 		}
 		
-		if (dao.merge(company) != null) {
+		if (companyGenericDao.merge(company) != null) {
 			this.setSession("companyOn", company);
 			ShowMessages.showMessageInfo("Vaga cadastrada!");
 			job = new JobOpportunity();
@@ -80,6 +80,25 @@ public class CompanyBean implements Serializable {
 			return "login.xhtml";
 	}
 	
+	
+	public String updateAccount() {
+		if(!company.getPassword().equals(this.aux)) {
+			ShowMessages.showMessageInfo("As senhas não conferem!");
+			return "";
+		} 
+	
+		
+		if(companyGenericDao.merge(company) != null) {
+			ShowMessages.showMessageInfo("Informações atualizadas");
+		} else {
+			ShowMessages.showMessageInfo("Não foi possível atualizar as informações");
+		}
+		
+		
+		
+		return "";
+	}
+	
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext ec = context.getExternalContext();
@@ -87,7 +106,7 @@ public class CompanyBean implements Serializable {
 		HttpServletRequest req = (HttpServletRequest) context.getCurrentInstance().getExternalContext().getRequest();
 		req.getSession().invalidate();
 		ShowMessages.showMessageInfo("Você saiu");
-		return "login";
+		return "/login.xhtml?faces-redirect=true";
 	}
 
 	
@@ -169,5 +188,15 @@ public class CompanyBean implements Serializable {
 	public void setJobs(List<JobOpportunity> jobs) {
 		this.jobs = jobs;
 	}
+	
+	public String getAux() {
+		return aux;
+	}
+	
+	public void setAux(String aux) {
+		this.aux = aux;
+	}
+	
+	
 
 }

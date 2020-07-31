@@ -22,11 +22,11 @@
 				icon="pi pi-angle-double-right" />
 		</pr:submenu>
 
-		<pr:submenu label="Configurações">
-			<pr:menuitem value="Alterar dados da conta" url="#" />
-		</pr:submenu>
+		<pr:menuitem value="Configurações" url="updateAccount.xhtml"
+			ajax="false" />
 
-		<pr:menuitem value="Sair" action="#{personBean.logout}"
+
+		<pr:menuitem value="Sair" action="#{personBean.logout}" ajax="false"
 			icon="pi pi-times" />
 	</pr:menubar>
 </h:form>
