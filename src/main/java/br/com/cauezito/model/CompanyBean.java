@@ -24,48 +24,47 @@ import br.com.cauezito.util.ShowMessages;
 public class CompanyBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private Company company;
-	
+
 	@Inject
 	private GenericDao<Company> companyGenericDao;
-	
-	
+
 	private String aux;
-	
+
 	@Inject
 	private JobOpportunity job;
-	
+
 	private List<JobOpportunity> jobs = new ArrayList<JobOpportunity>();
-	
+
 	private List<String> skills = new ArrayList<String>();
-	
+
 	@Inject
 	private CompanyDao cdao;
-	
+
 	public CompanyBean() {
 		this.skills();
 	}
-	
+
 	public String save() {
-		if(job != null) {
+		if (job != null) {
 			job.setSkills(skills);
 			job.setCompany(company);
-			jobs.add(job);			
-			company.setJobs(jobs);				
+			jobs.add(job);
+			company.setJobs(jobs);
 		}
-		
+
 		if (companyGenericDao.merge(company) != null) {
 			this.setSession("companyOn", company);
 			ShowMessages.showMessageInfo("Vaga cadastrada!");
 			job = new JobOpportunity();
 		} else {
 			ShowMessages.showMessageError("Não foi possível cadastrar a vaga;");
-		}	
+		}
 		return "";
 	}
-	
+
 	public String login() {
 		Company c = cdao.findCompany(company.getEmail(), company.getPassword(), company.getCnpj());
 
@@ -76,29 +75,27 @@ public class CompanyBean implements Serializable {
 			this.getSession();
 
 			return "company/company.xhtml?faces-redirect=true";
-		} 
-			return "login.xhtml";
+		}
+		return "login.xhtml";
 	}
-	
-	
+
 	public String updateAccount() {
-		if(!company.getPassword().equals(this.aux)) {
-			ShowMessages.showMessageInfo("As senhas não conferem!");
-			return "";
-		} 
-	
-		
-		if(companyGenericDao.merge(company) != null) {
-			ShowMessages.showMessageInfo("Informações atualizadas");
+
+		if (company.getPassword().equals(this.aux)) {
+
+			if (companyGenericDao.merge(company) != null) {
+				ShowMessages.showMessageInfo("Informações atualizadas");
+				
+			}
 		} else {
-			ShowMessages.showMessageInfo("Não foi possível atualizar as informações");
+			ShowMessages.showMessageError("As senhas não conferem!");
 		}
 		
-		
-		
+		this.aux = "";
+
 		return "";
 	}
-	
+
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext ec = context.getExternalContext();
@@ -109,29 +106,28 @@ public class CompanyBean implements Serializable {
 		return "/login.xhtml?faces-redirect=true";
 	}
 
-	
 	public String recoverInfoCompany() {
 		this.getSession();
 		return "/company/updateInfoCompany.xhtml?faces-redirect=true";
 	}
-	
+
 	public String newJob() {
 		job = new JobOpportunity();
 		skills.clear();
 		return "/company/newJob.xhtml?faces-redirect=true";
 	}
-	
+
 	private void getSession() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext ec = context.getExternalContext();
 		company = (Company) ec.getSessionMap().get("companyOn");
-		
-		if(company.getJobs() != null && !company.getJobs().isEmpty()) {
+
+		if (company.getJobs() != null && !company.getJobs().isEmpty()) {
 			jobs.clear();
 			for (JobOpportunity job : company.getJobs()) {
 				this.jobs.add(job);
 			}
-		}	
+		}
 	}
 
 	private void setSession(String key, Company company) {
@@ -140,7 +136,7 @@ public class CompanyBean implements Serializable {
 		ec.getSessionMap().remove(key);
 		ec.getSessionMap().put(key, company);
 	}
-	
+
 	private void skills() {
 		skills.add("PHP");
 		skills.add("Java");
@@ -155,7 +151,6 @@ public class CompanyBean implements Serializable {
 		skills.add("Javascript");
 		skills.add("NodeJs");
 	}
-
 
 	public Company getCompany() {
 		return company;
@@ -188,15 +183,13 @@ public class CompanyBean implements Serializable {
 	public void setJobs(List<JobOpportunity> jobs) {
 		this.jobs = jobs;
 	}
-	
+
 	public String getAux() {
 		return aux;
 	}
-	
+
 	public void setAux(String aux) {
 		this.aux = aux;
 	}
-	
-	
 
 }
