@@ -21,6 +21,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -39,6 +41,7 @@ public class JobOpportunity implements Serializable{
 	private String responsibility;
 	private String address;
 	@ElementCollection
+	@Cascade(CascadeType.ALL)
 	private List<String> skills = new ArrayList<String>();
 	@Lob
 	private String resume;
@@ -54,12 +57,15 @@ public class JobOpportunity implements Serializable{
 	
 	
 	@OneToMany(mappedBy = "job")
+	@Cascade(CascadeType.ALL)
 	private List<PersonJob> personJob = new ArrayList<PersonJob>();
 	
 	@OneToMany(mappedBy = "job")
-	private List<FinalistCandidate> finalistCandidate = new ArrayList<FinalistCandidate>();
+	@Cascade(CascadeType.ALL)
+	private List<FinalistCandidate> finalistCandidates = new ArrayList<FinalistCandidate>();
 	
 	@OneToMany(mappedBy = "job")
+	@Cascade(CascadeType.ALL)
 	private List<RejectedCandidate> rejectedCandidates = new ArrayList<RejectedCandidate>();
 	
 	public JobOpportunity() {
@@ -137,13 +143,12 @@ public class JobOpportunity implements Serializable{
 	public void setRemoteAux(String remoteAux) {
 		this.remoteAux = remoteAux;
 	}
-	/*public List<FinalistCandidate> getFinalistCandidates() {
-		return finalistCandidate;
+	public List<FinalistCandidate> getFinalistCandidates() {
+		return finalistCandidates;
 	}
-	public void setFinalistCandidates(List<FinalistCandidate> finalistCandidate) {
-		this.finalistCandidates = finalistCandidate;
-	}		*/
-
+	public void setFinalistCandidates(List<FinalistCandidate> finalistCandidates) {
+		this.finalistCandidates = finalistCandidates;
+	}		
 
 	public List<RejectedCandidate> getRejectedCandidates() {
 		return rejectedCandidates;

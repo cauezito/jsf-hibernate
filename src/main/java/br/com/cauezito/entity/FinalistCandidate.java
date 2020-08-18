@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 public class FinalistCandidate implements Serializable {
 
@@ -19,10 +22,12 @@ public class FinalistCandidate implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn
+	@Cascade(CascadeType.ALL)
 	private JobOpportunity job;
 	
 	@ManyToOne
 	@JoinColumn
+	@Cascade(CascadeType.ALL)
 	private Person candidate;
 	
 	public Long getId() {

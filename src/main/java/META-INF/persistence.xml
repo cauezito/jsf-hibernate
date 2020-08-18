@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
-xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
 	<!--Nome do contexto que configura o Provedor de Persistencia -->
 	<persistence-unit name="projetoJSF">
+
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>br.com.cauezito.entity.JobOpportunity</class>
 		<class>br.com.cauezito.entity.Person</class>
+		<class>br.com.cauezito.entity.JobOpportunity</class>
 		<class>br.com.cauezito.entity.Telephone</class>
 		<class>br.com.cauezito.entity.Image</class>
 		<class>br.com.cauezito.entity.Curriculum</class>
@@ -15,32 +18,34 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/x
 		<class>br.com.cauezito.entity.Message</class>
 		<class>br.com.cauezito.entity.RejectedCandidate</class>
 		<class>br.com.cauezito.entity.FinalistCandidate</class>
-		
-		
+
+
 		<properties>
 			<!-- Conexão com o banco -->
-			<property name="hibernate.connection.driver_class" 
-			value="org.postgresql.Driver"/>
-			<property name="hibernate.connection.url" 
-			value="jdbc:postgresql://localhost:5432/hibernatejsf"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-			<property name="hibernate.connection.autocommit" value="false"/>
-			<property name="hibernate.connection.username" value="postgres"/>
-			<property name="hibernate.connection.password" value="134679ca"/>
-			<!-- Cria e atualiza as tabelas -->
-			<property name="hibernate.hbm2ddl.auto" value="update"/>
-			<property name="hibernate.show_sql" value="true"/>
+			<property name="javax.persistence.jdbc.driver"
+				value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/tech?useTimezone=true&amp;serverTimezone=UTC" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="" />
+
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+
 			<!-- c3p0 -->
 			<!-- Mínimo de conexões ou portas disponíveis -->
-			  <property name="hibernate.c3p0.min_size" value="5"/> 
+			<property name="hibernate.c3p0.min_size" value="5" />
 			<!-- Máximo de conexões ou portas disponíveis -->
-			 <property name="hibernate.c3p0.max_size" value="100"/> 
+			<property name="hibernate.c3p0.max_size" value="100" />
 			<!-- O número de segundos em que uma conexão inativa é mantida no pool -->
-			<property name="hibernate.c3p0.timeout" value="300"/> 
-			<!-- Número total de instruções (sql, transações) no banco de dados mantida em cache -->
-			 <property name="hibernate.c3p0.max_statements" value="50"/> 
+			<property name="hibernate.c3p0.timeout" value="300" />
+			<!-- Número total de instruções (sql, transações) no banco de dados mantida 
+				em cache -->
+			<property name="hibernate.c3p0.max_statements" value="50" />
 			<!-- Tempo ocioso em segundos antes de uma conexão ser validada automaticamente -->
-			<property name="hibernate.c3p0.idle_test_period" value="140"/> 
+			<property name="hibernate.c3p0.idle_test_period" value="140" />
 		</properties>
 	</persistence-unit>
 </persistence>

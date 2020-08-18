@@ -70,14 +70,14 @@ public class JobBean implements Serializable {
 	private Company company;
 
 	@Inject
-	private Message message;	
+	private Message message;
 
 	@Inject
 	private JobOpportunity job;
 
 	@Inject
 	private JobDao jobDao;
-	
+
 	@Inject
 	private PersonJob personJob;
 
@@ -98,6 +98,9 @@ public class JobBean implements Serializable {
 	public String subscribedJobs() {
 		this.getSession();
 		this.getSubscribedJobs();
+		if(jobs.size() == 0) {
+			ShowMessages.showMessageError("Você ainda não se candidatou a nenhuma vaga!");
+		}
 		return "/user/candidatures.xhtml?faces-redirect=true";
 	}
 
@@ -119,6 +122,10 @@ public class JobBean implements Serializable {
 
 	public String allJobs() {
 		this.findAllJobs();
+		if (jobs.size() == 0) {
+			ShowMessages.showMessageError("Esta empresa ainda não publicou vagas!");
+		}
+
 		return "/company/jobs.xhtml?faces-redirect=true";
 
 	}
@@ -193,6 +200,12 @@ public class JobBean implements Serializable {
 
 		return false;
 
+	}
+
+	public String deleteJob() {
+		jobGenericDao.removeById(job);
+		ShowMessages.showMessageInfo("Vaga excluída");
+		return "/company/jobs.xhtml?faces-redirect=true";
 	}
 
 	private void getSession() {

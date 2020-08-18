@@ -45,7 +45,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsf-impl-2.2.0.jar" sourcepath="C:/Users/caahs/.m2/repository/com/sun/faces/jsf-impl/2.2.0/jsf-impl-2.2.0-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/junit-4.12.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/postgresql-9.3-1101-jdbc4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-7.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/servlet-api-2.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/validation-api-2.0.1.Final.jar"/>
@@ -56,5 +55,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/antlr-3.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.el-3.0.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/all-themes-1.0.10.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-8.0.20.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

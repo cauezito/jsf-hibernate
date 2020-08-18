@@ -13,6 +13,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 public class RejectedCandidate implements Serializable {
 
@@ -24,10 +27,12 @@ public class RejectedCandidate implements Serializable {
 
 	@ManyToOne
 	@JoinColumn
+	@Cascade(CascadeType.ALL)
 	private JobOpportunity job;
 
 	@ManyToOne
 	@JoinColumn
+	@Cascade(CascadeType.ALL)
 	private Person candidate;
 
 	public Long getId() {
