@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import org.jboss.weld.context.RequestContext;
+
 import br.com.cauezito.dao.GenericDao;
 import br.com.cauezito.entity.Company;
 import br.com.cauezito.entity.JobOpportunity;
@@ -47,20 +49,28 @@ public class CompanyBean implements Serializable {
 		this.skills();
 	}
 
-	public String save() {
+	public String save() {		
+		
 		if (job != null) {
 			job.setSkills(skills);
 			job.setCompany(company);
 			jobs.add(job);
 			company.setJobs(jobs);
 		}
-
+		
 		if (companyGenericDao.merge(company) != null) {
 			this.setSession("companyOn", company);
-			ShowMessages.showMessageInfo("Vaga cadastrada!");
-			job = new JobOpportunity();
+			HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+			String page = req.getRequestURI().split("/")[3];
+			if(page.contains("updateInfoCompany")) {
+				ShowMessages.showMessageInfo("Informações atualizadas com sucesso!");
+			} else {			
+				ShowMessages.showMessageInfo("Vaga cadastrada!");
+				job = new JobOpportunity();
+			}
+			skills.clear();	
 		} else {
-			ShowMessages.showMessageError("Não foi possível cadastrar a vaga;");
+			ShowMessages.showMessageError("Aconteceu um erro. Tente novamente.");
 		}
 		return "";
 	}

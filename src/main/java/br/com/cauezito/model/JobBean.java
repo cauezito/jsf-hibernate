@@ -88,6 +88,9 @@ public class JobBean implements Serializable {
 	public String unsubscribedJobs() {
 		this.getSession();
 		this.getUnsubscribedJobs();
+		if(jobs.size() == 0) {
+			ShowMessages.showMessageError("Não há vagas disponíveis para o seu perfil");
+		}
 		return "/user/search.xhtml?faces-redirect=true";
 	}
 
@@ -200,6 +203,11 @@ public class JobBean implements Serializable {
 
 		return false;
 
+	}
+	
+	public String updateJob() {
+		
+		return "/company/newJob.xhtml";
 	}
 
 	public String deleteJob() {
