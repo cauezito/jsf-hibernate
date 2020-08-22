@@ -10,32 +10,67 @@
 <h:head>
 	<title>TechJobs - Empresa</title>
 	<link rel="stylesheet" type="text/css"
-		href="#{facesContext.externalContext.requestContextPath}/resources/css/home.css"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/company/jobs.css"
 		media="screen" />
 </h:head>
 <h:body>
 	<ui:include src="/company/companyNav.xhtml" />
 
-	<h:form>
+	<h:form class="form">
 		<pr:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
 		<div class="ui-g">
-			<div class="ui-g-12 ui-md-10 ui-g-nopad">
-				<div class="ui-g-12 ui-g-nopad">
+			<div class="ui-g-12 ui-md-12 ui-g-nopad">
+				<!-- search -->
+				<div class="ui-g-3 ui-g-nopad configs">
+					<div class="ui-g">
+						<pr:panel id="panel" style="margin-bottom:20px">
+							<h:panelGrid columns="1" cellpadding="12" cellspacing="1">
+								<h:outputText value="Nome da vaga" />
+								<h:inputText />
+
+								<pr:outputLabel for="popup" value="A partir de:" />
+								<pr:datePicker id="popup" />
+
+								<pr:outputLabel for="@next" value="Nível:" />
+								<pr:selectOneMenu id="nivel" style="width:125px; margin: 0 0 20px 0;">
+									<f:selectItem itemLabel="Estagiário" itemValue="" />
+									<f:selectItem itemLabel="Júnior" itemValue="" />
+									<f:selectItem itemLabel="Pleno" itemValue="" />
+									<f:selectItem itemLabel="Sênior" itemValue="" />
+									<f:selectItem itemLabel="Trainee" itemValue="" />
+								</pr:selectOneMenu>
+
+								<pr:selectBooleanCheckbox itemLabel="Trabalho remoto" style="margin: 0 0 20px 0;" />
+
+								<pr:commandButton value="Pesquisar" />
+							</h:panelGrid>
+						</pr:panel>
+					</div>
+				</div>
+
+
+				<div class="ui-g-8 ui-g-nopad">
 					<div class="ui-g">
 						<ui:repeat var="job" value="#{jobBean.jobs}">
 							<div class="ui-g-12 ui-md-4">
-								<pr:panel id="basic" header="#{job.responsibility}"
-									style="margin-bottom:20px">
+
+								<pr:panel id="panel" style="margin-bottom:20px">
+
+									<h3 style="text-align: center">
+										<h:commandLink value="#{job.responsibility}"
+											action="#{jobBean.manageJobVacancy}">
+											<f:param name="jobId" value="#{job.id}"></f:param>
+										</h:commandLink>
+
+									</h3>
 									<h:panelGrid columns="2" cellpadding="12" cellspacing="1">
-										<h:graphicImage url="/resources/img/hierarchy.png"/>
+										<h:graphicImage url="/resources/img/hierarchy.png" />
 										<h:outputText value="#{job.level}" />
-										<h:graphicImage url="/resources/img/remote.png"/>
+										<h:graphicImage url="/resources/img/remote.png" />
 										<h:outputText value="#{job.remoteAux}" />
-										<h:graphicImage url="/resources/img/map.png"/>
+										<h:graphicImage url="/resources/img/map.png" />
 										<h:outputText value="#{job.address}" />
-										<h:commandButton value="Gerenciar" action="#{jobBean.manageJobVacancy}">
-											<f:param name="jobId" value="#{job.id}"></f:param>	
-										</h:commandButton>
+
 									</h:panelGrid>
 								</pr:panel>
 							</div>
